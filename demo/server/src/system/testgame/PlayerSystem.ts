@@ -387,6 +387,18 @@ export class PlayerSystem {
                     if(keyDown.includes('p')) {
                         U.spawnPlate(playerEntity);
                     }
+                    if(keyDown.includes('v')) {
+                        U.spawnSomething(playerEntity, INGREDIENT.hamburger);
+                    }
+                    if(keyDown.includes('b')) {
+                        U.spawnSomething(playerEntity, INGREDIENT.salad);
+                    }
+                    if(keyDown.includes('n')) {
+                        U.spawnSomething(playerEntity, INGREDIENT.potato_slice);
+                    }
+                    if(keyDown.includes('m')) {
+                        U.spawnSomething(playerEntity, INGREDIENT.tomato_slice);
+                    }
                     if(keyDown.includes('x')) {
                         if(playerCatch.catchType == CATCH_TYPE.HAND && playerCatch.catchEntity!.get(C.Gun)) {
                             shoot2(playerEntity,playerEntity.getR(C.PlayerCamera)!.origin!,playerEntity.getR(C.PlayerCamera)!.direction!);

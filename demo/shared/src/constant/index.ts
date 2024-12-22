@@ -308,7 +308,7 @@ export const INGREDIENT_PROPERTY: Record<INGREDIENT, INGREDIENT_INFO> = {
     },
     [INGREDIENT.hamburger]: {
         name: "hamburger",
-        recipe: [INGREDIENT.tomato, INGREDIENT.cooked_beef, INGREDIENT.cutted_cabbage],
+        recipe: [INGREDIENT.tomato_slice, INGREDIENT.cooked_beef, INGREDIENT.cutted_cabbage],
         type: "cylinder",
         mesh: { path: "public/assets/food/hamburger/hamburger.glb", scale: 0.027 },
         collide: new Ammo.btSphereShape(0.3),
