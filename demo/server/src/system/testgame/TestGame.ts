@@ -502,7 +502,7 @@ export class TestGame {
         const entities = EntitySystem.getEntityByRoom(this.room);
         for(const entity of entities) {
             //console.log("remove ", entity.id);
-            events.push(new E.EntityRemovedEvent(entity.room, entity.id));
+            if(!entity.get(C.Player)) events.push(new E.EntityRemovedEvent(entity.room, entity.id));
         }
         WebSocketSystem.send(player.id, events);
 
