@@ -89,6 +89,13 @@ export function ChatBox() {
                     value={newMessage}
                     style={{flexGrow: 1, marginRight: '10px'}}
                     onChange={(e) => setNewMessage(e.target.value)}
+                    onKeyDown={(event) => {
+                        if (event.key === "Enter" && newMessage !== "") {
+                            console.log("newMessage=", newMessage);
+                            sendPlayerMessage(newMessage);
+                            setNewMessage("");
+                        }
+                    }}
                     placeholder="Send new message"
                 />
                 <Button 

@@ -8,7 +8,6 @@ import { AssetSystem } from '@/system/AssetSystem'
 import { WebSocketSystem } from '@/system/WebSocketSystem'
 import { PlayerSystem } from './PlayerSystem'
 import { GridSystem } from '../GridSystem'
-import { Game } from '@/system/game'
 
 import { Ammo, AmmoModule } from '@shared/utils/ammo'
 import * as U from './utils'
@@ -24,6 +23,13 @@ async function generateLevel(
     gridSystem: GridSystem,
     physicsSystem: PhysicsSystem
 ) {
+    /*{
+        const light = new Entity(room);
+        const state = SPRITE_STATE.NONE;
+        light.set(new C.Sprite("light", undefined, state));
+        light.send(new C.SpriteInfo("light", state));
+        light.send(new C.TestGameLight());
+    }*/
     {
         const world = new Entity(room);
         const path = Config.level_path;
@@ -164,7 +170,6 @@ async function generateLevel(
         skillet.set(new C.Skillet());
     }
     for(const position of Config.knives) {
-        console.log("knife position", position);
         const knife = U.createSprite({
             room: room,
             mass: 1,
@@ -216,7 +221,7 @@ async function generateLevel(
     }
 }
 
-export class TestGame implements Game {
+export class TestGame {
     physicsSystem: PhysicsSystem
     playerSystem: PlayerSystem
     gridSystem: GridSystem
@@ -402,32 +407,40 @@ export class TestGame implements Game {
             gun.set(new C.Gun());
         }
     }
-    updatePlayers(entities: Entity[], physicsWorld: AmmoModule.btDiscreteDynamicsWorld) {
+    removePlayers() { // 这个函数和addPlayers只在GameSystem中使用，且removePlayers先用,addPlayers后用
+        const entities = EntitySystem.getEntityByRoom(this.room);
         const newPlayers: Entity[] = [];
         for(const entity of entities) {
             const playerInfo = entity.get(C.Player); if(!playerInfo) continue;
             newPlayers.push(entity);
         }
         const [adds, dels] = diff(this.players, newPlayers);
-        //if(adds.length != 0 || dels.length != 0) console.log("TestGame", adds, dels);
+        for(const entity of dels) this.removePlayer(entity, this.physicsSystem.world);
+    }
+    addPlayers() {
+        const entities = EntitySystem.getEntityByRoom(this.room);
+        const newPlayers: Entity[] = [];
+        for(const entity of entities) {
+            const playerInfo = entity.get(C.Player); if(!playerInfo) continue;
+            newPlayers.push(entity);
+        }
+        const [adds, dels] = diff(this.players, newPlayers);
         for(const entity of adds) this.addPlayer(entity);
-        for(const entity of dels) this.removePlayer(entity, physicsWorld);
         this.players = newPlayers;
     }
+
     update() {
         const now = Date.now();
         const dt = (now - this.timeStamp) / 1000;
         this.timeStamp = now;
 
         const entities = EntitySystem.getEntityByRoom(this.room);
-        //console.log("TestGame entities ", entities.length)
-        this.updatePlayers(entities, this.physicsSystem.world);
         this.playerSystem.update(entities, dt, this.physicsSystem.world, this.gridSystem);
         this.physicsSystem.update(entities, dt, this.timeStamp);
         this.gridSystem.update(entities, dt, this.physicsSystem.world);
     }
     addPlayer(playerEntity: Entity) {
-        console.log("[TestGame] addPlayer TestGame!");
+        console.log("[TestGame] addPlayer TestGame!", this.room, playerEntity.id);
         const entity = new Entity(this.room);
         const path = 'public/assets/main_character/minecraft_idle_and_walking_animation.glb';
         const scale = 1;
@@ -456,18 +469,25 @@ export class TestGame implements Game {
 
         const player = playerEntity.get(C.Player)!;
         player.setConnectId(entity.id);
+        player.sendProps();
 
         const entities = EntitySystem.getEntityByRoom(this.room);
         for(const entity of entities) {
             const events: E.MyEvent[] = []
             //console.log("hello!", (entity.getAllS()).length);
             events.push(new E.EntityAddedEvent(this.room, entity.id));
-            events.push(new E.ComponentSetEvent(entity.id, entity.getAllS()));
+            const list: C.UComponent[] = [];
+            for(const comp of entity.getAllS()) {
+                if(!(comp instanceof C.PlayerChat)) {
+                    list.push(comp);
+                }
+            }
+            events.push(new E.ComponentSetEvent(entity.id, list));
             WebSocketSystem.send(playerEntity.id, events);
         }
     }
     removePlayer(player: Entity, physicsWorld: AmmoModule.btDiscreteDynamicsWorld) {
-        console.log("removePlayer TestGame!");
+        console.log("removePlayer TestGame!", this.room, player.id);
         const playerConnectId = player.get(C.Player)!.connectId; if(!playerConnectId) return;
         const entity = EntitySystem.get(playerConnectId); if(!entity) return;
         const playerCatch = entity.get(C.PlayerCatch);
@@ -476,6 +496,7 @@ export class TestGame implements Game {
 
         const events: E.MyEvent[] = [];
         events.push(new E.EntityRemovedEvent(entity.room, entity.id));
+        console.log("use entity.removeEntity()");
         entity.removeEntity();
 
         const entities = EntitySystem.getEntityByRoom(this.room);

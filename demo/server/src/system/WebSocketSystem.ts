@@ -106,6 +106,10 @@ export class WebSocketSystem {
                 this.broadcast(entity.room, [new E.ComponentSetEvent(entity.id, sends)]);
             }
             for(const component of sends) component.mark(this);
+            if(entity._roomUpdated) {
+                this.broadcast(entity.room, [new E.EntitySetRoomEvent(entity.id, entity.room)]);
+                entity._roomUpdated = false;
+            }
         }
     }
     static broadcast(room: number, message: Array<E.MyEvent>) {

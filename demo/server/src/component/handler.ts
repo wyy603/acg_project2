@@ -8,6 +8,7 @@ import { initHandler as sharedInitHandler } from '@shared/component/handler'
 
 export function initHandler() {
     EventSystem.addHandler(E.EntityAddedEvent, (event: E.EntityAddedEvent) => {
+        console.log("server handler add entity", event.entityId);
         WebSocketSystem.broadcast(event.room, [event]);
     });
     // EventSystem.addHandler(E.ComponentSetEvent, (event: E.ComponentSetEvent) => {
@@ -15,7 +16,7 @@ export function initHandler() {
     //     if(entity) WebSocketSystem.broadcast(entity.room, [event], event._origin);
     // });
     EventSystem.addHandler(E.EntityRemovedEvent, (event: E.EntityRemovedEvent) => {
-        console.log("removebroadcast", event.room, event.entityId)
+        console.log("server handler remove entity", event.entityId);
         WebSocketSystem.broadcast(event.room, [event]);
     });
     sharedInitHandler();

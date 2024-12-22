@@ -29,4 +29,4 @@ export class MeshAddedEvent extends MyEvent {
 export class OvercraftUpdateEvent extends MyEvent {
     constructor(public subtick: number,public checkAll:boolean, public reset:boolean, public spawnList: OrderInfo[], public completeList: OrderInfo[]) {super();}
 }
-export { EntityAddedEvent, EntityRemovedEvent, ComponentSetEvent, MyEvent } from '@shared/basic'
+export { EntityAddedEvent, EntityRemovedEvent, ComponentSetEvent, MyEvent, EntitySetRoomEvent } from '@shared/basic'

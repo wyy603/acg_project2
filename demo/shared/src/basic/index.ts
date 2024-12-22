@@ -14,12 +14,12 @@ export abstract class Component implements IComponent {
 
 export abstract class UComponent implements IUComponent {
     public _typeUComponent = true;
-    constructor(public _entityId: number = 0, public _tag: any = []) {}
+    constructor(public _entityId: number = 0, public _tag: Set<any> = new Set()) {}
     setEntityId(id: number) { this._entityId = id; }
     getEntityId() { return this._entityId; }
-    mark(system: any) { this._tag.push(system); }
-    updated(system: any) { return this._tag.includes(system); }
-    clear() { this._tag = []; }
+    mark(system: any) { this._tag.add(system); }
+    updated(system: any) { return this._tag.has(system); }
+    clear() { this._tag = new Set(); }
     entity() {
         return EntitySystem.get(this._entityId);
     }
@@ -52,6 +52,12 @@ export class EntityRemovedEvent extends MyEvent {
         super();
     }
 };
+@register()
+export class EntitySetRoomEvent extends MyEvent {
+    constructor(public room: number, public entityId: number) {
+        super();
+    }
+};
 
 let globalEntityId = 0;
 function getNextEntityId() {
@@ -63,7 +69,9 @@ export class Entity implements IEntity {
     public components = new Map<Constructor, Component>();
     public receives = new Map<Constructor, UComponent>();
     public sends = new Map<Constructor, UComponent>();
+    public _roomUpdated = false;
     constructor(public room: number, public id: number = getNextEntityId(), message = true) {
+        console.log("(i am) entity constructor");
         //console.log(`addEntity entityId = ${id}, room = ${room}`);
         EntitySystem.add(this);
         if(message) EventSystem.addEvent(new EntityAddedEvent(room, this.id));
@@ -200,6 +208,7 @@ export class EntitySystem {
         (window as any).EntitySystem = this;
     }
     static onEntityAdded(room: number, entityId: number) {
+        console.log("(i am) add entity", entityId);
         if(!this.entities.has(entityId)) {
             const entity = new Entity(room, entityId, false);
             
@@ -228,7 +237,7 @@ export class EntitySystem {
             const id = a.indexOf(entity);
             if(id > -1) a.splice(id, 1);
         }
-        entity.room = room;
+        entity.room = room, entity._roomUpdated = true;
         const entities = EntitySystem.getEntityByRoom(entity.room);
         entities.push(entity);
     }
@@ -245,6 +254,7 @@ export class EntitySystem {
         return entity;
     }
     static onEntityRemoved(entityId: number) {
+        console.log("(i am) remove entity", entityId);
         if(this.entities.has(entityId)) {
             const entity = this.entities.get(entityId);
             this.entities.delete(entityId);

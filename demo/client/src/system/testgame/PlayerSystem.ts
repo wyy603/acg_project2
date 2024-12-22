@@ -42,10 +42,11 @@ export class PlayerSystem {
     dirLight: THREE.DirectionalLight
     name?: THREE.Mesh
     constructor() {
+        console.log("new playersystem!");
         const dirLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
         this.dirLight = dirLight;
         RenderSystem.scene.add(dirLight);
-        RenderSystem.lights.push(dirLight);
+        RenderSystem.lights.add(dirLight);
         const dirLightHelper = new THREE.DirectionalLightHelper( dirLight, 5 );
         RenderSystem.scene.add(dirLightHelper);
         dirLight.castShadow = true;
@@ -88,7 +89,7 @@ export class PlayerSystem {
         () => this.activateKey();
     }
     deactivate() {
-        () => this.deactivate();
+        RenderSystem.lights.delete(this.dirLight);
     }
     onMouseClick(event: MouseEvent) {
         this.click = event;
@@ -118,19 +119,23 @@ export class PlayerSystem {
         this.updateAllPlayers(entities);
     }
     updateAllPlayers(entities: Entity[]) {
+        const tmplist: any = [];
         for(const entity of entities) {
-            const playerName = entity.getR(C.PlayerName), connectId = entity.getR(C.PlayerConnectId);
-            if(!playerName || !connectId) continue;
+            const playerName = entity.getR(C.PlayerName);
+            if(!playerName) continue;
+            const connectId = entity.getR(C.PlayerConnectId);
+            if(!connectId) continue;
+            tmplist.push({entityid: entity.id, connectid: connectId.id});
             if(playerName.updated(this) && connectId.updated(this)) continue;
             const connectEntity = EntitySystem.get(connectId.id); if(!connectEntity) continue;
             const sprite = connectEntity.get(C.Sprite); if(!sprite) continue;
             sprite.playerName = playerName.name;
             U.updatePlayerName(sprite, sprite.playerName);
-            console.log("[PlayerSystem] hello", entity, playerName.updated(this));
         
             playerName.mark(this), connectId.mark(this);
             
         }
+        console.log("(i am)", WebSocketSystem.uuid, JSON.stringify(tmplist));
         
         for(const entity of entities) {
             const playerName = entity.getR(C.PlayerName), connectId = entity.getR(C.PlayerConnectId);
@@ -163,6 +168,7 @@ export class PlayerSystem {
                 playerSkin.mark(this);
             }
         }
+
 
         for(const entity of entities) {
             const playerName = entity.getR(C.PlayerName), playerChat = entity.getR(C.PlayerChat);

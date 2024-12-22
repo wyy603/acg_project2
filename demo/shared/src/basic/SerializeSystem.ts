@@ -20,7 +20,7 @@ export class SerializeSystem {
         this.infos.push({prototype, name, serialize, deserialize});
     }
     static generateID() {
-        console.log("[SerializeSystem] length", this.infos.length);
+        //console.log("[SerializeSystem] length", this.infos.length);
         this.infos.sort((a, b) => a.name.localeCompare(b.name));
         for(let i = 0; i < this.infos.length; ++i) {
             const info = this.infos[i]
@@ -37,7 +37,7 @@ export class SerializeSystem {
         if (Array.isArray(obj)) return obj.map(item => SerializeSystem.serialize(item));
         let id = this.objectMap.get(Object.getPrototypeOf(obj));
         if(id === undefined || this.infos[id] === undefined) { 
-            console.log("[SerializeSystem] Error", obj);
+            //console.log("[SerializeSystem] Error", obj);
             id = -1;
         }
         let objectData: any;
@@ -52,7 +52,7 @@ export class SerializeSystem {
             });
         } else objectData = serialize(obj);
         if(id == -1) {
-            console.log("[SerializeSystem] Result: ", {A: id, B: objectData});
+            //console.log("[SerializeSystem] Result: ", {A: id, B: objectData});
         }
         return {A: id, B: objectData};
     }
@@ -65,7 +65,7 @@ export class SerializeSystem {
         const { A: id, B: objectData } = json;
         const deserialize = id == -1 ? null : this.infos[id].deserialize;
         if(id == -1) {
-            console.log("[SerializeSystem] Error", {A: id, B: objectData});
+            //onsole.log("[SerializeSystem] Error", {A: id, B: objectData});
         }
         if(deserialize === null) {
             for(const key in objectData) {

@@ -18,7 +18,7 @@ export class RenderSystem {
     static camera : THREE.PerspectiveCamera
     static fakeCamera = new THREE.Object3D()
     static renderer : THREE.WebGLRenderer
-    static lights: THREE.Object3D[] = [];
+    static lights: Set<THREE.Object3D> = new Set();
     static water: Water;
     static clock = new THREE.Clock();
 
@@ -47,21 +47,7 @@ export class RenderSystem {
         {
             const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
             this.scene.add( hemiLight );
-            this.lights.push( hemiLight );
-        }
-        {
-            const pointLight = new THREE.PointLight(0xffff99, 35, 200);
-            pointLight.position.set(105-0.6, 10, 14-0.6);
-            this.scene.add(pointLight);
-            this.lights.push(pointLight);
-            pointLight.castShadow = true;
-            pointLight.shadow.camera.far = 400;
-            const d = 150;
-            pointLight.shadow.mapSize.width = 4096;
-            pointLight.shadow.mapSize.height = 4096;
-            pointLight.shadow.radius = 10;
-            pointLight.shadow.blurSamples = 25;
-            pointLight.shadow.bias = -0.001;
+            this.lights.add( hemiLight );
         }
     }
 
@@ -106,7 +92,7 @@ export class RenderSystem {
             }
         }
         for(const children of childrens) {
-            if(this.lights.includes(children)) continue;
+            if(this.lights.has(children)) continue;
             if(!meshes.includes(children)) dels.push(children);
         }
         for(const x of adds) {
@@ -126,8 +112,11 @@ export class RenderSystem {
 
         // CATCH_TYPE.HAND 抓取的物体要在最上方
         const otherObjects: THREE.Object3D[] = [];
-        const playerCatch = EntitySystem.get(EntitySystem.get(WebSocketSystem.uuid)!.getR(C.PlayerConnectId)!.id)!.get(C.PlayerCatch);
-        if(playerCatch && playerCatch.catchType == CATCH_TYPE.HAND) otherObjects.push(playerCatch.catchEntity!.get(C.Sprite)!.object3d);
+        const connectId = EntitySystem.get(WebSocketSystem.uuid)?.getR(C.PlayerConnectId)?.id;
+        if(connectId && EntitySystem.get(connectId)) {
+            const playerCatch = EntitySystem.get(connectId)!.get(C.PlayerCatch);
+            if(playerCatch && playerCatch.catchType == CATCH_TYPE.HAND) otherObjects.push(playerCatch.catchEntity!.get(C.Sprite)!.object3d);
+        }
         
         for(const obj of otherObjects) this.addMaxdepth(obj);
 
@@ -135,7 +124,7 @@ export class RenderSystem {
         this.renderer.clear();
         this.renderer.render(this.scene, this.camera);
         this.renderer.clearDepth();
-        const objects = Array.from(this.maxObjects.values()).concat(this.lights);
+        const objects = Array.from(this.maxObjects.values()).concat(Array.from(this.lights));
         const parents: Map<THREE.Object3D, {parent: THREE.Object3D, position: THREE.Vector3, rotation: THREE.Euler, scale: THREE.Vector3}> = new Map();
         for(const obj of objects) if(obj.parent) {
             obj.updateMatrixWorld(true);
