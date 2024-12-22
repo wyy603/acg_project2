@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 test
+client/public/assets
+server/public/assets
 
 # Editor directories and files
 .vscode/*
