@@ -23,13 +23,27 @@ async function generateLevel(
     gridSystem: GridSystem,
     physicsSystem: PhysicsSystem
 ) {
-    /*{
+    {
         const light = new Entity(room);
         const state = SPRITE_STATE.NONE;
         light.set(new C.Sprite("light", undefined, state));
         light.send(new C.SpriteInfo("light", state));
-        light.send(new C.TestGameLight());
-    }*/
+        light.send(new C.Lantern(new C.Vector3(105-0.6, 10, 14-0.6)));
+    }
+    {
+        const light = new Entity(room);
+        const state = SPRITE_STATE.NONE;
+        light.set(new C.Sprite("light", undefined, state));
+        light.send(new C.SpriteInfo("light", state));
+        light.send(new C.Lantern(new C.Vector3(105-1,13,15)));
+    }
+    {
+        const light = new Entity(room);
+        const state = SPRITE_STATE.NONE;
+        light.set(new C.Sprite("light", undefined, state));
+        light.send(new C.SpriteInfo("light", state));
+        light.send(new C.Lantern(new C.Vector3(94,13,14-1)));
+    }
     {
         const world = new Entity(room);
         const path = Config.level_path;

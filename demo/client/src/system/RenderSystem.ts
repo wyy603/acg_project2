@@ -72,10 +72,13 @@ export class RenderSystem {
 		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color( 0xbfd1e5 );
+		//this.scene.background = new THREE.Color( 0xbfd1e5 );
+        this.scene.background = new THREE.Color(0x000011);
 
+        
         {
-            const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
+            //const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
+            const hemiLight = new THREE.HemisphereLight(0x000033, 0x000000, 1);
             this.scene.add( hemiLight );
             this.lights.add( hemiLight );
         }

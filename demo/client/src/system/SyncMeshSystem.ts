@@ -28,6 +28,7 @@ export class SyncMeshSystem {
             const foodInfo = entity.getR(C.FoodInfo);
             const texturePlane = entity.getR(C.TexturePlane);
             const lineSegments = entity.getR(C.LineSegments);
+            const lantern = entity.getR(C.Lantern);
             const meshBasicMaterial = entity.getR(C.MeshBasicMaterial);
             const meshPhongMaterial = entity.getR(C.MeshPhongMaterial);
             const transform = entity.getR(C.SetMeshTransform);
@@ -41,7 +42,8 @@ export class SyncMeshSystem {
             (meshByPathLoaded && !meshByPathLoaded.updated(this)) || 
             (foodInfo && !foodInfo.updated(this)) ||
             (texturePlane && !texturePlane.updated(this)) ||
-            (lineSegments && !lineSegments.updated(this))) {
+            (lineSegments && !lineSegments.updated(this)) || 
+            (lantern && !lantern.updated(this))) {
                 const parent = sprite.object3d.parent;
                 sprite.object3d.removeFromParent();
                 const childrens = Array.from(sprite.childrens).filter(child => sprite.object3d.children.includes(child));
@@ -90,6 +92,20 @@ export class SyncMeshSystem {
                 if(lineSegments && !lineSegments.updated(this)) {
                     sprite.object3d = lineSegments.get();
                     lineSegments.mark(this);
+                }
+                if(lantern && !lantern.updated(this)) {
+                    const pointLight = new THREE.PointLight(0xffff99, 35, 200);
+                    pointLight.position.copy(lantern.pos.getTHREE());
+                    pointLight.castShadow = true;
+                    pointLight.shadow.camera.far = 400;
+                    const d = 150;
+                    pointLight.shadow.mapSize.width = 4096;
+                    pointLight.shadow.mapSize.height = 4096;
+                    pointLight.shadow.radius = 10;
+                    pointLight.shadow.blurSamples = 25;
+                    pointLight.shadow.bias = -0.001;
+                    sprite.object3d = pointLight;
+                    lantern.mark(this);
                 }
                 sprite.object3d.userData.entity = entity;
                 if(parent) parent.add(sprite.object3d);
