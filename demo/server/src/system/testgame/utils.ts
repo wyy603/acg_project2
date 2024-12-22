@@ -126,6 +126,16 @@ export function spawnPlate(player: Entity) {
         plate.receive(new C.SetPhysicsTransform(new C.Vector3(position.x,position.y+3,position.z), undefined, undefined));
     }
 }
+export function spawnSomething(player: Entity, ingredient: INGREDIENT) {
+    const gunTime = player.get(C.GunTime)!;
+    if(gunTime.time == 0)
+    {
+        gunTime.time = Config.server_tickrate * 0.5;
+        const plate = spawnRawFood(ingredient, player.room);
+        const position = getPosThree(player);
+        plate.receive(new C.SetPhysicsTransform(new C.Vector3(position.x,position.y+3,position.z), undefined, undefined));
+    }
+}
 export function spawnRawFood(itemType: INGREDIENT, room: number) {
     //console.log("spawnRawFood");
     const item = new Entity(room);

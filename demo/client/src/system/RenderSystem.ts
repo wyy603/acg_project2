@@ -82,6 +82,20 @@ export class RenderSystem {
             this.scene.add( hemiLight );
             this.lights.add( hemiLight );
         }
+        {
+            const pointLight = new THREE.PointLight(0xffff99, 35, 200);
+            pointLight.position.copy(new THREE.Vector3(99,13+5,5+2));
+            pointLight.castShadow = true;
+            pointLight.shadow.camera.far = 400;
+            const d = 150;
+            pointLight.shadow.mapSize.width = 4096;
+            pointLight.shadow.mapSize.height = 4096;
+            pointLight.shadow.radius = 10;
+            pointLight.shadow.blurSamples = 25;
+            pointLight.shadow.bias = -0.001;
+            this.scene.add( pointLight );
+            this.lights.add( pointLight );
+        }
     }
 
 	static setAnimationLoop(callback: XRFrameRequestCallback | null) { this.renderer.setAnimationLoop(callback); }

@@ -109,11 +109,11 @@ export class PlayerSystem {
 	}
 	onKeyDown(event: KeyboardEvent) {
         const ch = event.key.toLowerCase();
-		if("wasd zxcpqo".includes(ch)) this.keyDown.add(ch);
+		if("wasd zxcpqovbnm".includes(ch)) this.keyDown.add(ch);
 	}
 	onKeyUp(event: KeyboardEvent) {
         const ch = event.key.toLowerCase();
-		if("wasd zxcpqo".includes(ch)) this.keyDown.delete(ch);
+		if("wasd zxcpqovbnm".includes(ch)) this.keyDown.delete(ch);
 	}
     update(entities: Entity[], pointerLock: boolean) {
         this.updateMyPlayer(entities, pointerLock);
