@@ -65,6 +65,7 @@ export class PlayerSystem {
         this.onKeyUp = this.onKeyUp.bind(this);
         this.onMouseClick = this.onMouseClick.bind(this);
         this.onWheel = this.onWheel.bind(this);
+        (window as any).gameUtils = U;
     }
     mouseMoveListener = (event: MouseEvent) => this.onMouseMove(event)
     keyDownListener = (event: KeyboardEvent) => this.onKeyDown(event)
@@ -266,7 +267,6 @@ export class PlayerSystem {
         const parent = U.getEntityByName("cube")[0].get(C.Sprite)!.object3d.parent;
         if(parent) {
             HTMLSystem.set2("Logger", "cube_pos_parent", parent.name);
-            //console.log("cube_pos_parent", parent);
         }
 
         {

@@ -163,23 +163,23 @@ async function generateLevel(
         skillet.set(new C.positionOnPlacing(realPosition));
         skillet.set(new C.Skillet());
     }
-    for(const position of Config.knives) {
-        console.log("knife position", position);
-        const knife = U.createSprite({
-            room: room,
-            mass: 1,
-            collision_shape: new Ammo.btCapsuleShape(0.2, 0.8),
-            name: `knife`,
-            sprite_state: SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE,
-            linear_damping: 0.5,
-            restitution: 0.8,
-            ccd_threshold: 0.1,
-            ccd_radius: 0.1
-        });
-        knife.send(new C.SetMeshByPath("assets/tool/knife/knife.glb", {scale: 0.005}));
-        knife.receive(new C.SetPhysicsTransform(position.copy().add(ROOM_POSITION), undefined, undefined));
-        knife.set(new C.knifeInfo(new C.Vector3(0,0,0)));
-    }
+        for(const position of Config.knives) {
+            console.log("knife position", position);
+            const knife = U.createSprite({
+                room: room,
+                mass: 0,
+                collision_shape: new Ammo.btCapsuleShape(0.2, 0.8),
+                name: `knife`,
+                sprite_state: SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE,
+                linear_damping: 0.5,
+                restitution: 0.8,
+                ccd_threshold: 0.1,
+                ccd_radius: 0.1,
+            });
+            knife.send(new C.SetMeshByPath("assets/tool/knife/knife.glb", {scale: 0.005}));
+            knife.receive(new C.SetPhysicsTransform(position.copy().add(ROOM_POSITION).add(new C.Vector3(0, 0.7, 0)), undefined, new C.Quaternion(0, 0, 1, 0)));
+            knife.set(new C.knifeInfo(new C.Vector3(0,0,0)));
+        }
 
     // Configure serving area in level one
     for (const position of Config.servingArea) {
@@ -451,7 +451,7 @@ export class TestGame implements Game {
         entity.send(new C.PlayAnimation("still_test"));
         entity.set(new C.PlayerCatch(undefined, undefined));
         entity.send(new C.SetMeshByPath(path, {scale: scale}));
-        entity.receive(new C.SetPhysicsTransform(new C.Vector3(105, 30, 13)));
+        entity.receive(new C.SetPhysicsTransform(new C.Vector3(104, 6, 12), undefined));
         //entity.set(new C.SetPhysicsTransform(new C.Vector3(0, 50, 0)));
 
         const player = playerEntity.get(C.Player)!;

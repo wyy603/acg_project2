@@ -3,8 +3,8 @@ import { Progress } from "antd";
 import { HTMLSystem } from '../HTMLSystem'
 
 function interpolateColor(value: number) {
-    const startColor = [255, 0, 0]; // Red
-    const endColor = [0, 255, 0];   // Green
+    const startColor = [204, 244, 206]; // White
+    const endColor = [0, 144, 0];   // Green
 
     const ratio = value / 100;
 
@@ -16,7 +16,6 @@ function interpolateColor(value: number) {
 }
 
 function SingleProcess({ name, value }: { name: string, value: number }) {
-    const color = value <= 40 ? "red" : (value <= 80 ? "yellow" : "green");
     return (
         <div key={name} style={{ marginBottom: '10px' }}>
             <span>{name}: {value}%</span>
@@ -29,7 +28,8 @@ function SingleProcess({ name, value }: { name: string, value: number }) {
         </div>
     );
 }
-  
+
+
 export function ProgressApp() {
     const [progressList, setProgressList] = useState<Map<string, number> >(new Map());
     HTMLSystem.setSetter("Progress", setProgressList);
@@ -39,10 +39,10 @@ export function ProgressApp() {
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: "1000",
-        backgroundColor: 'rgba(255, 255, 255, 0.6)',
+        backgroundColor: 'rgba(255, 235, 225, 0.6)',
         padding: '10px',
         borderRadius: '5px',
-        height: '100px',
+        height: 'auto',
         width: '500px'
     };
     return <div style={divStyle}>

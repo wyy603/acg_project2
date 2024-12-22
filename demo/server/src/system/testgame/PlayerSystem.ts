@@ -126,6 +126,10 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
     let sprite2 = minEntity ? minEntity.get(C.Sprite)! : undefined;
     let b2 = sprite2 ? sprite2.body : undefined, v2 = sprite2 ? U.getPos(sprite2.body!) : undefined;
 
+    // if(minEntity && minEntity!.get(C.knifeInfo)) {
+    //     // minEntity!.set(C.Sprite)
+    // }
+
     function onPositionPlacing() {
         if(minEntity) {
             const Pplayer = U.getPosThree(playerEntity!);
@@ -183,6 +187,7 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
         playerCatch!.removeConstraint(physicsWorld);
     }
 
+
     if(clickInput.type == 2) {
         if(playerCatch.catchType != CATCH_TYPE.NONE) { // 当前正在抓取物品 
             // 释放物品
@@ -202,12 +207,12 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
                     // console.log("[PlayerSystem] PositionOnPlacing");
                     const tmp = gridSystem.takeFood(minEntity.get(C.positionOnPlacing)!.position, physicsWorld); //直接把食物取出
                     if(tmp) catchableEntity = tmp;
-                    /*if(minEntity && dist <= 6) {
-                        sprite2 = minEntity.get(C.Sprite)!;
-                        b2 = sprite2.body;
-                        v2 = U.getPos(b2!);
-                        console.log("change entity, name", sprite2.name);
-                    } else { Ammo.destroy(vec); return; }*/
+                    // if(minEntity && dist <= 6) {
+                    //     sprite2 = minEntity.get(C.Sprite)!;
+                    //     b2 = sprite2.body;
+                    //     v2 = U.getPos(b2!);
+                    //     console.log("change entity, name", sprite2.name);
+                    // } else { Ammo.destroy(vec); return; }
                 }
                 if(minEntity && minEntity.get(C.knifeInfo) && dist <= 6) { // 点击在刀上，切里面的食物。
                     // console.log("[PlayerSystem] knifeInfo");
@@ -262,6 +267,19 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
                     const itemType = (minEntity.get(C.SpawnOnCatch) as C.SpawnOnCatch).ingredient;
                     const spawnedItem = spawnRawFood(itemType, minEntity.room);
                     spawnedItem.receive(new C.SetPhysicsTransform(C.Vector3.byAmmo(v2), undefined, undefined));
+                    // console.log("hi1");
+                    // console.log(spawnedItem);
+                    // console.log(playerCatch)
+                    // if(player.catchType == CATCH_TYPE.HAND && playerCatch.catchType === CATCH_TYPE.NONE) {
+                    //     console.log("hi2");
+                    //     playerCatch.catchType = CATCH_TYPE.HAND;
+                    //     playerCatch.catchLen = 0;
+                    //     playerCatch.catchEntity = spawnedItem;
+                    //     playerCatch.send();
+                    //     spawnedItem.get(C.Sprite)!.body!.activate(true);
+                    //     spawnedItem.get(C.Sprite)!.deactivate(physicsWorld);
+                    // }
+                    console.log("hi3");
                     return;
                 }
             }

@@ -143,9 +143,9 @@ export const LEVEL2_Config: LEVEL_Config = {
         new Vector3(105, 7, 7).dec(new Vector3(100, 2, 10)),
     ],
     knives: [
-        new Vector3(105, 9, 14).dec(new Vector3(100, 2, 11)),
-        new Vector3(104, 9, 14).dec(new Vector3(100, 2, 11)),
-        new Vector3(103, 9, 14).dec(new Vector3(100, 2, 11)),
+        new Vector3(105, 7, 15).dec(new Vector3(100, 2, 11)),
+        new Vector3(104, 7, 15).dec(new Vector3(100, 2, 11)),
+        new Vector3(103, 7, 15).dec(new Vector3(100, 2, 11)),
     ],
     servingArea: [] as Vector3[],
     storage: [
