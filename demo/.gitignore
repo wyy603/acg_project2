@@ -28,3 +28,5 @@ server/public/assets
 node_modules
 package-lock.json
 json_dataset
+.VSCodeCounter
+

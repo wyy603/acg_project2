@@ -6,7 +6,7 @@ export { RenderSystem, WebSocketSystem, SyncMeshSystem, AssetSystem }
 
 export class ClientConfig {
     static lowFPS = false;
-    static noShadow = false;
+    static noShadow = true;
 
     static update_lowFPS(x: boolean) {
         this.lowFPS = x;

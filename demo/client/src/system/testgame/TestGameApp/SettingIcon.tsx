@@ -4,6 +4,7 @@ import { Space, Input, Select, Button, Switch, Typography} from "antd";
 import { getPlayerName, setPlayerName, setPlayerSkin, getPlayerSkin } from '@/system/utils';
 const { Title, Text } = Typography;
 import { ClientConfig } from '@/system';
+import { CloseOutlined } from "@ant-design/icons";
 
 export function SettingIcon() {
     const [isHovered, setIsHovered] = useState(false);
@@ -28,8 +29,11 @@ export function SettingIcon() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        backgroundColor: 'rgba(255, 255, 255, 0.3)',
-        padding: '20px',
+        backgroundColor: 'rgba(255, 235, 225, 0.8)',
+        paddingTop: '10px',
+        paddingBottom: '10px',
+        paddingLeft: '20px', 
+        paddingRight: '20px',
         borderRadius: '10px',
         display: showSettings ? 'block' : 'none',
         zIndex: 1001,
@@ -69,7 +73,23 @@ export function SettingIcon() {
 
             {showSettings && (
                 <div style={settingsStyle}>
-                    <Title level={3}>Settings</Title>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <Title level={3} style = {{ margin : 0}}>Settings</Title>
+                        <Button onClick={() => setShowSettings(false)} style={{ border: 'none', background: 'transparent' }}>
+                        <div 
+                            style={{ 
+                                width: '20px', 
+                                height: '20px', 
+                                backgroundColor: '#F44336', // 红色
+                                borderRadius: '50%', 
+                                transition: 'background-color 0.3s ease',
+                            }}
+                            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#E57373'} // 浅红色
+                            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#F44336'}
+                        />
+                        </Button>
+                    </div>
+
                     <div style={containerStyle}>
                         <Text strong>Name:</Text>
                         <div>
@@ -104,7 +124,8 @@ export function SettingIcon() {
                         <Switch checked={noShadow} onChange={handleNoShadowChange} />
                     </div>
                     <div style={containerStyle}>
-                        <h3>Skin: </h3>
+                        <h3> Skin:</h3>
+
                         <div>
                             <Select
                                 defaultValue={getPlayerSkin()}

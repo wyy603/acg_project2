@@ -48,6 +48,7 @@
     "ammo.js": "github:kripken/ammo.js",
     "ammojs-typed": "^1.0.6",
     "antd": "^5.22.2",
+    "detect-gpu": "^5.0.62",
     "http": "^0.0.1-security",
     "http-proxy": "^1.18.1",
     "msgpack": "^1.0.3",

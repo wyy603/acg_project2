@@ -13,6 +13,13 @@ import { Config, CAMERA_PROP, CATCH_TYPE } from '@shared/constant'
 import * as U from '@/system/utils'
 import { HTMLSystem } from './testgame/HTMLSystem'
 
+import { getGPUTier } from 'detect-gpu';
+
+let gpuTier: any;
+(async () => {
+  gpuTier = await getGPUTier();
+})();
+
 export class RenderSystem {
     static scene : THREE.Scene
     static camera : THREE.PerspectiveCamera
@@ -22,27 +29,50 @@ export class RenderSystem {
     static water: Water;
     static clock = new THREE.Clock();
 
-    static sceneMax = new THREE.Scene();
-    static maxObjects = new Set<THREE.Object3D>();
-    static addMaxdepth(obj: THREE.Object3D) {
-        this.maxObjects.add(obj);
-    }
-    static delMaxdepth(obj: THREE.Object3D) {
-        this.maxObjects.delete(obj);
-    }
+	static sceneMax = new THREE.Scene();
+	static maxObjects = new Set<THREE.Object3D>();
+	static addMaxdepth(obj: THREE.Object3D) {
+		this.maxObjects.add(obj);
+	}
+	static delMaxdepth(obj: THREE.Object3D) {
+		this.maxObjects.delete(obj);
+	}
 
-    static init(w: number, h: number) {
-        this.fakeCamera.name = "test"
-        this.camera = new THREE.PerspectiveCamera( CAMERA_PROP.fov, w / h, CAMERA_PROP.near, CAMERA_PROP.far );
+	static checkHighPerformance() {
+		console.log("gpuTier", gpuTier);
+		console.log(gpuTier.fps);
+		// return true;
+		return (gpuTier.fps >= 120);
+		
+		// // return true;
+		// // Example criteria: check for high memory and modern GPU
+		// const memory = navigator.deviceMemory || 4; // Default to 4GB if not available
+		// const isModernGPU = navigator.gpu || false; // Check if WebGPU is available
+	
+		// return memory >= 8 && isModernGPU; // Example condition for high performance
+	}
+	
+	static init(w: number, h: number) {
+		this.fakeCamera.name = "test"
+		this.camera = new THREE.PerspectiveCamera( CAMERA_PROP.fov, w / h, CAMERA_PROP.near, CAMERA_PROP.far );
 
-        this.renderer = new THREE.WebGLRenderer({ antialias: true});
-        this.renderer.setSize(w, h);
-        this.renderer.setPixelRatio( window.devicePixelRatio );
-        this.renderer.shadowMap.enabled = !ClientConfig.noShadow;
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+		const isHighPerformance = this.checkHighPerformance();
+		if (isHighPerformance) {
+			console.log("high performance");
+			ClientConfig.noShadow = false;
+			this.renderer = new THREE.WebGLRenderer({ antialias: true });
+		} else {
+			console.log("low performance");
+			ClientConfig.noShadow = true;
+			this.renderer = new THREE.WebGLRenderer({antialias: false,alpha: true, precision: "lowp", powerPreference: "low-power" });
+		}
+		this.renderer.setSize(w, h);
+		this.renderer.setPixelRatio( window.devicePixelRatio );
+		this.renderer.shadowMap.enabled = !ClientConfig.noShadow;
+		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        this.scene = new THREE.Scene();
-        this.scene.background = new THREE.Color( 0xbfd1e5 );
+		this.scene = new THREE.Scene();
+		this.scene.background = new THREE.Color( 0xbfd1e5 );
 
         {
             const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
@@ -51,15 +81,15 @@ export class RenderSystem {
         }
     }
 
-    static setAnimationLoop(callback: XRFrameRequestCallback | null) { this.renderer.setAnimationLoop(callback); }
-    static getDomElement() { return this.renderer.domElement; }
-    static getCamera() { return this.camera; }
+	static setAnimationLoop(callback: XRFrameRequestCallback | null) { this.renderer.setAnimationLoop(callback); }
+	static getDomElement() { return this.renderer.domElement; }
+	static getCamera() { return this.camera; }
 
-    static resize(w: number, h: number) { // Resize
-        this.camera.aspect = w / h;
-        this.camera.updateProjectionMatrix();
-        this.renderer.setSize(w, h);
-    }
+	static resize(w: number, h: number) { // Resize
+		this.camera.aspect = w / h;
+		this.camera.updateProjectionMatrix();
+		this.renderer.setSize(w, h);
+	}
 
     static update(entities: Entity[]) {
         if(this.renderer.shadowMap.enabled !== (!ClientConfig.noShadow)) {
@@ -102,13 +132,13 @@ export class RenderSystem {
             this.scene.remove(x);
         }
 
-        // 动画
-        for(const entity of entities) {
-            const component = entity.get(myC.Sprite); if(!component) continue;
-            const object3d = component.object3d;
-            if(component.animate && all.includes(object3d)) component.animate();
-            if(object3d.userData.mixer) object3d.userData.mixer.update(dt * object3d.userData.ratio);
-        }
+		// 动画
+		for(const entity of entities) {
+			const component = entity.get(myC.Sprite); if(!component) continue;
+			const object3d = component.object3d;
+			if(component.animate && all.includes(object3d)) component.animate();
+			if(object3d.userData.mixer) object3d.userData.mixer.update(dt * object3d.userData.ratio);
+		}
 
         // CATCH_TYPE.HAND 抓取的物体要在最上方
         const otherObjects: THREE.Object3D[] = [];
@@ -146,6 +176,6 @@ export class RenderSystem {
         }
         this.renderer.autoClearColor = true;
 
-        for(const obj of otherObjects) this.delMaxdepth(obj);
-    }
+		for(const obj of otherObjects) this.delMaxdepth(obj);
+	}
 };
