@@ -45,6 +45,15 @@ async function generateLevel(
         light.send(new C.Lantern(new C.Vector3(94,13,14-1)));
     }
     {
+        const tree=new Entity(room);
+        const state=SPRITE_STATE.NONE;
+        tree.set(new C.Sprite("tree", undefined, state));
+        tree.send(new C.SpriteInfo("tree", state));
+        tree.send(new C.SetMeshByPath("assets/christmas_tree/christmas_tree_polycraft.glb",{scale:0.01}));
+        tree.send(new C.MeshPhongMaterial(new C.Color(0,0,0)));
+        tree.send(new C.SetMeshTransform(new C.Vector3(100,12.5,6)));
+    }
+    {
         const world = new Entity(room);
         const path = Config.level_path;
         const bodyinfo = U.getRigidBodyConstructionInfo(0, U.TriangleShapeByMesh(await AssetSystem.get(path)));
