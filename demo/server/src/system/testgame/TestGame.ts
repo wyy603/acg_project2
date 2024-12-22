@@ -491,7 +491,10 @@ export class TestGame {
         const playerConnectId = player.get(C.Player)!.connectId; if(!playerConnectId) return;
         const entity = EntitySystem.get(playerConnectId); if(!entity) return;
         const playerCatch = entity.get(C.PlayerCatch);
-        if(playerCatch) playerCatch.removeConstraint(physicsWorld);
+        if(playerCatch) {
+            playerCatch.removeConstraint(physicsWorld);
+            playerCatch.send();
+        }
         //console.log("remove ", entity.id);
 
         const events: E.MyEvent[] = [];
