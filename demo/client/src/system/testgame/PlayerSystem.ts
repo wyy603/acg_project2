@@ -147,6 +147,7 @@ export class PlayerSystem {
             const u_playerCatch = connectEntity.getR(C.U_PlayerCatch);
             let playerCatch = connectEntity.get(C.PlayerCatch);
             if(u_playerCatch && !u_playerCatch.updated(this)) {
+                console.log("updatePlayerCatch type 2", u_playerCatch.catchType);
                 U.updatePlayerCatch(entity, connectEntity);
                 u_playerCatch.mark(this);
             }

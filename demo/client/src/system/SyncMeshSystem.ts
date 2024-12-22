@@ -138,7 +138,7 @@ export class SyncMeshSystem {
             if(object3dupdate && entity.getR(C.U_PlayerCatch)) {
                 let flag = false;
                 for(const playerEntity of EntitySystem.getAllR(C.PlayerConnectId)) if(playerEntity.getR(C.PlayerConnectId)!.id == entity.id) {
-                    console.log("playerEntity=", playerEntity.id);
+                    console.log("updatePlayerCatch type 1 playerEntity=", playerEntity.id);
                     U.updatePlayerCatch(playerEntity, entity);
                     flag = true;
                 }

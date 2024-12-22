@@ -147,7 +147,7 @@ export class RenderSystem {
             const playerCatch = EntitySystem.get(connectId)!.get(C.PlayerCatch);
             if(playerCatch && playerCatch.catchType == CATCH_TYPE.HAND) otherObjects.push(playerCatch.catchEntity!.get(C.Sprite)!.object3d);
         }
-        
+
         for(const obj of otherObjects) this.addMaxdepth(obj);
 
         // 在 this.maxObjects 中的物体会在所有物体的最上方显示

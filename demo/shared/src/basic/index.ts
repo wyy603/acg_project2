@@ -29,6 +29,10 @@ export class MyEvent extends UComponent {
 	constructor() { super(); }
 }
 @register()
+export class Broadcast extends MyEvent {
+    constructor(public room: number, public value: Array<MyEvent>) { super(); }
+};
+@register()
 export class ComponentSetEvent extends MyEvent {
 	constructor(public entityId: number, public value: UComponent[]) {
 		super();
@@ -158,9 +162,9 @@ export class Entity implements IEntity {
         }
     }
     removeEntity(message = true) {
-        for(const component of this.components.values()) {
+        /*for(const component of this.components.values()) {
             this.remove(Object.getPrototypeOf(component), false);
-        }
+        }*/
         if(message) {
             EventSystem.addEvent(new EntityRemovedEvent(this.room, this.id));
         }
