@@ -82,7 +82,7 @@ export class GridSystem {
                 entities.push(entity);
                 entity.getS(C.FoodInfo)!.inGrid = 1;
                 entity.send(entity.getS(C.FoodInfo)!);
-                entity.receive(new C.SetPhysicsTransform(position));
+                entity.receive(new C.SetPhysicsTransform(position.copy().add(new C.Vector3(0,0.5+U.getFoodHeight(entity)/2,0))));
                 U.updateFoodBody(entity, physicsWorld);
             } else if(entities.length == 1) {
                 const currentEntity = this.grids.get(position)![0]!, foodInfo = currentEntity.getS(C.FoodInfo)!;

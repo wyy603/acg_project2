@@ -244,11 +244,15 @@ import { RenderSystem } from '@/system'
 import { CAMERA_OFFSET, CATCH_TYPE } from '@shared/constant'
 
 export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // 第一个有C.PlayerName，第二个是它connect的
-    console.log("updatePlayerCatch", entity.id);
+    console.log("updatePlayerCatch", entity.id, connectEntity.id, connectEntity.get(C.PlayerCatch)?.catchType);
     const sprite = connectEntity.get(C.Sprite); if(!sprite) return;
     const object3d = sprite.object3d;
     const u_playerCatch = connectEntity.getR(C.U_PlayerCatch);
     let playerCatch = connectEntity.get(C.PlayerCatch);
+    if(connectEntity.get(C.PlayerCatch)?.catchType == CATCH_TYPE.HAND && 
+    u_playerCatch?.catchType == CATCH_TYPE.HAND) {
+        u_playerCatch.catchType = CATCH_TYPE.NONE;
+    } //强行修复换房间时拿着东西会留下mesh的bug
     if(u_playerCatch) {
         console.log("hihihi!!");
         if(playerCatch) {
@@ -256,11 +260,13 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // �
             if(playerCatch.catchType == CATCH_TYPE.HAND) {
                 const catchEntity = playerCatch.catchEntity!;
                 const catchObject3D = catchEntity.get(C.Sprite)!.object3d;
+                console.log("updatePlayerCatch catchObject3D", catchObject3D);
                 catchObject3D.removeFromParent();
             }
         }
         connectEntity.set(new C.PlayerCatch(u_playerCatch.catchType, u_playerCatch.catchEntity));
         playerCatch = connectEntity.get(C.PlayerCatch)!;
+        console.log("updatePlayerCatch2", entity.id, connectEntity.id, connectEntity.get(C.PlayerCatch)?.catchType, u_playerCatch.catchType);
         if(playerCatch.catchType == CATCH_TYPE.HAND) {
             const catchEntity = playerCatch.catchEntity!;
             const catchObject3D = catchEntity.get(C.Sprite)!.object3d;
@@ -330,7 +336,7 @@ export function getFoodMesh(food: C.FoodInfo): THREE.Object3D {
 }
 
 export function getTheConnectingPlayer(entity: C.Entity) {
-    for(const player of EntitySystem.getEntityByRoom(entity.room)) {
+    for(const player of EntitySystem.getAll()) {
         if(player.getR(C.PlayerConnectId)?.id == entity.id) return player;
     }
 }

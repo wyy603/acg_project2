@@ -141,6 +141,19 @@ export function spawnRawFood(itemType: INGREDIENT, room: number) {
     return item;
 }
 
+export function getFoodHeight(entity: C.Entity) {
+    const food = entity.getS(C.FoodInfo)!;
+    let maxRadius = 0;
+    let totalHeight = 0;
+    food.ingredients.forEach(ingredient => {
+        const info = INGREDIENT_PROPERTY[ingredient];
+        if (info.height !== undefined && info.radius !== undefined) {
+            maxRadius = Math.max(maxRadius, info.radius);
+            totalHeight += info.height;
+        }
+    });
+    return totalHeight;
+}
 export function getFoodBody(entity: C.Entity) {
     let collide: AmmoModule.btCollisionShape
     let raw = false;

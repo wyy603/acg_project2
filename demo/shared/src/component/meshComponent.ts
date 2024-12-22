@@ -113,3 +113,7 @@ export class TexturePlane extends UComponent {
 export class WaterBlock extends UComponent {
     constructor(public p1: Vector3, public p2: Vector3) { super(); }
 };
+@register()
+export class Lantern extends UComponent {
+    constructor(public pos: Vector3) { super(); }
+};

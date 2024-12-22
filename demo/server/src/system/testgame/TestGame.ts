@@ -23,13 +23,27 @@ async function generateLevel(
     gridSystem: GridSystem,
     physicsSystem: PhysicsSystem
 ) {
-    /*{
+    {
         const light = new Entity(room);
         const state = SPRITE_STATE.NONE;
         light.set(new C.Sprite("light", undefined, state));
         light.send(new C.SpriteInfo("light", state));
-        light.send(new C.TestGameLight());
-    }*/
+        light.send(new C.Lantern(new C.Vector3(105-0.6, 10, 14-0.6)));
+    }
+    {
+        const light = new Entity(room);
+        const state = SPRITE_STATE.NONE;
+        light.set(new C.Sprite("light", undefined, state));
+        light.send(new C.SpriteInfo("light", state));
+        light.send(new C.Lantern(new C.Vector3(105-1,13,15)));
+    }
+    {
+        const light = new Entity(room);
+        const state = SPRITE_STATE.NONE;
+        light.set(new C.Sprite("light", undefined, state));
+        light.send(new C.SpriteInfo("light", state));
+        light.send(new C.Lantern(new C.Vector3(94,13,14-1)));
+    }
     {
         const world = new Entity(room);
         const path = Config.level_path;
@@ -441,6 +455,8 @@ export class TestGame {
     }
     addPlayer(playerEntity: Entity) {
         console.log("[TestGame] addPlayer TestGame!", this.room, playerEntity.id);
+        WebSocketSystem.broadcast(this.room, [new E.EntityAddedEvent(this.room, playerEntity.id)]);
+        playerEntity.get(C.Player)!.sendProps();
         const entity = new Entity(this.room);
         const path = 'public/assets/main_character/minecraft_idle_and_walking_animation.glb';
         const scale = 1;
@@ -491,7 +507,10 @@ export class TestGame {
         const playerConnectId = player.get(C.Player)!.connectId; if(!playerConnectId) return;
         const entity = EntitySystem.get(playerConnectId); if(!entity) return;
         const playerCatch = entity.get(C.PlayerCatch);
-        if(playerCatch) playerCatch.removeConstraint(physicsWorld);
+        if(playerCatch) {
+            console.log("removeConstraint");
+            playerCatch.removeConstraint(physicsWorld);
+        }
         //console.log("remove ", entity.id);
 
         const events: E.MyEvent[] = [];
@@ -502,7 +521,7 @@ export class TestGame {
         const entities = EntitySystem.getEntityByRoom(this.room);
         for(const entity of entities) {
             //console.log("remove ", entity.id);
-            if(!entity.get(C.Player)) events.push(new E.EntityRemovedEvent(entity.room, entity.id));
+            events.push(new E.EntityRemovedEvent(entity.room, entity.id));
         }
         WebSocketSystem.send(player.id, events);
 

@@ -2,10 +2,6 @@ import { Component, UComponent, register, MyEvent } from '../basic'
 import { OrderInfo } from './playerComponent';
 
 @register()
-export class Broadcast extends MyEvent {
-    constructor(public room: number, public value: Array<MyEvent>) { super(); }
-};
-@register()
 export class AnyEvent extends MyEvent {
     constructor(public entityId: number, public value: any) {
         super();
@@ -29,4 +25,4 @@ export class MeshAddedEvent extends MyEvent {
 export class OvercraftUpdateEvent extends MyEvent {
     constructor(public subtick: number,public checkAll:boolean, public reset:boolean, public spawnList: OrderInfo[], public completeList: OrderInfo[]) {super();}
 }
-export { EntityAddedEvent, EntityRemovedEvent, ComponentSetEvent, MyEvent, EntitySetRoomEvent } from '@shared/basic'
+export { EntityAddedEvent, EntityRemovedEvent, ComponentSetEvent, MyEvent, EntitySetRoomEvent, Broadcast } from '@shared/basic'
