@@ -3,13 +3,13 @@ import { IEntity, IComponent, IUComponent, Constructor } from './interface'
 import { SerializeSystem, register } from './SerializeSystem'
 
 export abstract class Component implements IComponent {
-    public _typeComponent = true;
-    constructor(public _entityId: number = 0) {}
-    setEntityId(id: number) { this._entityId = id; }
-    getEntityId() { return this._entityId; }
-    entity() {
-        return EntitySystem.get(this._entityId);
-    }
+	public _typeComponent = true;
+	constructor(public _entityId: number = 0) {}
+	setEntityId(id: number) { this._entityId = id; }
+	getEntityId() { return this._entityId; }
+	entity() {
+		return EntitySystem.get(this._entityId);
+	}
 };
 
 export abstract class UComponent implements IUComponent {
@@ -26,31 +26,31 @@ export abstract class UComponent implements IUComponent {
 };
 
 export class MyEvent extends UComponent {
-    constructor() { super(); }
+	constructor() { super(); }
 }
 @register()
 export class ComponentSetEvent extends MyEvent {
-    constructor(public entityId: number, public value: UComponent[]) {
-        super();
-    }
+	constructor(public entityId: number, public value: UComponent[]) {
+		super();
+	}
 };
 @register()
 export class ComponentRemovedEvent extends MyEvent {
-    constructor(public entityId: number, public value: UComponent) {
-        super();
-    }
+	constructor(public entityId: number, public value: UComponent) {
+		super();
+	}
 };
 @register()
 export class EntityAddedEvent extends MyEvent {
-    constructor(public room: number, public entityId: number) {
-        super();
-    }
+	constructor(public room: number, public entityId: number) {
+		super();
+	}
 };
 @register()
 export class EntityRemovedEvent extends MyEvent {
-    constructor(public room: number, public entityId: number) {
-        super();
-    }
+	constructor(public room: number, public entityId: number) {
+		super();
+	}
 };
 @register()
 export class EntitySetRoomEvent extends MyEvent {
@@ -61,7 +61,7 @@ export class EntitySetRoomEvent extends MyEvent {
 
 let globalEntityId = 0;
 function getNextEntityId() {
-    return globalEntityId++;
+	return globalEntityId++;
 }
 
 @register((entity: Entity) => { return entity.id; }, (obj: number) => { return EntitySystem.get(obj); })
@@ -168,36 +168,36 @@ export class Entity implements IEntity {
 };
 
 export class EventSystem {
-    static eventHandler = new Map<Object, Function[]>();
-    static asyncEventHandler = new Map<Object, Function[]>();
-    constructor() {
-        
-    }
-    static addHandler<T extends MyEvent>(obj: new (...args: any[]) => MyEvent, func: (event: T) => any) {
-        let arr = this.eventHandler.get(obj.prototype);
-        if(!arr) arr = []
-        arr.push(func);
-        this.eventHandler.set(obj.prototype, arr);
-    }
-    static addAsyncHandler<T extends MyEvent>(obj: new (...args: any[]) => MyEvent, func: (event: T) => any) {
-        let arr = this.eventHandler.get(obj.prototype);
-        if(!arr) arr = []
-        arr.push(func);
-        this.eventHandler.set(obj.prototype, arr);
-    }
-    static async addEvent<T extends MyEvent>(event: T, callback?: (event: T) => any) {
-        //console.log("addEvent", event);
-        const prototype = Object.getPrototypeOf(event);
-        let handlers = this.eventHandler.get(prototype);
-        if(handlers) {
-            for(let func of handlers) func(event);
-        }
-        handlers = this.asyncEventHandler.get(prototype);
-        if(handlers) {
-            for(let func of handlers) await func(event);
-        }
-        if(callback) callback(event);
-    }
+	static eventHandler = new Map<Object, Function[]>();
+	static asyncEventHandler = new Map<Object, Function[]>();
+	constructor() {
+		
+	}
+	static addHandler<T extends MyEvent>(obj: new (...args: any[]) => MyEvent, func: (event: T) => any) {
+		let arr = this.eventHandler.get(obj.prototype);
+		if(!arr) arr = []
+		arr.push(func);
+		this.eventHandler.set(obj.prototype, arr);
+	}
+	static addAsyncHandler<T extends MyEvent>(obj: new (...args: any[]) => MyEvent, func: (event: T) => any) {
+		let arr = this.eventHandler.get(obj.prototype);
+		if(!arr) arr = []
+		arr.push(func);
+		this.eventHandler.set(obj.prototype, arr);
+	}
+	static async addEvent<T extends MyEvent>(event: T, callback?: (event: T) => any) {
+		//console.log("addEvent", event);
+		const prototype = Object.getPrototypeOf(event);
+		let handlers = this.eventHandler.get(prototype);
+		if(handlers) {
+			for(let func of handlers) func(event);
+		}
+		handlers = this.asyncEventHandler.get(prototype);
+		if(handlers) {
+			for(let func of handlers) await func(event);
+		}
+		if(callback) callback(event);
+	}
 };
 
 export class EntitySystem {
@@ -264,10 +264,10 @@ export class EntitySystem {
                     this.entityRoom.set(entity.room, roomEntities.filter(e => e.id !== entityId));
                 }
 
-                entity.removeEntity(false);
-            }
-        }
-    }
+				entity.removeEntity(false);
+			}
+		}
+	}
 };
 
 export { SerializeSystem, register }

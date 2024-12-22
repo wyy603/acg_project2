@@ -464,7 +464,7 @@ export class TestGame {
         entity.send(new C.PlayAnimation("still_test"));
         entity.set(new C.PlayerCatch(undefined, undefined));
         entity.send(new C.SetMeshByPath(path, {scale: scale}));
-        entity.receive(new C.SetPhysicsTransform(new C.Vector3(105, 30, 13)));
+        entity.receive(new C.SetPhysicsTransform(new C.Vector3(104, 6, 12), undefined));
         //entity.set(new C.SetPhysicsTransform(new C.Vector3(0, 50, 0)));
 
         const player = playerEntity.get(C.Player)!;
