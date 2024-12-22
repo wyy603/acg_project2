@@ -1,0 +1,78 @@
+"filename", "language", "JSON", "TypeScript", "JSON with Comments", "Markdown", "TypeScript JSX", "JavaScript", "CSS", "HTML", "comment", "blank", "total"
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\README.md", "Markdown", 0, 0, 0, 6, 0, 0, 0, 0, 0, 6, 12
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\droid\droid_sans_bold.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\droid\droid_sans_mono_regular.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\droid\droid_sans_regular.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\droid\droid_serif_bold.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\droid\droid_serif_regular.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\gentilis_bold.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\gentilis_regular.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\helvetiker_bold.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\helvetiker_regular.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\optimer_bold.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\optimer_regular.typeface.json", "JSON", 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\assets\fonts\ttf\README.md", "Markdown", 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 10
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\README.md", "Markdown", 0, 0, 0, 40, 0, 0, 0, 0, 0, 11, 51
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\eslint.config.js", "JavaScript", 0, 0, 0, 0, 0, 27, 0, 0, 0, 2, 29
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\index.html", "HTML", 0, 0, 0, 0, 0, 0, 0, 16, 0, 2, 18
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\package.json", "JSON", 29, 0, 0, 0, 0, 0, 0, 0, 0, 1, 30
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\public\css\a.css", "CSS", 0, 0, 0, 0, 0, 0, 35, 0, 0, 5, 40
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\component\handler.ts", "TypeScript", 0, 18, 0, 0, 0, 0, 0, 0, 10, 4, 32
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\component\index.ts", "TypeScript", 0, 20, 0, 0, 0, 0, 0, 0, 0, 1, 21
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\main.tsx", "TypeScript JSX", 0, 0, 0, 0, 8, 0, 0, 0, 0, 2, 10
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\AssetSystem.ts", "TypeScript", 0, 54, 0, 0, 0, 0, 0, 0, 0, 2, 56
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\GameSystem.ts", "TypeScript", 0, 106, 0, 0, 0, 0, 0, 0, 7, 14, 127
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\ReactSystem.tsx", "TypeScript JSX", 0, 0, 0, 0, 15, 0, 0, 0, 0, 1, 16
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\RenderSystem.ts", "TypeScript", 0, 73, 0, 0, 0, 0, 0, 0, 2, 9, 84
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\SyncMeshSystem.ts", "TypeScript", 0, 105, 0, 0, 0, 0, 0, 0, 1, 6, 112
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\WebSocketSystem.ts", "TypeScript", 0, 67, 0, 0, 0, 0, 0, 0, 6, 6, 79
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\index.ts", "TypeScript", 0, 5, 0, 0, 0, 0, 0, 0, 0, 1, 6
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\Logger.ts", "TypeScript", 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 12
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\OvercraftSystem.ts", "TypeScript", 0, 80, 0, 0, 0, 0, 0, 0, 5, 11, 96
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\PlayerSystem.ts", "TypeScript", 0, 239, 0, 0, 0, 0, 0, 0, 8, 14, 261
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\TestGame.ts", "TypeScript", 0, 57, 0, 0, 0, 0, 0, 0, 1, 2, 60
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\TestGameApp\LoginPage.tsx", "TypeScript JSX", 0, 0, 0, 0, 29, 0, 0, 0, 0, 1, 30
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\TestGameApp\Progress.tsx", "TypeScript JSX", 0, 0, 0, 0, 69, 0, 0, 0, 1, 8, 78
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\TestGameApp\SettingIcon.tsx", "TypeScript JSX", 0, 0, 0, 0, 88, 0, 0, 0, 0, 8, 96
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\testgame\TestGameApp\index.tsx", "TypeScript JSX", 0, 0, 0, 0, 29, 0, 0, 0, 0, 1, 30
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\src\system\utils.ts", "TypeScript", 0, 133, 0, 0, 0, 0, 0, 0, 1, 10, 144
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\tsconfig.app.json", "JSON", 28, 0, 0, 0, 0, 0, 0, 0, 2, 4, 34
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\tsconfig.json", "JSON with Comments", 0, 0, 7, 0, 0, 0, 0, 0, 0, 1, 8
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\tsconfig.node.json", "JSON", 26, 0, 0, 0, 0, 0, 0, 0, 2, 4, 32
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\client\vite.config.ts", "TypeScript", 0, 21, 0, 0, 0, 0, 0, 0, 0, 1, 22
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\package.json", "JSON", 48, 0, 0, 0, 0, 0, 0, 0, 0, 1, 49
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\proxy\proxy.js", "JavaScript", 0, 0, 0, 0, 0, 15, 0, 0, 3, 4, 22
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\main.ts", "TypeScript", 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 4
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\component\handler.ts", "TypeScript", 0, 16, 0, 0, 0, 0, 0, 0, 4, 4, 24
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\component\index.ts", "TypeScript", 0, 121, 0, 0, 0, 0, 0, 0, 0, 3, 124
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\AssetSystem.ts", "TypeScript", 0, 34, 0, 0, 0, 0, 0, 0, 0, 2, 36
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\GameSystem.ts", "TypeScript", 0, 75, 0, 0, 0, 0, 0, 0, 9, 7, 91
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\GridSystem.ts", "TypeScript", 0, 78, 0, 0, 0, 0, 0, 0, 2, 6, 86
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\OvercraftSystem.ts", "TypeScript", 0, 80, 0, 0, 0, 0, 0, 0, 18, 14, 112
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\WebSocketSystem.ts", "TypeScript", 0, 120, 0, 0, 0, 0, 0, 0, 14, 7, 141
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\game.ts", "TypeScript", 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 6
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 1, 5
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\testgame\PhysicsSystem.ts", "TypeScript", 0, 125, 0, 0, 0, 0, 0, 0, 14, 13, 152
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\testgame\PlayerSystem.ts", "TypeScript", 0, 410, 0, 0, 0, 0, 0, 0, 8, 26, 444
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\testgame\TestGame.ts", "TypeScript", 0, 359, 0, 0, 0, 0, 0, 0, 24, 23, 406
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\src\system\testgame\utils.ts", "TypeScript", 0, 219, 0, 0, 0, 0, 0, 0, 3, 12, 234
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\server\tsconfig.json", "JSON with Comments", 0, 0, 26, 0, 0, 0, 0, 0, 2, 4, 32
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\basic\OvercraftSystemBasic.ts", "TypeScript", 0, 74, 0, 0, 0, 0, 0, 0, 13, 16, 103
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\basic\SerializeSystem.ts", "TypeScript", 0, 72, 0, 0, 0, 0, 0, 0, 1, 6, 79
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\basic\index.ts", "TypeScript", 0, 245, 0, 0, 0, 0, 0, 0, 3, 11, 259
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\basic\interface.ts", "TypeScript", 0, 36, 0, 0, 0, 0, 0, 0, 0, 0, 36
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\component\event.ts", "TypeScript", 0, 31, 0, 0, 0, 0, 0, 0, 0, 1, 32
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\component\handler.ts", "TypeScript", 0, 19, 0, 0, 0, 0, 0, 0, 0, 1, 20
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\component\index.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\component\meshComponent.ts", "TypeScript", 0, 53, 0, 0, 0, 0, 0, 0, 1, 3, 57
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\component\physicsComponent.ts", "TypeScript", 0, 108, 0, 0, 0, 0, 0, 0, 0, 2, 110
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\component\playerComponent.ts", "TypeScript", 0, 132, 0, 0, 0, 0, 0, 0, 2, 5, 139
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\constant\index.ts", "TypeScript", 0, 179, 0, 0, 0, 0, 0, 0, 5, 19, 203
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\system\index.ts", "TypeScript", 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\utils\AmmoDebugDrawer.ts", "TypeScript", 0, 134, 0, 0, 0, 0, 0, 0, 29, 13, 176
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\utils\MathUtils.ts", "TypeScript", 0, 30, 0, 0, 0, 0, 0, 0, 0, 1, 31
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\utils\ammo.ts", "TypeScript", 0, 4, 0, 0, 0, 0, 0, 0, 3, 3, 10
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\utils\basic.ts", "TypeScript", 0, 13, 0, 0, 0, 0, 0, 0, 0, 1, 14
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\src\utils\index.ts", "TypeScript", 0, 196, 0, 0, 0, 0, 0, 0, 19, 10, 225
+"c:\Users\NINGMEI\Desktop\acg_project2\demo\shared\tsconfig.json", "JSON with Comments", 0, 0, 25, 0, 0, 0, 0, 0, 2, 4, 31
+"Total", "-", 142, 3971, 58, 51, 238, 42, 35, 16, 225, 368, 5146
