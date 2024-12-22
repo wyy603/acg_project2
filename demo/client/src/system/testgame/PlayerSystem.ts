@@ -62,7 +62,7 @@ export class PlayerSystem {
         dirLight.shadow.blurSamples = 25;
         dirLight.shadow.bias = -0.001; // https://blog.csdn.net/eevee_1/article/details/123372143
         this.onMouseMove = this.onMouseMove.bind(this);
-        this.onKeyDown = this.onKeyDown.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this); 
         this.onKeyUp = this.onKeyUp.bind(this);
         this.onMouseClick = this.onMouseClick.bind(this);
         this.onWheel = this.onWheel.bind(this);
