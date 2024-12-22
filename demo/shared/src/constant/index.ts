@@ -89,7 +89,8 @@ export enum INGREDIENT {
     cutted_cabbage,
     salad,
     raw_beef,
-    cooked_beef
+    cooked_beef,
+    hamburger,
 };
 
 export interface LEVEL_Config {
@@ -300,6 +301,16 @@ export const INGREDIENT_PROPERTY: Record<INGREDIENT, INGREDIENT_INFO> = {
         recipe: [INGREDIENT.raw_beef, INGREDIENT.fried],
         type: "cylinder",
         mesh: { path: "public/assets/food/cooked_beef/cooked_beef.glb", scale: 0.03 },
+        collide: new Ammo.btSphereShape(0.3),
+        height: 0.12,
+        radius: 0.50,
+        priority: 0
+    },
+    [INGREDIENT.hamburger]: {
+        name: "hamburger",
+        recipe: [INGREDIENT.tomato, INGREDIENT.cooked_beef, INGREDIENT.cutted_cabbage],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/hamburger/hamburger.glb", scale: 0.027 },
         collide: new Ammo.btSphereShape(0.3),
         height: 0.12,
         radius: 0.50,
