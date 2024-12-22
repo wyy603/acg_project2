@@ -59,6 +59,10 @@ export class SyncMeshSystem {
                     meshByPathLoaded.mark(this);
 
                     const player = U.getTheConnectingPlayer(entity);
+                    if(entity.get(C.Sprite)?.name == "playerEntity") {
+                        if(!player) console.log("change skin player not found!");
+                        else console.log("change skin player found!");
+                    }
                     if(player && player.getR(C.PlayerSkin)) {
                         AssetSystem.loadBitmap(`assets/skins/${player.getR(C.PlayerSkin)!.name}.png`, (bitmap) => {
                             const texture = new THREE.CanvasTexture(bitmap);

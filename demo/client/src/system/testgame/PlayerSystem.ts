@@ -132,8 +132,7 @@ export class PlayerSystem {
             sprite.playerName = playerName.name;
             U.updatePlayerName(sprite, sprite.playerName);
         
-            playerName.mark(this), connectId.mark(this);
-            
+            playerName.mark(this);
         }
         console.log("(i am)", WebSocketSystem.uuid, JSON.stringify(tmplist));
         
@@ -152,8 +151,8 @@ export class PlayerSystem {
             }
 
             const playerSkin = entity.getR(C.PlayerSkin);
-            if(playerSkin && !playerSkin.updated(this)) {
-                console.log("change", entity.id);
+            if(playerSkin && (!playerSkin.updated(this) || !connectId.updated(this))) {
+                console.log("change skin", entity.id, connectId.id, playerSkin.name, JSON.stringify(sprite.object3d.children), sprite.name);
                 AssetSystem.loadBitmap(`assets/skins/${playerSkin.name}.png`, (bitmap) => {
                     createImageBitmap(bitmap).then(abitmap => {
                         const texture = new THREE.CanvasTexture(abitmap);
@@ -178,6 +177,11 @@ export class PlayerSystem {
             console.log("list", list);
             HTMLSystem.set("ChatBox", list);
             playerChat.mark(this);
+        }
+        for(const entity of entities) {
+            const connectId = entity.getR(C.PlayerConnectId);
+            if(!connectId) continue;
+            connectId.mark(this);
         }
     }
     updateMyPlayer(entities: Entity[], pointerLock: boolean) {

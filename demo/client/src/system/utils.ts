@@ -330,7 +330,7 @@ export function getFoodMesh(food: C.FoodInfo): THREE.Object3D {
 }
 
 export function getTheConnectingPlayer(entity: C.Entity) {
-    for(const player of EntitySystem.getEntityByRoom(entity.room)) {
+    for(const player of EntitySystem.getAll()) {
         if(player.getR(C.PlayerConnectId)?.id == entity.id) return player;
     }
 }
