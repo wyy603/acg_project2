@@ -77,7 +77,7 @@ export class SyncMeshSystem {
                     foodInfo.mark(this);
                 }
                 if(spriteInfo.name.includes("face:")) {
-                    console.log("face: entity", entity);
+                    //console.log("face: entity", entity);
                 }
                 if(texturePlane && !texturePlane.updated(this)) {
                     U.setTexturePlane(sprite, texturePlane.name, texturePlane.position);
@@ -127,7 +127,10 @@ export class SyncMeshSystem {
             }
 
             spriteInfo.name = sprite.name;
-            if(object3dupdate && sprite.playerName) U.updatePlayerName(sprite, sprite.playerName);
+            if(object3dupdate && sprite.playerName) {
+                console.log("updatePlayerName", sprite.entity(), "-", entity);
+                U.updatePlayerName(sprite, sprite.playerName);
+            }
             if(object3dupdate && entity.getR(C.U_PlayerCatch)) {
                 let flag = false;
                 for(const playerEntity of EntitySystem.getAllR(C.PlayerConnectId)) if(playerEntity.getR(C.PlayerConnectId)!.id == entity.id) {

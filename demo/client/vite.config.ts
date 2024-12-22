@@ -11,7 +11,7 @@ export default defineConfig({
         outDir: path.resolve(__dirname, "dist"),
     },
     server: {
-        hmr: false,
+        hmr: true,
         fs: {
             allow: ['..','../..','../../..']
         }

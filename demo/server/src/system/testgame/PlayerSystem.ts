@@ -359,6 +359,7 @@ export class PlayerSystem {
             }
             if(playerChangeRoom && !playerChangeRoom.updated(this)) {
                 player.setRoom(playerChangeRoom.id);
+                console.log("set entity.room=", entity.room, entity.id);
                 playerChangeRoom.mark(this);
             }
             if(!playerEntity.get(C.GunTime)) playerEntity.set(new C.GunTime(0));

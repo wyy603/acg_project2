@@ -23,9 +23,9 @@ export function initHandler() {
     EventSystem.addHandler(E.LoadAssetEvent, async (event: E.LoadAssetEvent) => {
         const asset = await AssetSystem.load(event.name);
         const entity = EntitySystem.get(event.entityId);
-        console.log(`Load Asset ${event.name} to ${event.entityId}`);
+        //console.log(`Load Asset ${event.name} to ${event.entityId}`);
         if(entity) {
-            console.log(`Find Entity ${event.entityId}, set ${event.name}`);
+            //console.log(`Find Entity ${event.entityId}, set ${event.name}`);
             entity.receive(new C.MeshByPathLoaded(event.name, event.args));
         }
     });

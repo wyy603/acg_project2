@@ -99,6 +99,7 @@ export class Game {
         const player = EntitySystem.get(WebSocketSystem.uuid); if(player) {
             const playerInfo = player.getR(C.PlayerRoom); if(playerInfo) {
                 if(!playerInfo.updated(Game)) {
+                    console.log("Change Game!!!!!!!!!!!!!!", playerInfo);
                     if(this.currentGame) this.currentGame.deactivate();
                     this.roomType = playerInfo.roomType;
                     this.currentGame = this.getGame(this.roomType);

@@ -24,7 +24,7 @@ export class PlayerCatchType extends UComponent {
 };
 @register()
 export class PlayerRoom extends UComponent {
-    constructor(public roomType: ROOM_TYPE) { super(); }
+    constructor(public roomType: ROOM_TYPE, public roomId: number) { super(); }
 };
 @register()
 export class PlayerChangeRoom extends UComponent {

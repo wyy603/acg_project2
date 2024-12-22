@@ -97,10 +97,15 @@ export class Player extends C.Component {
         public entityId: number
     ) {
         super(entityId);
-        this.setName("Undefined");
         this.setRoom(0);
+        this.setName("Undefined");
         this.setCatchType(CATCH_TYPE.HAND);
         this.setSkin("blockbench-default");
+    }
+    sendProps() {
+        this.setName(this.name);
+        this.setCatchType(this.catchType);
+        this.setSkin(this.skin);
     }
     connectEntity() {
         return this.connectId ? EntitySystem.get(this.connectId) : undefined;
@@ -118,9 +123,9 @@ export class Player extends C.Component {
         this.entity()!.send(new C.PlayerSkin(skin));
     }
     setRoom(room: number) {
-        this.entity()!.room = room;
+        EntitySystem.setRoom(this.entity()!, room);
         const roomType = GameSystem.getRoomType(this.entity()!.room);
-        this.entity()!.send(new C.PlayerRoom(roomType));
+        this.entity()!.send(new C.PlayerRoom(roomType, room));
     }
     setCatchType(catchType: number) {
         this.catchType = catchType;

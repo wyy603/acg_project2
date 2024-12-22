@@ -17,4 +17,8 @@ export function initHandler() {
     EventSystem.addHandler(E.EntityRemovedEvent, (event: E.EntityRemovedEvent) => {
         EntitySystem.onEntityRemoved(event.entityId)
     });
+    EventSystem.addHandler(E.EntitySetRoomEvent, (event: E.EntitySetRoomEvent) => {
+        const entity = EntitySystem.get(event.entityId);
+        if(entity) EntitySystem.setRoom(entity, event.room);
+    });
 }

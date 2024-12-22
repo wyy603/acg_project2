@@ -50,10 +50,10 @@ export class AssetSystem {
                     for(const clip of gltf.animations) {
                         if(!this.animationMap.has(clip.name)) this.animationMap.set(clip.name, clip);
                     }
-                    console.log(`[${id}] Load Asset ${name} ${path}: `, mesh);
+                    //console.log(`[${id}] Load Asset ${name} ${path}: `, mesh);
                     this.map.set(name, mesh);
                 } catch (error) {
-                    console.error(`[${id}] Failed to load asset ${name}: `, error);
+                    //console.error(`[${id}] Failed to load asset ${name}: `, error);
                 } finally {
                     this.loading_list.delete(name);
                 }

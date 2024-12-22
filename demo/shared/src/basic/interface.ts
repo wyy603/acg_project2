@@ -20,6 +20,7 @@ export type Constructor<T extends Object = Object> = new (...args: any[]) => T
 export interface IEntity {
     room: number
     id: number
+    _roomUpdated: boolean,
     components: Map<Constructor, IComponent>
     receives: Map<Constructor, IUComponent>
     sends: Map<Constructor, IUComponent>

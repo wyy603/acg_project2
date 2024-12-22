@@ -62,6 +62,10 @@ export class WebSocketSystem {
                 this.send([new E.ComponentSetEvent(entity.id, sends)]);
             }
             for(const component of sends) component.mark(this);
+            if(entity._roomUpdated) {
+                this.send([new E.EntitySetRoomEvent(entity.id, entity.room)]);
+                entity._roomUpdated = false;
+            }
         }
     }
     static onMessage(event: MessageEvent) {
@@ -85,6 +89,12 @@ export class WebSocketSystem {
            // console.log("[WebSocketSystem] receive", component);
             if(component instanceof E.MyEvent) {
                 EventSystem.addEvent(component);
+            }
+            if(component instanceof E.EntityRemovedEvent) {
+                console.log("receive", component);
+                /*for(const comp of component.value) if(comp instanceof C.PlayerName) {
+                    console.log("998 websocketsystem: set playername", component.entityId, comp.name);
+                }*/
                 //console.log("[WebSocketSystem] receive", component);
             }
         }

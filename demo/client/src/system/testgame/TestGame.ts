@@ -28,6 +28,7 @@ export class TestGame {
     }
 
     constructor() {
+        console.log("new testgame!");
         this.playerSystem = new PlayerSystem();
         this.onClick = this.onClick.bind(this);
         this.onPointerLockChange = this.onPointerLockChange.bind(this);

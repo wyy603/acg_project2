@@ -11,7 +11,6 @@ import '@/component'
 import { SerializeSystem, EntitySystem, EventSystem } from '@shared/system'
 import { Config, ROOM_TYPE } from '@shared/constant'
 
-import { Game } from '@/system/game'
 import { TestGame } from '@/system/testgame/TestGame'
 import { WebSocketSystem } from '@/system/WebSocketSystem'
 
@@ -20,7 +19,7 @@ import { GridSystem } from './GridSystem';
 import { OvercraftSystemServer } from './OvercraftSystem';
 
 export class GameSystem {
-    static games: Map<number, Game>
+    static games: Map<number, TestGame>
     static gamesystems: Map<number, any>;
     static activate = false
     static async init() {
@@ -80,6 +79,12 @@ export class GameSystem {
                 //console.log(entity);
             }*/
             for(const game of this.games.values()) {
+                game.removePlayers();
+            }
+            for(const game of this.games.values()) {
+                game.addPlayers();
+            }
+            for(const game of this.games.values()) {
                 if(!this.activate) game.timeStamp = Date.now();
                 game.update();
             }
@@ -91,8 +96,8 @@ export class GameSystem {
             if(Config.server_tickrate == 0)
                 setImmediate(() => this.gameLoop());
             else {
-                if((time2 - time1) > 1000 / Config.client_tickrate) {
-                    console.log("Warning! Tick rate can not be reached!");
+                if((time2 - time1) > 1000 / Config.server_tickrate) {
+                    //console.log("Warning! Tick rate can not be reached!");
                 }
                 setTimeout(() => this.gameLoop(), 1000 / Config.server_tickrate - (time2 - time1));
             }

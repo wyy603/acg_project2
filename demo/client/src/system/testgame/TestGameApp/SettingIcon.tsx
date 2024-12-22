@@ -56,8 +56,8 @@ export function SettingIcon() {
         ClientConfig.update_noShadow(checked);
     };
 
-	document.addEventListener('keydown', () => {
-        if(showSettings) setShowSettings(false);
+	document.addEventListener('keydown', (event) => {
+        if(event.key === "Escape" && showSettings) setShowSettings(false);
     }, false);
 
     return (

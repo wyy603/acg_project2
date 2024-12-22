@@ -93,12 +93,13 @@ export function playAnimation(obj: THREE.Object3D, name: string, ratio: number, 
 }
 
 export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vector3) {
-    console.log("setTexturePlane path", name);
+    //console.log("setTexturePlane path", name);
     function setMaterial(bitmap: ImageBitmap, args: any = {}) {
         const texture = new THREE.CanvasTexture(bitmap);
         texture.minFilter = THREE.NearestFilter;
         texture.magFilter = THREE.NearestFilter;
         texture.colorSpace = "srgb";
+        const { time, animation, ...filteredArgs } = args;
         const material = new THREE.MeshPhysicalMaterial({
             map: texture,
             side: THREE.DoubleSide,
@@ -107,7 +108,7 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
             normalScale: new THREE.Vector2(1, -1),
             transparent: false,
             specularIntensity: 1,
-            ...args
+            ...filteredArgs
         });
         if(args.animation) {
             const { width, height } = texture.image;
@@ -143,7 +144,7 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
             const geometry = setGeometry();
             const plane = new THREE.Mesh(geometry, material);
             plane.position.copy(position.getTHREE());
-            console.log("setTexturePlane material", material);
+            //console.log("setTexturePlane material", material);
             sprite.object3d = plane;
         });
     } else if(name == "water_still") {
@@ -164,7 +165,7 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
             const geometry = setGeometry();
             const plane = new THREE.Mesh(geometry, material);
             plane.position.copy(position.getTHREE());
-            console.log("setTexturePlane material water", material);
+            //console.log("setTexturePlane material water", material);
             sprite.object3d = plane;
         });
     } else if(name == "cow_icon") {
@@ -173,7 +174,7 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
             const geometry = setGeometry();
             const plane = new THREE.Mesh(geometry, material);
             plane.position.copy(position.getTHREE());
-            console.log("setTexturePlane material", material);
+            //console.log("setTexturePlane material", material);
             sprite.object3d = plane;
         });
     }
@@ -192,10 +193,12 @@ export function updateTexture(obj: THREE.Object3D, texture: THREE.Texture) {
 
 export function updatePlayerName(sprite: C.Sprite, name: string) {
     console.log("updatePlayerName", name);
+    console.log("aasprite", sprite);
+    const entity = sprite.entity()!;
     const object3d = sprite.object3d;
     const loader = new FontLoader();
     loader.load( 'assets/fonts/helvetiker_regular.typeface.json', (font) => {
-        console.log("Font Loaded", sprite.entity()!.id);
+        console.log("Font Loaded", entity.id);
         const textGeometry = new TextGeometry(name, {
             font: font,
             size: 0.1,
@@ -398,30 +401,35 @@ function playerChangeRoom(room: number) {
     player.send(new C.PlayerChangeRoom(room));
 }
 export function sendPlayerMessage(str: string) {
+    function send(msg: any) {
+        let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+        list.push(msg);
+        HTMLSystem.set("ChatBox", list);
+    }
+    const player = EntitySystem.get(WebSocketSystem.uuid);
+    if(!player) return;
     if(str != "") {
         if (str[0] === '/') {
             const parts = str.slice(1).split(' ');
             const command = parts[0];
             const args = parts.slice(1);
             if(command == 'cd') {
-                if(args[0] == '1') {
-                    playerChangeRoom(parseInt(args[0]));
-                    let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
-                    list.push({type: 'systemmessage', str: `Sending you to room ${args[0]}...`});
-                    HTMLSystem.set("ChatBox", list);
+                if(args[0] == '0' || args[0] == '1') {
+                    const changeRoom = parseInt(args[0]);
+                    if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
+                        send({type: 'error', str: `Error: You are already in room ${args[0]}.`});
+                    } else {
+                        playerChangeRoom(parseInt(args[0]));
+                        send({type: 'systemmessage', str: `Sending you to room ${args[0]}...`})
+                    }
                 } else {
-                    let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
-                    list.push({type: 'error', str: `Error room ${args[0]} not found.`});
-                    HTMLSystem.set("ChatBox", list);
+                    send({type: 'error', str: `Error: room ${args[0]} not found.`});
                 }
             } else {
-                let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
-                list.push({type: 'error', str: `Error invalid command [${str}].`});
-                HTMLSystem.set("ChatBox", list);
+                send({type: 'error', str: `Error: invalid command [${str}].`});
             }
         } else {
-            const player = EntitySystem.get(WebSocketSystem.uuid);
-            if(player) player.send(new C.PlayerChat(getPlayerName(), str));
+            player.send(new C.PlayerChat(getPlayerName(), str));
         }
     }
 }
