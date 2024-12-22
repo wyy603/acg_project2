@@ -182,7 +182,7 @@ async function generateLevel(
             ccd_radius: 0.1
         });
         knife.send(new C.SetMeshByPath("assets/tool/knife/knife.glb", {scale: 0.005}));
-        knife.receive(new C.SetPhysicsTransform(position.copy().add(ROOM_POSITION), undefined, undefined));
+        knife.receive(new C.SetPhysicsTransform(position.copy().add(ROOM_POSITION).add(new C.Vector3(0, 1, 0)), undefined, undefined));
         knife.set(new C.knifeInfo(new C.Vector3(0,0,0)));
     }
 

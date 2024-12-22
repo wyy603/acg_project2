@@ -17,7 +17,7 @@ function interpolateColor(value: number) {
 
 function SingleProcess({ name, value }: { name: string, value: number }) {
     return (
-        <div key={name} style={{ marginBottom: '10px' }}>
+        <div key={name} style={{ marginBottom: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <span>{name}: {value}%</span>
             <Progress
                 percent={value}
@@ -34,16 +34,19 @@ export function ProgressApp() {
     const [progressList, setProgressList] = useState<Map<string, number> >(new Map());
     HTMLSystem.setSetter("Progress", setProgressList);
     const divStyle: CSSProperties = {
-        position: "absolute",
-        bottom: "40px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: "1000",
+        position: 'absolute',
+        bottom: '30px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 1000,
         backgroundColor: 'rgba(255, 235, 225, 0.6)',
         padding: '10px',
-        borderRadius: '5px',
+        borderRadius: '25px',
         height: 'auto',
-        width: '500px'
+        width: '400px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     };
     return <div style={divStyle}>
         {Object.entries(progressList).map(([key, value], i) => (
