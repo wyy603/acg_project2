@@ -11,9 +11,6 @@ node_modules
 dist
 dist-ssr
 *.local
-assets/
-client/public/assets
-server/public/assets
 test
 
 # Editor directories and files

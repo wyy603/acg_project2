@@ -1,0 +1,24 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"down": "minecraft_workspace:stove_bottom",
+		"up": "minecraft_workspace:stove_top_on",
+		"particle": "minecraft_workspace:stove_front_on",
+		"north": "minecraft_workspace:stove_front_on",
+		"east": "minecraft_workspace:stove_side"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#north", "cullface": "north"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#east", "cullface": "east"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#east", "cullface": "south"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#east", "cullface": "west"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#up", "cullface": "up"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#down", "cullface": "down"}
+			}
+		}
+	]
+}
