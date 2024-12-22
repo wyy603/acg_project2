@@ -318,6 +318,8 @@ export class PlayerSystem {
             const playerChangeName = entity.getR(C.PlayerName);
             const playerChangeSkin = entity.getR(C.PlayerSkin);
             const playerCatchType = entity.getR(C.PlayerCatchType);
+            const playerChat = entity.getR(C.PlayerChat);
+            const playerChangeRoom = entity.getR(C.PlayerChangeRoom);
             if(!sprite || !playerCatch) continue;
 
             if(playerChangeName && !playerChangeName.updated(this)) {
@@ -332,6 +334,14 @@ export class PlayerSystem {
             if(playerCatchType && !playerCatchType.updated(this)) {
                 player.setCatchType(playerCatchType.catchType);
                 playerCatchType.mark(this);
+            }
+            if(playerChat && !playerChat.updated(this)) {
+                entity.send(playerChat);
+                playerChat.mark(this);
+            }
+            if(playerChangeRoom && !playerChangeRoom.updated(this)) {
+                player.setRoom(playerChangeRoom.id);
+                playerChangeRoom.mark(this);
             }
             if(!playerEntity.get(C.GunTime)) playerEntity.set(new C.GunTime(0));
             const gunTime = playerEntity.get(C.GunTime)!;

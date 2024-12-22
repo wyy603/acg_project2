@@ -219,10 +219,10 @@ export class MinecraftWorld extends C.Component {
                 console.log("destroy!!!!!");
                 this.physicsWorld.removeRigidBody(oldbody);
                 const shape = oldbody.getCollisionShape();
-                if (!shape.__destroy__) {
+                /*if (!shape.__destroy__) { 如果要启用，这里不要注释掉
                     console.log("destroy!");
                     Ammo.destroy(shape);
-                }
+                }*/
             }
             this.genBlock(playerEntity.id, bid);
             this.blockIds.set(playerEntity.id, bid);
@@ -323,5 +323,10 @@ export class MinecraftWorld extends C.Component {
         }
     }
 }
+
+export class ChatHistory extends C.Component {
+    constructor(history: C.PlayerChat[]) { super(); }
+};
+
 export * from '@shared/component'
 

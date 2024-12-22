@@ -390,3 +390,38 @@ export function getMinecraftBlock({north, south, east, west, bottom, up}: {
     const cube = new THREE.Mesh(geometry, materials);
     return cube;
 }
+
+import { HTMLSystem } from '@/system/testgame/HTMLSystem'
+
+function playerChangeRoom(room: number) {
+    const player = EntitySystem.get(WebSocketSystem.uuid)!;
+    player.send(new C.PlayerChangeRoom(room));
+}
+export function sendPlayerMessage(str: string) {
+    if(str != "") {
+        if (str[0] === '/') {
+            const parts = str.slice(1).split(' ');
+            const command = parts[0];
+            const args = parts.slice(1);
+            if(command == 'cd') {
+                if(args[0] == '1') {
+                    playerChangeRoom(parseInt(args[0]));
+                    let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+                    list.push({type: 'systemmessage', str: `Sending you to room ${args[0]}...`});
+                    HTMLSystem.set("ChatBox", list);
+                } else {
+                    let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+                    list.push({type: 'error', str: `Error room ${args[0]} not found.`});
+                    HTMLSystem.set("ChatBox", list);
+                }
+            } else {
+                let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+                list.push({type: 'error', str: `Error invalid command [${str}].`});
+                HTMLSystem.set("ChatBox", list);
+            }
+        } else {
+            const player = EntitySystem.get(WebSocketSystem.uuid);
+            if(player) player.send(new C.PlayerChat(getPlayerName(), str));
+        }
+    }
+}

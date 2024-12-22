@@ -32,13 +32,25 @@ export class GameSystem {
         this.games = new Map();
         this.gamesystems = new Map();
 
-        const game0 = new TestGame(0);
-        await game0.init();
-        this.games.set(0, game0);
-        const game1 = new OvercraftSystemServer(0, true); // NOTE: actually still in room id 0, too lazy to change. 
-        game1.setConfig();
-        // game1.run();
-        this.gamesystems.set(0, game1);
+        {
+            const game0 = new TestGame(0);
+            await game0.init();
+            this.games.set(0, game0);
+            const sys0 = new OvercraftSystemServer(0, true); // NOTE: actually still in room id 0, too lazy to change. 
+            sys0.setConfig();
+            // game1.run();
+            this.gamesystems.set(0, sys0);
+        }
+
+        {
+            const game1 = new TestGame(1);
+            await game1.init();
+            this.games.set(1, game1);
+            const sys1 = new OvercraftSystemServer(1, true);
+            sys1.setConfig();
+            // game1.run();
+            this.gamesystems.set(1, sys1);
+        }
     }
     static getRoomType(id: number) {
         if(this.games.get(id) instanceof TestGame) return ROOM_TYPE.testGame;

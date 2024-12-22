@@ -1,13 +1,16 @@
-type systemSymbol = "Logger" | "Progress" | "OvercraftInfo"
+type systemSymbol = "Logger" | "Progress" | "OvercraftInfo" | "ChatBox"
 
 export class HTMLSystem {
     static info: Record<string, any> = {}
     static setter: Record<string, Function> = {}
     static get(key: string) { return this.info[key]; }
+    static copy(obj: any): any {
+        return JSON.parse(JSON.stringify(obj));
+    }
     static update(key: systemSymbol) {
         if(!this.setter[key]) return;
         if((typeof this.info[key]) !== "object") this.setter[key](this.info[key]);
-        else this.setter[key](Object.assign({}, this.info[key]));
+        else this.setter[key](this.copy(this.info[key]));
     }
     static set(key: systemSymbol, value: any) {
         this.info[key] = value, this.update(key);

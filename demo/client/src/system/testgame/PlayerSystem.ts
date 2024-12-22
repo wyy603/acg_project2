@@ -163,6 +163,16 @@ export class PlayerSystem {
                 playerSkin.mark(this);
             }
         }
+
+        for(const entity of entities) {
+            const playerName = entity.getR(C.PlayerName), playerChat = entity.getR(C.PlayerChat);
+            if(!playerName || !playerChat || playerChat.updated(this)) continue;
+            let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+            list.push({type: 'message', name: playerChat.name, str: playerChat.str});
+            console.log("list", list);
+            HTMLSystem.set("ChatBox", list);
+            playerChat.mark(this);
+        }
     }
     updateMyPlayer(entities: Entity[], pointerLock: boolean) {
         const player = EntitySystem.get(WebSocketSystem.uuid);
@@ -259,7 +269,7 @@ export class PlayerSystem {
             //console.log("cube_pos_parent", parent);
         }
 
-        /*{
+        {
             function round(vec: THREE.Vector3) {
                 return new THREE.Vector3(Math.round(vec.x), Math.round(vec.y), Math.round(vec.z));
             }
@@ -286,6 +296,6 @@ export class PlayerSystem {
                 if(sprite && spriteInfo && (spriteInfo.type & SPRITE_STATE.DETECTOR)) detectors.push(sprite.object3d), sprite.object3d.visible = false;
             }
             for(const obj of objects) if(detectors.includes(obj)) { obj.visible = true; break; }
-        }*/
+        }
     }
 };

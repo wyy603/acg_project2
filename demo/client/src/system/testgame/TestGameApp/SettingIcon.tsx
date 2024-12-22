@@ -15,10 +15,6 @@ export function SettingIcon() {
     const [newSkin, setNewSkin] = useState('');
 
     const divStyle: CSSProperties = {
-        position: "absolute",
-        bottom: "40px",
-        right: "40px",
-        zIndex: 1000,
         transform: 'scale(2)',
         backgroundColor: isHovered ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0)',
         padding: '10px',
@@ -55,6 +51,10 @@ export function SettingIcon() {
         setNoShadow(checked);
         ClientConfig.update_noShadow(checked);
     };
+
+	document.addEventListener('keydown', () => {
+        if(showSettings) setShowSettings(false);
+    }, false);
 
     return (
         <>

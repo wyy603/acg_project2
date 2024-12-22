@@ -27,6 +27,10 @@ export class PlayerRoom extends UComponent {
     constructor(public roomType: ROOM_TYPE) { super(); }
 };
 @register()
+export class PlayerChangeRoom extends UComponent {
+    constructor(public id: number) { super(); }
+};
+@register()
 export class PlayerConnectId extends UComponent {
     constructor(public id: number) { super(); }
 };
@@ -155,4 +159,9 @@ export class PlayerStuff extends UComponent {
 export class PlayAnimation extends UComponent {
     constructor(public name: string, public ratio = 1, public repeat = true) { super(); }
     unequal(x: PlayAnimation) { return this.name != x.name || this.ratio != x.ratio || this.repeat != x.repeat; }
+};
+
+@register()
+export class PlayerChat extends UComponent {
+    constructor(public name: string, public str: string) { super(); }
 };

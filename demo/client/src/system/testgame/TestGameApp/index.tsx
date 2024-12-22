@@ -3,6 +3,7 @@ import { HTMLSystem } from '../HTMLSystem'
 import { ProgressApp } from './Progress'
 import { SettingIcon } from './SettingIcon'
 import { OvercraftInfo } from './OvercraftInfo'
+import { ChatBox } from './ChatBox'
 
 function Logger() {
     const [logger, setLogger] = useState("");
@@ -32,6 +33,18 @@ export function TestGameApp() {
         left: "20px",
         zIndex: 1000,
     }
+    const rightTop: CSSProperties = {
+        position: "absolute",
+        top: "40px",
+        right: "40px",
+        zIndex: 1000,
+    }
+    const rightBottom: CSSProperties = {
+        position: "absolute",
+        bottom: "40px",
+        right: "40px",
+        zIndex: 1000,
+    }
     return (
         <div>
             <div style={leftTop}>
@@ -39,7 +52,12 @@ export function TestGameApp() {
                 <Logger/>
             </div>
             <ProgressApp/>
-            <SettingIcon/>
+            <div style={rightTop}>
+                <SettingIcon/>
+            </div>
+            <div style={rightBottom}>
+                <ChatBox/>
+            </div>
         </div>
     );
 }
