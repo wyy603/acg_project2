@@ -133,15 +133,15 @@ export class PhysicsSystem {
             if((sprite.asyncPos || sprite.asyncRot) && sprite.transformChanged) {
                 if(sprite.asyncRot) {
                     entity.send(new C.SetMeshTransform(
-                        U.fixedV(sprite.position, 2),
+                        U.fixedV(sprite.position, 4),
                         undefined,
-                        U.fixedQ(sprite.quaternion, 2),
+                        U.fixedQ(sprite.quaternion, 4),
                         )
                     );
                 } else {
                     entity.send(new C.SetMeshTransform(
-                        U.fixedV(sprite.position, 2),
-                        U.fixedE(sprite.rotation, 2),
+                        U.fixedV(sprite.position, 4),
+                        U.fixedE(sprite.rotation, 4),
                         )
                     );
                 }

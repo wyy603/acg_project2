@@ -31,15 +31,23 @@ export class RenderSystem {
         this.maxObjects.delete(obj);
     }
 
-    static init(w: number, h: number) {
-        this.fakeCamera.name = "test"
-        this.camera = new THREE.PerspectiveCamera( CAMERA_PROP.fov, w / h, CAMERA_PROP.near, CAMERA_PROP.far );
-
+    static setRenderer(w: number, h:number) {
+        // 
+        // this.renderer = new THREE.WebGLRenderer(config)
         this.renderer = new THREE.WebGLRenderer({ antialias: true});
         this.renderer.setSize(w, h);
         this.renderer.setPixelRatio( window.devicePixelRatio );
         this.renderer.shadowMap.enabled = !ClientConfig.noShadow;
         this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    }
+
+    static init(w: number, h: number) {
+        this.fakeCamera.name = "test"
+        this.camera = new THREE.PerspectiveCamera( CAMERA_PROP.fov, w / h, CAMERA_PROP.near, CAMERA_PROP.far );
+        // this.renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true, precision: "lowp", powerPreference: "low-power"});
+
+        // this.renderer = new THREE.WebGLRenderer({ antialias: true});
+        this.setRenderer(w, h); 
 
         this.scene = new THREE.Scene();
         this.scene.background = new THREE.Color( 0xbfd1e5 );
