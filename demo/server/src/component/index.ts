@@ -82,7 +82,7 @@ export class PlayerCatch extends C.Component {
     }
     send() {
         console.log("updatePlayerCatch send u_playercatch", this.catchType, this.entity()!.id);
-        this.entity()!.send(new C.U_PlayerCatch(this.catchType, this.catchLen, this.catchEntity));
+        this.entity()!.send(new C.U_PlayerCatch(this.catchType, this.catchLen, this.catchEntity?.id));
     }
 };
 export class GunTime extends C.Component {

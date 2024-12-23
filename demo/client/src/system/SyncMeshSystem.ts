@@ -66,6 +66,7 @@ export class SyncMeshSystem {
                         else console.log("change skin player found!");
                     }
                     if(player && player.getR(C.PlayerSkin)) {
+                        console.log("change skin type1");
                         AssetSystem.loadBitmap(`assets/skins/${player.getR(C.PlayerSkin)!.name}.png`, (bitmap) => {
                             const texture = new THREE.CanvasTexture(bitmap);
                             texture.wrapS = THREE.RepeatWrapping;
@@ -73,7 +74,7 @@ export class SyncMeshSystem {
                             texture.minFilter = THREE.NearestFilter;
                             texture.magFilter = THREE.NearestFilter;
                             texture.colorSpace = "srgb";
-                            U.updateTexture(sprite.object3d, texture);
+                            U.updateTexture(sprite.object3d, texture, sprite.childrens);
                         });
                     }
                 }

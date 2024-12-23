@@ -180,14 +180,16 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
     }
 }
 
-export function updateTexture(obj: THREE.Object3D, texture: THREE.Texture) {
+export function updateTexture(obj: THREE.Object3D, texture: THREE.Texture, exclude: THREE.Object3D[]) {
     if(obj instanceof THREE.Mesh) {
         if(obj.material instanceof THREE.Material) {
             obj.material = obj.material.clone();
             if(obj.material.map) obj.material.map = texture;
         }
     } else {
-        for(const child of obj.children) updateTexture(child, texture);
+        for(const child of obj.children) {
+            if(!exclude.includes(child)) updateTexture(child, texture, exclude);
+        }
     }
 }
 
@@ -264,18 +266,15 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // ç¬
                 catchObject3D.removeFromParent();
             }
         }
-        connectEntity.set(new C.PlayerCatch(u_playerCatch.catchType, u_playerCatch.catchEntity));
+        connectEntity.set(new C.PlayerCatch(u_playerCatch.catchType, u_playerCatch.catchEntityId ? EntitySystem.get(u_playerCatch.catchEntityId) : undefined));
         playerCatch = connectEntity.get(C.PlayerCatch)!;
         console.log("updatePlayerCatch2", entity.id, connectEntity.id, connectEntity.get(C.PlayerCatch)?.catchType, u_playerCatch.catchType);
         if(playerCatch.catchType == CATCH_TYPE.HAND) {
-            const catchEntity = playerCatch.catchEntity!;
-            const catchObject3D = catchEntity.get(C.Sprite)!.object3d;
+            let catchObject3D = playerCatch.catchEntity!.get(C.Sprite)!.object3d;
             if(entity.id == WebSocketSystem.uuid) {
                 RenderSystem.fakeCamera.add(catchObject3D);
                 catchObject3D.position.set(2, -0.5, -2);
                 catchObject3D.rotation.set(0, -Math.PI / 2, 0);
-                //const position = getEntityByName("cube")[0].get(C.Sprite)!.object3d.position;
-                // Logger.set("cube_post", `{'x':${Math.round(position.x)}, 'y':${Math.round(position.y)}, 'z':${Math.round(position.z)}}`)
             } else {
                 sprite.addChildren(catchObject3D);
                 console.log("object3d.children", object3d.children, "catch.parent.name", catchObject3D.parent!.name, "catch.parent", catchObject3D.parent);
