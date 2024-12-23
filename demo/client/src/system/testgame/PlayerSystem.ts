@@ -94,6 +94,29 @@ export class PlayerSystem {
     }
     onMouseClick(event: MouseEvent) {
         this.click = event;
+
+        console.log("onmouseclick");
+
+        const raycaster = new THREE.Raycaster();
+        raycaster.setFromCamera(new THREE.Vector2(0, 0), RenderSystem.camera);
+
+        const tests: THREE.Object3D[] = [];
+        for(const entity of EntitySystem.getAllR(C.Tips)) {
+            const sprite = entity.get(C.Sprite), spriteInfo = entity.getR(C.SpriteInfo);
+            if(sprite && spriteInfo && (spriteInfo.type & SPRITE_STATE.DETECTOR)) tests.push(sprite.object3d);
+        }
+        const intersects = raycaster.intersectObjects(tests, true);
+
+        for(const closestIntersect of intersects) {
+            const entity = U.getSpriteByObject3D(closestIntersect.object, RenderSystem.scene);
+            if (entity) {
+                console.log("find tip!");
+                let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+                list.push({type: 'systemmessage', str: entity.getR(C.Tips)!.str});
+                HTMLSystem.set("ChatBox", list);
+                break;
+            }
+        }
     }
     onWheel(event: WheelEvent) {
         this.wheel = event;
@@ -154,7 +177,7 @@ export class PlayerSystem {
 
             const playerSkin = entity.getR(C.PlayerSkin);
             if(playerSkin && (!playerSkin.updated(this) || !connectId.updated(this))) {
-                console.log("change skin", entity.id, connectId.id, playerSkin.name, JSON.stringify(sprite.object3d.children), sprite.name);
+                //console.log("change skin", entity.id, connectId.id, playerSkin.name, JSON.stringify(sprite.object3d.children), sprite.name);
                 AssetSystem.loadBitmap(`assets/skins/${playerSkin.name}.png`, (bitmap) => {
                     createImageBitmap(bitmap).then(abitmap => {
                         const texture = new THREE.CanvasTexture(abitmap);

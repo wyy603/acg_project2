@@ -263,7 +263,7 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
                 b2 = b2!, v2 = v2!, sprite2 = sprite2!;
                 const vec = U.copyV(v2).op_sub(v1);
                 const dist = vec.length();
-                if(minEntity && minEntity.get(C.SpawnOnCatch) && dist <= 6) { // 抓到一个拥有 C.SpawnOnCatch Component 的物体，从它中生成出食物出来
+                if(minEntity.get(C.SpawnOnCatch) && dist <= 6) { // 抓到一个拥有 C.SpawnOnCatch Component 的物体，从它中生成出食物出来
                     const itemType = (minEntity.get(C.SpawnOnCatch) as C.SpawnOnCatch).ingredient;
                     const spawnedItem = spawnRawFood(itemType, minEntity.room);
                     spawnedItem.receive(new C.SetPhysicsTransform(C.Vector3.byAmmo(v2), undefined, undefined));

@@ -383,6 +383,7 @@ export interface LEVEL_Config {
     tools: {position: Vector3, type: "lantern" | "gun"}[],
     generatePosition: Vector3,
     roomPosition: Vector3,
+    tips?: {position: Vector3, str: string}[],
 };
 
 
@@ -424,7 +425,13 @@ export const LEVEL0_Config: LEVEL_Config = {
     water: [],
     tools: [
         //{position: new Vector3(0, 10, 0), type: "gun"},
-    ]
+    ],
+    tips: [
+        { position: new Vector3(-2, 2, 4).dec(new Vector3(0, 0, 0)), str: "鼠标左键：拿起物品或与生成器、菜板、放置区等交互；鼠标右键：放下物品。" },
+        { position: new Vector3(-2, 2, 1).dec(new Vector3(0, 0, 0)), str: "在拿起食物时，鼠标左键可以将部分食物放到菜板上。只能在菜板上切菜。" },
+        { position: new Vector3(-2, 2, -2).dec(new Vector3(0, 0, 0)), str: "在拿起食物时，鼠标左键可以将部分食物放到煎锅上。" },
+        { position: new Vector3(-2, 2, -5).dec(new Vector3(0, 0, 0)), str: "左边生成盘子，右边是放置区。只能在放置区对食物进行合成。所有菜都需要放在盘子上才能送出。在聊天栏中输入 /help 查询更多帮助。" },
+    ],
 };
 
 export const LEVEL1_Config: LEVEL_Config = {
@@ -447,7 +454,7 @@ export const LEVEL1_Config: LEVEL_Config = {
     flatPositions: [] as Vector3[],
     faces: [],
     water: [],
-    tools: []
+    tools: [],
 };
 for (let x = 95; x <= 101; x++) {
     LEVEL1_Config.flatPositions.push(new Vector3(x, 6, 10).dec(new Vector3(100, 2, 10)));
