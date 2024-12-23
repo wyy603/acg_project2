@@ -438,7 +438,7 @@ export function sendPlayerMessage(str: string) {
                 send({type: 'systemmessage', str: `1. 鼠标左键：拿起物品或与生成器、菜板、放置区等交互；鼠标右键：放下物品。`});
                 send({type: 'systemmessage', str: `2. 鼠标滚轮可以切换抓取方式。在拿枪时，按 z,x 发射子弹。`});
                 send({type: 'systemmessage', str: `3. 在主世界 (room_id = 0) 可以获得与 OverCraft 做菜相关的帮助。在房间中按 q 开始一局游戏。`});
-                send({type: 'systemmessage', str: `4. /cd [room_id = 0,1,2,...] 可以切换房间。当前在房间 ${player.getR(C.PlayerRoom)!.roomId}。`});
+                send({type: 'systemmessage', str: `4. /cd [room_id = 0,1,2,3] 可以切换房间。当前在房间 ${player.getR(C.PlayerRoom)!.roomId}。`});
                 send({type: 'systemmessage', str: `5. /help 可以获取帮助。`});
             } else {
                 send({type: 'error', str: `Error: invalid command [${str}].`});
