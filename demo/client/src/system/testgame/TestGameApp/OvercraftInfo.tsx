@@ -71,7 +71,7 @@ export function OvercraftInfo() {
                         <SingleProcess name="tmp" value={order.percentage}></SingleProcess>
                     </div>
                     <div style={{ display: "flex", backgroundColor: '#add8e6', }}>
-                        {order.ingredients && order.ingredients.map((ingredient: INGREDIENT, index: number) => (
+                        {order.ingredients && order.tutorial.map((ingredient: INGREDIENT, index: number) => (
                             INGREDIENT_PROPERTY[ingredient].icon && (
                                 <div key={index}>
                                     <img

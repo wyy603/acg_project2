@@ -1,11 +1,7 @@
 import { Entity } from '@shared/basic'
-import * as THREE from 'three'
-import { AmmoModule, Ammo } from '@shared/utils/ammo'
 import { SPRITE_STATE, ROOM_TYPE, CATCH_TYPE, INGREDIENT, ORDER_TYPE, ORDER_PROPERTY, TIME_PER_COMPLEXITY } from '@shared/constant'
-import * as U from '@shared/utils'
 import { Component, UComponent, register } from '@shared/basic'
 import * as C from '.'
-import { Config } from '@shared/constant'
 import { OvercraftSystemBasic } from '@shared/basic/OvercraftSystemBasic'
 
 // For Player Info ========================================

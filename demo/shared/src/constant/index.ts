@@ -527,25 +527,56 @@ for(let z = 11; z <= 15; ++z) {
 export enum ORDER_TYPE {
     Chopped_Potato,
     Chopped_Tomato,
+    Salad,
+    Tomato_Pizza,
+    Pepperoni_Pizza,
+    Hamburger,
 }
 
-export const TIME_PER_COMPLEXITY = 10;
+export const TIME_PER_COMPLEXITY = 15;
 
 type ORDER_INFO = {
     ingredients: INGREDIENT[];
     complexity: number; // expire time = 10 * complexity. 
+    tutorial: INGREDIENT[]
     scoreFunction: (x: any) => any;
 };
 
 export const ORDER_PROPERTY: Record<ORDER_TYPE, ORDER_INFO> = {
     [ORDER_TYPE.Chopped_Potato]: {
         ingredients: [INGREDIENT.potato_slice, INGREDIENT.plate],
-        complexity: 3,
-        scoreFunction: (x) => (x >= 0 ? [3 * 20, x] : [-30, 0]),
+        complexity: 2,
+        tutorial: [INGREDIENT.potato_slice],
+        scoreFunction: (x) => (x >= 0 ? [1 * 20, x] : [-30, 0]),
     },
     [ORDER_TYPE.Chopped_Tomato]: {
         ingredients: [INGREDIENT.tomato_slice, INGREDIENT.plate],
+        complexity: 2,
+        tutorial: [INGREDIENT.tomato_slice],
+        scoreFunction: (x) => (x >= 0 ? [1 * 20, x] : [-30, 0]),
+    },
+    [ORDER_TYPE.Salad]: {
+        ingredients: [INGREDIENT.salad, INGREDIENT.plate],
         complexity: 3,
+        tutorial: [INGREDIENT.tomato_slice, INGREDIENT.cutted_cabbage, INGREDIENT.cutted_cabbage],
+        scoreFunction: (x) => (x >= 0 ? [2 * 20, x] : [-30, 0]),
+    },
+    [ORDER_TYPE.Tomato_Pizza]: {
+        ingredients: [INGREDIENT.pizza1, INGREDIENT.plate],
+        complexity: 4,
+        tutorial: [INGREDIENT.pizza_dough, INGREDIENT.tomato_slice],
         scoreFunction: (x) => (x >= 0 ? [3 * 20, x] : [-30, 0]),
+    },
+    [ORDER_TYPE.Pepperoni_Pizza]: {
+        ingredients: [INGREDIENT.pizza5, INGREDIENT.plate],
+        complexity: 5,
+        tutorial: [INGREDIENT.pizza_dough, INGREDIENT.cooked_beef, INGREDIENT.fried],
+        scoreFunction: (x) => (x >= 0 ? [4 * 20, x] : [-30, 0]),
+    },
+    [ORDER_TYPE.Hamburger]: {
+        ingredients: [INGREDIENT.hamburger, INGREDIENT.plate],
+        complexity: 6,
+        tutorial: [INGREDIENT.sliced_bread, INGREDIENT.tomato_slice, INGREDIENT.cooked_beef, INGREDIENT.cutted_cabbage, INGREDIENT.sliced_bread],
+        scoreFunction: (x) => (x >= 0 ? [5 * 20, x] : [-30, 0]),
     },
 };
