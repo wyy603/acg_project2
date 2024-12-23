@@ -279,7 +279,7 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
                     //     spawnedItem.get(C.Sprite)!.body!.activate(true);
                     //     spawnedItem.get(C.Sprite)!.deactivate(physicsWorld);
                     // }
-                    console.log("hi3");
+                    // console.log("hi3");
                     return;
                 }
             }
