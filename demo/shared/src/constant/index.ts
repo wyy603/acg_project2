@@ -102,6 +102,8 @@ export enum INGREDIENT {
     pizza3,
     pizza4,
     pizza5,
+    gun,
+    knife,
 };
 
 interface INGREDIENT_INFO {
@@ -351,6 +353,20 @@ export const INGREDIENT_PROPERTY: Record<INGREDIENT, INGREDIENT_INFO> = {
         radius: 0.50,
         priority: 0
     },
+    [INGREDIENT.gun]: {
+        name: "gun",
+        recipe: [],
+        type: "raw",
+        mesh: { path: "public/assets/tool/gun/gun.glb", scale: 1 },
+        collide: new Ammo.btSphereShape(0.4),
+    },
+    [INGREDIENT.knife]: {
+        name: "knife",
+        recipe: [],
+        type: "raw",
+        mesh: { path: "public/assets/tool/knife/knife.glb", scale: 1 },
+        collide: new Ammo.btCapsuleShape(0.2, 0.8),
+    },
 };
 
 export interface LEVEL_Config {
@@ -371,9 +387,9 @@ export interface LEVEL_Config {
 
 
 export const LEVEL0_Config: LEVEL_Config = {
-    level_path: "public/assets/main_world/main_world.glb",
+    level_path: "public/assets/main_world/main_world_mc.glb",
     level_name: "main_world",
-    roomPosition: new Vector3(0, 0, 0),
+    roomPosition: new Vector3(0, -3, 0),
     generatePosition: new Vector3(0, 10, 0),
     knive_detectors: [
         new Vector3(-2, 5, 2).dec(new Vector3(0, 0, 0)),
@@ -382,9 +398,9 @@ export const LEVEL0_Config: LEVEL_Config = {
         new Vector3(-2, 5, -1).dec(new Vector3(0, 0, 0)),
     ],
     knives: [
+        /*new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
         new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
-        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
-        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
+        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),*/
     ],
     servingArea: [
     ],
@@ -393,6 +409,8 @@ export const LEVEL0_Config: LEVEL_Config = {
         { position: new Vector3(-2, 5, 5).dec(new Vector3(0, 0, 0)), item: INGREDIENT.potato },
         { position: new Vector3(-2, 5, 7).dec(new Vector3(0, 0, 0)), item: INGREDIENT.raw_beef },
         { position: new Vector3(-2, 5, -4).dec(new Vector3(0, 0, 0)), item: INGREDIENT.plate },
+        { position: new Vector3(1, 5, 9).dec(new Vector3(0, 0, 0)), item: INGREDIENT.knife },
+        { position: new Vector3(1, 5, -10).dec(new Vector3(0, 0, 0)), item: INGREDIENT.gun },
     ],
     flatPositions: [
         new Vector3(-2, 4.5, -7).dec(new Vector3(0, 0, 0)),
@@ -400,10 +418,12 @@ export const LEVEL0_Config: LEVEL_Config = {
     ],
     faces: [
         { position: new Vector3(-1.499, 5, -1).dec(new Vector3(0, 0, 0)), name: "stove_front_on" },
+        { position: new Vector3(1, 5.501, 9).dec(new Vector3(0, 0, 0)), name: "assets/tool/knife/icon.png" },
+        { position: new Vector3(1, 5.501, -10).dec(new Vector3(0, 0, 0)), name: "assets/tool/gun/icon.png" },
     ],
     water: [],
     tools: [
-        {position: new Vector3(0, 10, 0), type: "gun"},
+        //{position: new Vector3(0, 10, 0), type: "gun"},
     ]
 };
 

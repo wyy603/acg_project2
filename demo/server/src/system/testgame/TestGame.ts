@@ -318,6 +318,17 @@ export class TestGame {
             if(this.level == 0) {
                 generateLevel(LEVEL0_Config, this.room, this.gridSystem, this.physicsSystem);
                 this.generatePosition = LEVEL0_Config.generatePosition;
+                
+                const world = new Entity(this.room);
+                const path = "public/assets/main_world/main_world.glb";
+                const bodyinfo = U.getRigidBodyConstructionInfo(0, U.TriangleShapeByMesh(await AssetSystem.get(path)));
+                const body = new Ammo.btRigidBody(bodyinfo);
+                body.setRestitution(0.8);
+                const state = SPRITE_STATE.COLLIDE;
+                world.set(new C.Sprite("level0_world", body, state));
+                world.send(new C.SpriteInfo("level0_world", state));
+                world.send(new C.SetMeshByPath(path, {minecraft: true}));
+                world.receive(new C.SetPhysicsTransform(new C.Vector3(0,0,0), undefined, undefined));
             } else if(this.level == 1) {
                 generateLevel(LEVEL1_Config, this.room, this.gridSystem, this.physicsSystem);
                 this.generatePosition = LEVEL1_Config.generatePosition;

@@ -287,13 +287,13 @@ export class PlayerSystem {
             const raycaster = new THREE.Raycaster();
             raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 
-            const tests: THREE.Object3D[] = [];
+            /*const tests: THREE.Object3D[] = [];
             for(const entity of entities) {
                 const sprite = entity.get(C.Sprite), spriteInfo = entity.getR(C.SpriteInfo);
                 if(sprite && spriteInfo && (spriteInfo.type & SPRITE_STATE.DETECTOR)) tests.push(sprite.object3d);
             }
-            const intersects = raycaster.intersectObjects(tests, true);
-            //const intersects = raycaster.intersectObjects(scene.children, true);
+            const intersects = raycaster.intersectObjects(tests, true);*/
+            const intersects = raycaster.intersectObjects(scene.children, true);
 
             const objects = intersects.map(intersect => intersect.object);
             const direction = raycaster.ray.direction;
