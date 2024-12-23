@@ -84,8 +84,9 @@ export function composeIngredients(ingredients: INGREDIENT[]): INGREDIENT | unde
     return undefined;
 }
 export function canInsFood(food1: C.FoodInfo, food2: C.FoodInfo): boolean {
-    const ingredient = food2.ingredients[0];
-    return INGREDIENT_PROPERTY[ingredient].type == "cylinder";
+    for(const a of food1.ingredients) if(INGREDIENT_PROPERTY[a].type != "cylinder") return false;
+    for(const a of food2.ingredients) if(INGREDIENT_PROPERTY[a].type != "cylinder") return false;
+    return true;
 }
 export function updateFoodInfo(foodInfo: C.FoodInfo) {
     if(composeIngredients(foodInfo.ingredients.concat(INGREDIENT.cut))) {

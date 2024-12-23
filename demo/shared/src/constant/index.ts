@@ -91,6 +91,11 @@ export enum INGREDIENT {
     raw_beef,
     cooked_beef,
     hamburger,
+    sliced_bread,
+    cucumber,
+    cutted_cucumber,
+    onion,
+    cutted_onion,
 };
 
 export interface LEVEL_Config {
@@ -198,13 +203,16 @@ export const LEVEL2_Config: LEVEL_Config = {
         { position: new Vector3(94, 7, 13).dec(new Vector3(100, 2, 11)), item: INGREDIENT.potato },
         { position: new Vector3(94, 7, 12).dec(new Vector3(100, 2, 11)), item: INGREDIENT.cabbage },
         { position: new Vector3(94, 7, 11).dec(new Vector3(100, 2, 11)), item: INGREDIENT.raw_beef },
+        { position: new Vector3(94, 7, 10).dec(new Vector3(100, 2, 11)), item: INGREDIENT.sliced_bread },
+        { position: new Vector3(94, 7, 9).dec(new Vector3(100, 2, 11)), item: INGREDIENT.cucumber },
+        { position: new Vector3(94, 7, 8).dec(new Vector3(100, 2, 11)), item: INGREDIENT.onion },
         { position: new Vector3(101, 7, 5).dec(new Vector3(100, 2, 11)), item: INGREDIENT.plate },
         { position: new Vector3(98, 7, 5).dec(new Vector3(100, 2, 11)), item: INGREDIENT.plate },
     ],
     flatPositions: [] as Vector3[],
     faces: [
-        { position: new Vector3(94.501, 7, 8).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
-        { position: new Vector3(94.501, 7, 7).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
+        //{ position: new Vector3(94.501, 7, 8).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
+        //{ position: new Vector3(94.501, 7, 7).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
         { position: new Vector3(104.499, 7, 7).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
         { position: new Vector3(104.499, 7, 8).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
         { position: new Vector3(94, 7.501, 10).dec(new Vector3(100, 2, 10)), name: "cow_icon" },
@@ -363,6 +371,50 @@ export const INGREDIENT_PROPERTY: Record<INGREDIENT, INGREDIENT_INFO> = {
         collide: new Ammo.btSphereShape(0.3),
         height: 0.12,
         radius: 0.50,
+        priority: 0
+    },
+    [INGREDIENT.cucumber]: {
+        name: "cucumber",
+        recipe: [],
+        type: "raw",
+        mesh: { path: "public/assets/food/cucumber/cucumber.glb", scale: 0.14 },
+        collide: new Ammo.btSphereShape(0.35),
+    },
+    [INGREDIENT.cutted_cucumber]: {
+        name: "cutted_cucumber",
+        recipe: [INGREDIENT.cucumber, INGREDIENT.cut],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/cutted_cucumber/cutted_cucumber.glb", scale: 0.04 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.06,
+        radius: 0.28,
+        priority: 0
+    },
+    [INGREDIENT.sliced_bread]: {
+        name: "sliced_bread",
+        recipe: [],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/sliced_bread/sliced_bread.glb", scale: 4 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.28,
+        priority: 0
+    },
+    [INGREDIENT.onion]: {
+        name: "onion",
+        recipe: [],
+        type: "raw",
+        mesh: { path: "public/assets/food/onion/onion.glb", scale: 0.4 },
+        collide: new Ammo.btSphereShape(0.25),
+    },
+    [INGREDIENT.cutted_onion]: {
+        name: "cutted_onion",
+        recipe: [INGREDIENT.onion, INGREDIENT.cut],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/cutted_onion/cutted_onion.glb", scale: 0.04 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.28,
         priority: 0
     },
 };
