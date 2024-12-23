@@ -387,18 +387,6 @@ export class PlayerSystem {
                     if(keyDown.includes('p')) {
                         U.spawnPlate(playerEntity);
                     }
-                    if(keyDown.includes('v')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.hamburger);
-                    }
-                    if(keyDown.includes('b')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.salad);
-                    }
-                    if(keyDown.includes('n')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.potato_slice);
-                    }
-                    if(keyDown.includes('m')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.tomato_slice);
-                    }
                     if(keyDown.includes('x')) {
                         if(playerCatch.catchType == CATCH_TYPE.HAND && playerCatch.catchEntity!.get(C.Gun)) {
                             shoot2(playerEntity,playerEntity.getR(C.PlayerCamera)!.origin!,playerEntity.getR(C.PlayerCamera)!.direction!);
@@ -410,12 +398,14 @@ export class PlayerSystem {
                         }
                     }
                     if(keyDown.includes('q')) {
-                        const system = GameSystem.gamesystems.get(0) as OvercraftSystemServer;
+                        const roomID = entity.room;
+                        const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
                         if(system && !system.isRunning()) system.run();
                     }
                     if(keyDown.includes('o')) {
-                        const system = GameSystem.gamesystems.get(0) as OvercraftSystemServer;
-                        if(system && system.isRunning()) system.isEnded = true;
+                        const roomID = entity.room;
+                        const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
+                        if(system && system.isRunning()) system.close();
                     }
                 }
                 /*if(playerAnimation.name != "still_test") {

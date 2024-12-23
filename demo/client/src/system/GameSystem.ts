@@ -62,7 +62,7 @@ export class Game {
         const gamesystem = new OvercraftSystemClient(0, false);
         gamesystem.setConfig();
         this.gamesystems.set(0,gamesystem);
-        gamesystem.run();
+        // gamesystem.run();
         /*WebSocketSystem.send([new PlayerRoomChangeEvent(WebSocketSystem.uuid, 1)]);*/
     }
 
@@ -73,7 +73,7 @@ export class Game {
     static getGameSystem(id: number) {
         return this.gamesystems.get(id)!;
     }
-
+ 
     static time = 0;
     static lastRender = 0;
     static render() {

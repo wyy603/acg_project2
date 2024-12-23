@@ -28,7 +28,7 @@ const level1Config = {
 		{ type: ORDER_TYPE.Chopped_Potato, availableTime: [-1, 120] },
 		{ type: ORDER_TYPE.Chopped_Tomato, availableTime: [-1, 120] },
 	], 
-	spawnCheckpoints: [1, 1, 60, 60], 
+	spawnCheckpoints: [1, 60, 60], 
 };
 
 export class OvercraftSystemBasic {
@@ -52,7 +52,7 @@ export class OvercraftSystemBasic {
 		this.currentOrders = [];
 		this.onServingList = [];
 		this.subtick = 0;
-		this.messenger = new OvercraftUpdateEvent(-1,false,false,[],[]);
+		this.messenger = new OvercraftUpdateEvent(-1,false,false,false,[],[]);
 		this.isEnded = true;
 	}
 
