@@ -32,7 +32,7 @@ export class GameSystem {
         this.gamesystems = new Map();
 
         {
-            const game0 = new TestGame(0);
+            const game0 = new TestGame(0, 0);
             await game0.init();
             this.games.set(0, game0);
             const sys0 = new OvercraftSystemServer(0, true); // NOTE: actually still in room id 0, too lazy to change. 
@@ -42,7 +42,7 @@ export class GameSystem {
         }
 
         {
-            const game1 = new TestGame(1);
+            const game1 = new TestGame(1, 2);
             await game1.init();
             this.games.set(1, game1);
             const sys1 = new OvercraftSystemServer(1, true);

@@ -122,10 +122,10 @@ export class SyncMeshSystem {
             }
             if(transform && (object3dupdate || !transform.updated(this))) {
                 if(sprite.name == "world") console.log("set position!!!!!");
-                if(sprite.name == 'cube tool') {
+                /*if(sprite.name == 'cube tool') {
                     //console.log("hi!!!!!!!!!!!!!!!!!!!!!!");
                     HTMLSystem.set2("Logger", "update_cube_pos", "true");
-                }
+                }*/
                 let position = transform.position, rotation = transform.rotation, quaternion = transform.quaternion;
                 if(position) {
                     sprite.object3d.position.copy(position.getTHREE());
@@ -143,7 +143,7 @@ export class SyncMeshSystem {
                 }
                 transform.mark(this);
             } else {
-                if(sprite.name == 'cube tool') HTMLSystem.set2("Logger", "update_cube_pos", "false");
+                //if(sprite.name == 'cube tool') HTMLSystem.set2("Logger", "update_cube_pos", "false");
             }
 
             spriteInfo.name = sprite.name;

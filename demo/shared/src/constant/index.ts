@@ -104,13 +104,17 @@ export interface LEVEL_Config {
     flatPositions: Vector3[],
     faces: {position: Vector3, name: string}[]
     water: {p1: Vector3, p2: Vector3}[]
+    tools: {position: Vector3, type: "lantern" | "gun"}[],
+    generatePosition: Vector3,
+    roomPosition: Vector3,
 };
 
 
-export const LEVEL0_ROOM_POSITION = new Vector3(0, 0, 0);
 export const LEVEL0_Config: LEVEL_Config = {
-    level_path: undefined,
+    level_path: "public/assets/main_world/main_world.glb",
     level_name: "main_world",
+    roomPosition: new Vector3(0, 0, 0),
+    generatePosition: new Vector3(0, 10, 0),
     knive_detectors: [
         new Vector3(-2, 5, 2).dec(new Vector3(0, 0, 0)),
     ],
@@ -123,8 +127,6 @@ export const LEVEL0_Config: LEVEL_Config = {
         new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
     ],
     servingArea: [
-        new Vector3(-2, 5, -7).dec(new Vector3(0, 0, 0)),
-        new Vector3(-2, 5, -8).dec(new Vector3(0, 0, 0)),
     ],
     storage: [
         { position: new Vector3(-2, 5, 6).dec(new Vector3(0, 0, 0)), item: INGREDIENT.tomato },
@@ -132,17 +134,24 @@ export const LEVEL0_Config: LEVEL_Config = {
         { position: new Vector3(-2, 5, 7).dec(new Vector3(0, 0, 0)), item: INGREDIENT.raw_beef },
         { position: new Vector3(-2, 5, -4).dec(new Vector3(0, 0, 0)), item: INGREDIENT.plate },
     ],
-    flatPositions: [] as Vector3[],
+    flatPositions: [
+        new Vector3(-2, 4.5, -7).dec(new Vector3(0, 0, 0)),
+        new Vector3(-2, 4.5, -8).dec(new Vector3(0, 0, 0)),
+    ],
     faces: [
         { position: new Vector3(-1.499, 5, -1).dec(new Vector3(0, 0, 0)), name: "stove_front_on" },
     ],
-    water: []
+    water: [],
+    tools: [
+        {position: new Vector3(0, 10, 0), type: "gun"},
+    ]
 };
 
-export const LEVEL1_ROOM_POSITION = new Vector3(100, 2, 10);
 export const LEVEL1_Config: LEVEL_Config = {
     level_path: "public/assets/level1/level1.glb",
     level_name: "level1_test",
+    roomPosition: new Vector3(100, 2, 10),
+    generatePosition: new Vector3(104, 6, 12),
     knive_detectors: [
         new Vector3(103, 6, 7).dec(new Vector3(100, 2, 10))
     ],
@@ -158,15 +167,17 @@ export const LEVEL1_Config: LEVEL_Config = {
     flatPositions: [] as Vector3[],
     faces: [],
     water: [],
+    tools: []
 };
 for (let x = 95; x <= 101; x++) {
     LEVEL1_Config.flatPositions.push(new Vector3(x, 6, 10).dec(new Vector3(100, 2, 10)));
 }
 
-export const LEVEL2_ROOM_POSITION = new Vector3(100, 2, 10);
 export const LEVEL2_Config: LEVEL_Config = {
     level_path: "public/assets/level2/level2.glb",
     level_name: "level2_test",
+    roomPosition: new Vector3(100, 2, 10),
+    generatePosition: new Vector3(104, 6, 12),
     knive_detectors: [
         new Vector3(105, 7, 14).dec(new Vector3(100, 2, 11)),
         new Vector3(104, 7, 14).dec(new Vector3(100, 2, 11)),
@@ -198,7 +209,12 @@ export const LEVEL2_Config: LEVEL_Config = {
         { position: new Vector3(104.499, 7, 8).dec(new Vector3(100, 2, 11)), name: "stove_front_on" },
         { position: new Vector3(94, 7.501, 10).dec(new Vector3(100, 2, 10)), name: "cow_icon" },
     ],
-    water: []
+    water: [],
+    tools: [
+        {position: new Vector3(105-0.6, 10, 14-0.6), type: "lantern"},
+        {position: new Vector3(105-1,13,15), type: "lantern"},
+        {position: new Vector3(94,13,14-1), type: "lantern"},
+    ]
 };
 /*for(let x = 98; x <= 101; ++x) {
     for(let y = 10; y <= 15; ++y) LEVEL2_Config.faces.push({ position: new Vector3(x, 6.4, y).dec(new Vector3(100, 2, 11)), name: "water_still" })

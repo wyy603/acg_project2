@@ -12,37 +12,37 @@ import { GridSystem } from '../GridSystem'
 import { Ammo, AmmoModule } from '@shared/utils/ammo'
 import * as U from './utils'
 import { diff } from '@shared/utils/basic'
-import { SPRITE_STATE, LEVEL0_ROOM_POSITION, LEVEL0_Config, LEVEL1_ROOM_POSITION, LEVEL1_Config, 
-    LEVEL2_ROOM_POSITION, LEVEL2_Config, LEVEL_Config,
+import { SPRITE_STATE, LEVEL0_Config, LEVEL1_Config, LEVEL2_Config, LEVEL_Config,
     Config, GRID_TYPE, CollisionFlags, INGREDIENT_PROPERTY } from '@shared/constant'
 
 async function generateLevel(
-    ROOM_POSITION: C.Vector3,
     Config: LEVEL_Config,
     room: number,
     gridSystem: GridSystem,
     physicsSystem: PhysicsSystem
 ) {
-    {
-        const light = new Entity(room);
-        const state = SPRITE_STATE.NONE;
-        light.set(new C.Sprite("light", undefined, state));
-        light.send(new C.SpriteInfo("light", state));
-        light.send(new C.Lantern(new C.Vector3(105-0.6, 10, 14-0.6)));
-    }
-    {
-        const light = new Entity(room);
-        const state = SPRITE_STATE.NONE;
-        light.set(new C.Sprite("light", undefined, state));
-        light.send(new C.SpriteInfo("light", state));
-        light.send(new C.Lantern(new C.Vector3(105-1,13,15)));
-    }
-    {
-        const light = new Entity(room);
-        const state = SPRITE_STATE.NONE;
-        light.set(new C.Sprite("light", undefined, state));
-        light.send(new C.SpriteInfo("light", state));
-        light.send(new C.Lantern(new C.Vector3(94,13,14-1)));
+    for(const a of Config.tools) {
+        if(a.type == "lantern") {
+            const light = new Entity(room);
+            const state = SPRITE_STATE.NONE;
+            light.set(new C.Sprite("light", undefined, state));
+            light.send(new C.SpriteInfo("light", state));
+            light.send(new C.Lantern(a.position));
+        } else if(a.type == "gun") {
+            const gun = new Entity(room);
+            const path = 'public/assets/tool/gun/gun.glb';
+            const bodyinfo = U.getRigidBodyConstructionInfo(1, new Ammo.btSphereShape(0.4));
+            bodyinfo.set_m_linearDamping(0.5);
+            const body = new Ammo.btRigidBody(bodyinfo);
+            const state = SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE;
+            body.setCcdMotionThreshold(0.001);
+            body.setCcdSweptSphereRadius(0.01);
+            gun.set(new C.Sprite(`gun`, body, state));
+            gun.send(new C.SpriteInfo(`gun`, state));
+            gun.send(new C.SetMeshByPath(path));
+            gun.receive(new C.SetPhysicsTransform(a.position));
+            gun.set(new C.Gun());
+        }
     }
     /*{
         const tree=new Entity(room);
@@ -63,23 +63,23 @@ async function generateLevel(
         world.set(new C.Sprite(Config.level_name, body, state));
         world.send(new C.SpriteInfo(Config.level_name, state));
         world.send(new C.SetMeshByPath(path, {minecraft: true}));
-        world.receive(new C.SetPhysicsTransform(ROOM_POSITION, undefined, undefined));
+        world.receive(new C.SetPhysicsTransform(Config.roomPosition, undefined, undefined));
 
         /*const world = new Entity(room);
         const path = Config.level_path;
         const state = SPRITE_STATE.COLLIDE;
-        world.set(new C.MinecraftWorld(await AssetSystem.get(path), ROOM_POSITION.getAmmo(), physicsSystem.world));
+        world.set(new C.MinecraftWorld(await AssetSystem.get(path), Config.roomPosition.getAmmo(), physicsSystem.world));
         world.set(new C.Sprite(`world`, undefined, state));
         world.send(new C.SpriteInfo("world", state));
         world.send(new C.SetMeshByPath(path, {minecraft: true}));
-        world.send(new C.SetMeshTransform(ROOM_POSITION, undefined, undefined));*/
+        world.send(new C.SetMeshTransform(Config.roomPosition, undefined, undefined));*/
     }
 
     // Configure food storage places in level one
     for (const storageItem of Config.storage) {
         const { position, item } = storageItem;
         const realPosition = new C.Vector3(); realPosition.clone(position);
-        realPosition.add(ROOM_POSITION).add(new C.Vector3(0,0.53,0));
+        realPosition.add(Config.roomPosition).add(new C.Vector3(0,0.53,0));
 
         const plane = new Entity(room);
         const halfExtents = new Ammo.btVector3(0.50, 0.02, 0.50); // Half extents for a unit cube
@@ -103,7 +103,7 @@ async function generateLevel(
     // Configure stacking places in level one
     for (const position of Config.flatPositions) {
         const realPosition = new C.Vector3(); realPosition.clone(position);
-        realPosition.add(ROOM_POSITION).add(new C.Vector3(0,0.5 + 0.2 + 0.25 + 0.02 ,0));
+        realPosition.add(Config.roomPosition).add(new C.Vector3(0,0.5 + 0.2 + 0.25 + 0.02 ,0));
         const plane = new Entity(room);
         const halfExtents = new Ammo.btVector3(0.49, 0.25, 0.49); // Half extents for a unit cube
         const bodyinfo = U.getRigidBodyConstructionInfo(0, new Ammo.btBoxShape(halfExtents));
@@ -130,7 +130,7 @@ async function generateLevel(
         let knifePosition = undefined;
         {
             const realPosition = new C.Vector3(); realPosition.clone(position);
-            realPosition.add(ROOM_POSITION).add(new C.Vector3(0,0.4 + 0.25 + 0.02 ,0));
+            realPosition.add(Config.roomPosition).add(new C.Vector3(0,0.4 + 0.25 + 0.02 ,0));
             knifePosition = realPosition;
             const plane = new Entity(room);
             const halfExtents = new Ammo.btVector3(0.49, 0.25, 0.49); // Half extents for a unit cube
@@ -153,7 +153,7 @@ async function generateLevel(
         }
         /*{
             const realPosition = new C.Vector3(); realPosition.clone(position);
-            realPosition.add(ROOM_POSITION).dec(new C.Vector3(0,0.2,0));
+            realPosition.add(Config.roomPosition).dec(new C.Vector3(0,0.2,0));
             const plane = new Entity(room);
             const halfExtents = new Ammo.btVector3(0.55, 0.3, 0.55); // Half extents for a unit cube
             const bodyinfo = U.getRigidBodyConstructionInfo(0, new Ammo.btBoxShape(halfExtents));
@@ -174,7 +174,7 @@ async function generateLevel(
     }
     for (const position of Config.skillets) {
         const realPosition = new C.Vector3(); realPosition.clone(position);
-        realPosition.add(ROOM_POSITION).add(new C.Vector3(0, 0.4 + 0.25 + 0.02 ,0));
+        realPosition.add(Config.roomPosition).add(new C.Vector3(0, 0.4 + 0.25 + 0.02 ,0));
         const skillet = U.createSprite({
             room: room,
             mass: 0,
@@ -205,14 +205,14 @@ async function generateLevel(
             ccd_radius: 0.1
         });
         knife.send(new C.SetMeshByPath("assets/tool/knife/knife.glb", {scale: 0.005}));
-        knife.receive(new C.SetPhysicsTransform(position.copy().add(ROOM_POSITION).add(new C.Vector3(0, 1, 0)), undefined, undefined));
+        knife.receive(new C.SetPhysicsTransform(position.copy().add(Config.roomPosition).add(new C.Vector3(0, 1, 0)), undefined, undefined));
         knife.set(new C.knifeInfo(new C.Vector3(0,0,0)));
     }
 
     // Configure serving area in level one
     for (const position of Config.servingArea) {
         const realPosition = new C.Vector3(); realPosition.clone(position);
-        realPosition.add(ROOM_POSITION).add(new C.Vector3(0, 0.5 + 0.25 + 0.02 + 0.2 ,0));
+        realPosition.add(Config.roomPosition).add(new C.Vector3(0, 0.5 + 0.25 + 0.02 + 0.2 ,0));
         const plane = new Entity(room);
         const halfExtents = new Ammo.btVector3(0.49, 0.25, 0.49); // Half extents for a unit cube
         const bodyinfo = U.getRigidBodyConstructionInfo(0, new Ammo.btBoxShape(halfExtents));
@@ -240,7 +240,7 @@ async function generateLevel(
         const state = SPRITE_STATE.NONE | SPRITE_STATE.NO_RAYTEST;
         plane.set(new C.Sprite("face:" + name, undefined, state));
         plane.send(new C.SpriteInfo("face:" + name, state));
-        plane.send(new C.TexturePlane(name, position.copy().add(ROOM_POSITION)));
+        plane.send(new C.TexturePlane(name, position.copy().add(Config.roomPosition)));
     }
 }
 
@@ -249,12 +249,14 @@ export class TestGame {
     playerSystem: PlayerSystem
     gridSystem: GridSystem
     players: Entity[]
+    generatePosition: C.Vector3
     timeStamp = 0
-    constructor(public room: number) {
+    constructor(public room: number, public level: number) {
         this.physicsSystem = new PhysicsSystem();
         this.playerSystem = new PlayerSystem();
         this.gridSystem = new GridSystem();
         this.players = [];
+        this.generatePosition = new C.Vector3(0, 0, 0);
     }
     async init() {
         /*for(let j=1;j<=5;++j)
@@ -292,7 +294,7 @@ export class TestGame {
             //ball.set(new C.SetMeshTransform(new C.Vector3(0, 40, -40), undefined, undefined));
         }
         {
-            const world = new Entity(this.room);
+            /*const world = new Entity(this.room);
             const path = 'public/assets/main_world/main_world.glb';
             const bodyinfo = U.getRigidBodyConstructionInfo(0, U.TriangleShapeByMesh(await AssetSystem.get(path)));
             const body = new Ammo.btRigidBody(bodyinfo);
@@ -301,7 +303,7 @@ export class TestGame {
             world.set(new C.Sprite(`world`, body, state));
             world.send(new C.SpriteInfo("world", state));
             world.send(new C.SetMeshByPath(path, {minecraft:true})); //world.send(new C.MeshPhongMaterial(new C.Color(0,0,0)));
-            world.receive(new C.SetPhysicsTransform(new C.Vector3(0, 0, 0), undefined, undefined));
+            world.receive(new C.SetPhysicsTransform(new C.Vector3(0, 0, 0), undefined, undefined));*/
 
             /*const world = new Entity(this.room);
             const path = 'public/assets/test_building/test_building.glb';
@@ -313,9 +315,26 @@ export class TestGame {
             world.send(new C.SetMeshTransform(new C.Vector3(0, -200, 0), undefined, undefined));*/
         }
         {
-            generateLevel(LEVEL0_ROOM_POSITION, LEVEL0_Config, this.room, this.gridSystem, this.physicsSystem);
-            //generateLevel(LEVEL1_ROOM_POSITION, LEVEL1_Config, this.room);
-            //generateLevel(LEVEL2_ROOM_POSITION, LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
+            if(this.level == 0) {
+                generateLevel(LEVEL0_Config, this.room, this.gridSystem, this.physicsSystem);
+                this.generatePosition = LEVEL0_Config.generatePosition;
+            } else if(this.level == 1) {
+                generateLevel(LEVEL1_Config, this.room, this.gridSystem, this.physicsSystem);
+                this.generatePosition = LEVEL1_Config.generatePosition;
+            } else if(this.level == 2) {
+                generateLevel(LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
+                this.generatePosition = LEVEL2_Config.generatePosition;
+                const world = new Entity(this.room);
+                const path = 'public/assets/test_building/test_building.glb';
+                const state = SPRITE_STATE.COLLIDE;
+                //world.set(new C.MinecraftWorld(await AssetSystem.get(path), new Ammo.btVector3(0, -200, 0), this.physicsSystem.world));
+                world.set(new C.Sprite(`world`, undefined, state));
+                world.send(new C.SpriteInfo("world", state));
+                world.send(new C.SetMeshByPath(path, {minecraft: true}));
+                world.send(new C.SetMeshTransform(new C.Vector3(0, -200, 0), undefined, undefined));
+            }
+            //generateLevel(LEVEL1_Config.roomPosition, LEVEL1_Config, this.room);
+            //generateLevel(LEVEL2_Config.roomPosition, LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
             
             /*{
                 console.log("[TestGame] Adding a car!");
@@ -415,7 +434,7 @@ export class TestGame {
             entity.send(new C.SetMeshByPath(path));
             entity.receive(new C.SetPhysicsTransform(new C.Vector3(0, 40, -40), undefined, undefined));
         }*/
-        for(let j=0;j<=5;++j){
+        /*for(let j=0;j<=5;++j){
             const gun = new Entity(this.room);
             const path = 'public/assets/tool/gun/gun.glb';
             const bodyinfo = U.getRigidBodyConstructionInfo(1, new Ammo.btSphereShape(0.4));
@@ -429,7 +448,7 @@ export class TestGame {
             gun.send(new C.SetMeshByPath(path));
             gun.receive(new C.SetPhysicsTransform(new C.Vector3(0, 5, -40), undefined, undefined));
             gun.set(new C.Gun());
-        }
+        }*/
     }
     removePlayers() { // 这个函数和addPlayers只在GameSystem中使用，且removePlayers先用,addPlayers后用
         const entities = EntitySystem.getEntityByRoom(this.room);
@@ -490,7 +509,8 @@ export class TestGame {
         entity.send(new C.PlayAnimation("still_test"));
         entity.set(new C.PlayerCatch(undefined, undefined));
         entity.send(new C.SetMeshByPath(path, {scale: scale}));
-        entity.receive(new C.SetPhysicsTransform(new C.Vector3(104, 6, 12), undefined));
+        console.log("send", this.room, this.generatePosition);
+        entity.receive(new C.SetPhysicsTransform(this.generatePosition, undefined));
         //entity.set(new C.SetPhysicsTransform(new C.Vector3(0, 50, 0)));
 
         const player = playerEntity.get(C.Player)!;
