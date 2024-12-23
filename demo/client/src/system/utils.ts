@@ -251,10 +251,10 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // �
     const object3d = sprite.object3d;
     const u_playerCatch = connectEntity.getR(C.U_PlayerCatch);
     let playerCatch = connectEntity.get(C.PlayerCatch);
-    if(connectEntity.get(C.PlayerCatch)?.catchType == CATCH_TYPE.HAND && 
+    /*if(connectEntity.get(C.PlayerCatch)?.catchType == CATCH_TYPE.HAND && 
     u_playerCatch?.catchType == CATCH_TYPE.HAND) {
         u_playerCatch.catchType = CATCH_TYPE.NONE;
-    } //强行修复换房间时拿着东西会留下mesh的bug
+    }*/ //强行修复换房间时拿着东西会留下mesh的bug
     if(u_playerCatch) {
         console.log("hihihi!!");
         if(playerCatch) {
@@ -421,7 +421,7 @@ export function sendPlayerMessage(str: string) {
             if(command == 'cd') {
                 if(args[0] == '0' || args[0] == '1') {
                     const changeRoom = parseInt(args[0]);
-                    if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntity) {
+                    if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
                         send({type: 'error', str: `Error: You are catching an item.`});
                     } else if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
                         send({type: 'error', str: `Error: You are already in room ${args[0]}.`});
