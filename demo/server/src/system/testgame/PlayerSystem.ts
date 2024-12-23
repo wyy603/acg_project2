@@ -388,16 +388,16 @@ export class PlayerSystem {
                         U.spawnPlate(playerEntity);
                     }
                     if(keyDown.includes('v')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.hamburger);
+                        U.spawnSomething(playerEntity, INGREDIENT.sliced_bread);
                     }
                     if(keyDown.includes('b')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.salad);
+                        U.spawnSomething(playerEntity, INGREDIENT.cucumber);
                     }
                     if(keyDown.includes('n')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.potato_slice);
+                        U.spawnSomething(playerEntity, INGREDIENT.cutted_cucumber);
                     }
                     if(keyDown.includes('m')) {
-                        U.spawnSomething(playerEntity, INGREDIENT.tomato_slice);
+                        U.spawnSomething(playerEntity, INGREDIENT.onion);
                     }
                     if(keyDown.includes('x')) {
                         if(playerCatch.catchType == CATCH_TYPE.HAND && playerCatch.catchEntity!.get(C.Gun)) {

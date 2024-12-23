@@ -82,10 +82,11 @@ export class GridSystem {
                 entities.push(entity);
                 entity.getS(C.FoodInfo)!.inGrid = 1;
                 entity.send(entity.getS(C.FoodInfo)!);
-                entity.receive(new C.SetPhysicsTransform(position.copy().add(new C.Vector3(0,0.5+U.getFoodHeight(entity)/2,0))));
+                entity.receive(new C.SetPhysicsTransform(position.copy().add(new C.Vector3(0,0.3+U.getFoodHeight(entity)/2,0))));
                 U.updateFoodBody(entity, physicsWorld);
             } else if(entities.length == 1) {
                 const currentEntity = this.grids.get(position)![0]!, foodInfo = currentEntity.getS(C.FoodInfo)!;
+                console.log("hello, insFood", foodInfo, entity!.getS(C.FoodInfo)!.ingredients);
                 U.insFood(foodInfo, entity!.getS(C.FoodInfo)!.ingredients);
                 console.log("result foodInfo.ingredients", foodInfo.ingredients);
                 currentEntity.send(foodInfo);
@@ -112,7 +113,7 @@ export class GridSystem {
 		return food;
 	}
 	takeFood(position: C.Vector3, physicsWorld: AmmoModule.btDiscreteDynamicsWorld) {
-		const food = this.grids.get(position)!.at(0);
+		const food = this.grids.get(position)?.at(0);
 		if(food) {
 			this.onRemove(food, physicsWorld);
 			this.grids.get(position)!.splice(0,1);
