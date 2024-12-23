@@ -24,6 +24,7 @@ export function Message({ playerChat }: { playerChat: any }) {
             </div>
         );
     } else if (playerChat.type === 'systemmessage') {
+        playerChat.setIsFocused(true);
         return (
             <div style={{ ...baseStyle, color: "green" }}>
                 <span>{playerChat.str}</span>
@@ -76,7 +77,7 @@ export function ChatBox() {
             <div style={outerBox}>
                 <div style={messageBox}>
                     {chatMessages.map((playerChat, index) => (
-                        <Message playerChat={{ ...playerChat, isFocused }} key={index} />
+                        <Message playerChat={{ ...playerChat, isFocused, setIsFocused }} key={index} />
                     ))}
                     <div ref={messageEndRef} />
                 </div>

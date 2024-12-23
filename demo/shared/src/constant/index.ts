@@ -102,6 +102,8 @@ export enum INGREDIENT {
     pizza3,
     pizza4,
     pizza5,
+    gun,
+    knife,
 };
 
 interface INGREDIENT_INFO {
@@ -351,6 +353,20 @@ export const INGREDIENT_PROPERTY: Record<INGREDIENT, INGREDIENT_INFO> = {
         radius: 0.50,
         priority: 0
     },
+    [INGREDIENT.gun]: {
+        name: "gun",
+        recipe: [],
+        type: "raw",
+        mesh: { path: "public/assets/tool/gun/gun.glb", scale: 1 },
+        collide: new Ammo.btSphereShape(0.4),
+    },
+    [INGREDIENT.knife]: {
+        name: "knife",
+        recipe: [],
+        type: "raw",
+        mesh: { path: "public/assets/tool/knife/knife.glb", scale: 1 },
+        collide: new Ammo.btCapsuleShape(0.2, 0.8),
+    },
 };
 
 export interface LEVEL_Config {
@@ -367,13 +383,14 @@ export interface LEVEL_Config {
     tools: {position: Vector3, type: "lantern" | "gun"}[],
     generatePosition: Vector3,
     roomPosition: Vector3,
+    tips?: {position: Vector3, str: string}[],
 };
 
 
 export const LEVEL0_Config: LEVEL_Config = {
-    level_path: "public/assets/main_world/main_world.glb",
+    level_path: "public/assets/main_world/main_world_mc.glb",
     level_name: "main_world",
-    roomPosition: new Vector3(0, 0, 0),
+    roomPosition: new Vector3(0, -3, 0),
     generatePosition: new Vector3(0, 10, 0),
     knive_detectors: [
         new Vector3(-2, 5, 2).dec(new Vector3(0, 0, 0)),
@@ -382,9 +399,9 @@ export const LEVEL0_Config: LEVEL_Config = {
         new Vector3(-2, 5, -1).dec(new Vector3(0, 0, 0)),
     ],
     knives: [
+        /*new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
         new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
-        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
-        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
+        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),*/
     ],
     servingArea: [
     ],
@@ -393,6 +410,8 @@ export const LEVEL0_Config: LEVEL_Config = {
         { position: new Vector3(-2, 5, 5).dec(new Vector3(0, 0, 0)), item: INGREDIENT.potato },
         { position: new Vector3(-2, 5, 7).dec(new Vector3(0, 0, 0)), item: INGREDIENT.raw_beef },
         { position: new Vector3(-2, 5, -4).dec(new Vector3(0, 0, 0)), item: INGREDIENT.plate },
+        { position: new Vector3(1, 5, 9).dec(new Vector3(0, 0, 0)), item: INGREDIENT.knife },
+        { position: new Vector3(1, 5, -10).dec(new Vector3(0, 0, 0)), item: INGREDIENT.gun },
     ],
     flatPositions: [
         new Vector3(-2, 4.5, -7).dec(new Vector3(0, 0, 0)),
@@ -400,11 +419,19 @@ export const LEVEL0_Config: LEVEL_Config = {
     ],
     faces: [
         { position: new Vector3(-1.499, 5, -1).dec(new Vector3(0, 0, 0)), name: "stove_front_on" },
+        { position: new Vector3(1, 5.501, 9).dec(new Vector3(0, 0, 0)), name: "assets/tool/knife/icon.png" },
+        { position: new Vector3(1, 5.501, -10).dec(new Vector3(0, 0, 0)), name: "assets/tool/gun/icon.png" },
     ],
     water: [],
     tools: [
-        {position: new Vector3(0, 10, 0), type: "gun"},
-    ]
+        //{position: new Vector3(0, 10, 0), type: "gun"},
+    ],
+    tips: [
+        { position: new Vector3(-2, 2, 4).dec(new Vector3(0, 0, 0)), str: "鼠标左键：拿起物品或与生成器、菜板、放置区等交互；鼠标右键：放下物品。" },
+        { position: new Vector3(-2, 2, 1).dec(new Vector3(0, 0, 0)), str: "在拿起食物时，鼠标左键可以将部分食物放到菜板上。只能在菜板上切菜。" },
+        { position: new Vector3(-2, 2, -2).dec(new Vector3(0, 0, 0)), str: "在拿起食物时，鼠标左键可以将部分食物放到煎锅上。" },
+        { position: new Vector3(-2, 2, -5).dec(new Vector3(0, 0, 0)), str: "左边生成盘子，右边是放置区。只能在放置区对食物进行合成。所有菜都需要放在盘子上才能送出。在聊天栏中输入 /help 查询更多帮助。" },
+    ],
 };
 
 export const LEVEL1_Config: LEVEL_Config = {
@@ -427,7 +454,7 @@ export const LEVEL1_Config: LEVEL_Config = {
     flatPositions: [] as Vector3[],
     faces: [],
     water: [],
-    tools: []
+    tools: [],
 };
 for (let x = 95; x <= 101; x++) {
     LEVEL1_Config.flatPositions.push(new Vector3(x, 6, 10).dec(new Vector3(100, 2, 10)));

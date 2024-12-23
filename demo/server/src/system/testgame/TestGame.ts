@@ -76,6 +76,30 @@ async function generateLevel(
     }
 
     // Configure food storage places in level one
+    if(Config.tips) {
+        for (const storageItem of Config.tips) {
+            const { position, str } = storageItem;
+
+            const tips = new Entity(room);
+            const halfExtents = new Ammo.btVector3(0.50, 0.50, 0.50); // Half extents for a unit cube
+            const bodyinfo = U.getRigidBodyConstructionInfo(0, new Ammo.btBoxShape(halfExtents));
+            bodyinfo.set_m_linearDamping(0);
+            bodyinfo.set_m_restitution(0);
+
+            const body = new Ammo.btRigidBody(bodyinfo);
+            body.setCollisionFlags(body.getCollisionFlags() | 4);
+            const state = SPRITE_STATE.NONE | SPRITE_STATE.DETECTOR;
+            const spriteinfo = `tips`
+            tips.set(new C.Sprite(spriteinfo, body, state));
+            tips.send(new C.SpriteInfo(spriteinfo, state));
+            tips.send(new C.SetMesh(new C.BoxGeometry(1, 1, 1), new C.DetectorMaterial(1,1,1)));
+            tips.receive(new C.SetPhysicsTransform(position, undefined, undefined));
+            tips.send(new C.Tips(str));
+            //console.log((plane.getR(C.SetPhysicsTransform) as C.SetPhysicsTransform).position, item);
+            //console.log("set position = ",realPosition);
+        }
+    }
+
     for (const storageItem of Config.storage) {
         const { position, item } = storageItem;
         const realPosition = new C.Vector3(); realPosition.clone(position);
@@ -318,6 +342,17 @@ export class TestGame {
             if(this.level == 0) {
                 generateLevel(LEVEL0_Config, this.room, this.gridSystem, this.physicsSystem);
                 this.generatePosition = LEVEL0_Config.generatePosition;
+                
+                const world = new Entity(this.room);
+                const path = "public/assets/main_world/main_world.glb";
+                const bodyinfo = U.getRigidBodyConstructionInfo(0, U.TriangleShapeByMesh(await AssetSystem.get(path)));
+                const body = new Ammo.btRigidBody(bodyinfo);
+                body.setRestitution(0.8);
+                const state = SPRITE_STATE.COLLIDE;
+                world.set(new C.Sprite("level0_world", body, state));
+                world.send(new C.SpriteInfo("level0_world", state));
+                world.send(new C.SetMeshByPath(path, {minecraft: true}));
+                world.receive(new C.SetPhysicsTransform(new C.Vector3(0,0,0), undefined, undefined));
             } else if(this.level == 1) {
                 generateLevel(LEVEL1_Config, this.room, this.gridSystem, this.physicsSystem);
                 this.generatePosition = LEVEL1_Config.generatePosition;

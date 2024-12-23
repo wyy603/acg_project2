@@ -165,3 +165,7 @@ export class PlayerChat extends UComponent {
 export class SetTime extends UComponent {
     constructor(public str: "day" | "night") { super(); }
 };
+@register()
+export class Tips extends UComponent {
+    constructor(public str: string) { super(); }
+};

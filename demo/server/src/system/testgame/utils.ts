@@ -2,7 +2,7 @@ import { Entity } from '@shared/basic'
 import * as C from '@/component'
 import { AmmoModule, Ammo } from '@shared/utils/ammo'
 import { SPRITE_STATE } from '@shared/constant'
-import * as U from '@shared/utils'
+import * as U from '@/system/testgame/utils'
 import { EntitySystem } from '@shared/system'
 import { INGREDIENT, INGREDIENT_PROPERTY } from '@shared/constant'
 import * as THREE from 'three'
@@ -139,17 +139,50 @@ export function spawnSomething(player: Entity, ingredient: INGREDIENT) {
 }
 export function spawnRawFood(itemType: INGREDIENT, room: number) {
     //console.log("spawnRawFood");
-    const item = new Entity(room);
-    item.send(new C.FoodInfo([itemType]));
-    const body = getFoodBody(item);
-    //body.setActivationState(4); // DISABLE_ACTIVATION
-    const state = SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE;
-    const spriteinfo = INGREDIENT_PROPERTY[itemType].name;
-    item.set(new C.Sprite(spriteinfo, body, state));
-    item.send(new C.SpriteInfo(spriteinfo, state));
-    item.receive(new C.SetPhysicsTransform(new C.Vector3(0,0,0), undefined, undefined));
-    updateFoodInfo(item.getS(C.FoodInfo)!);
-    return item;
+    if(itemType == INGREDIENT.knife) {
+        const knife = U.createSprite({
+            room: room,
+            mass: 1,
+            collision_shape: new Ammo.btCapsuleShape(0.2, 0.8),
+            name: `knife`,
+            sprite_state: SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE,
+            linear_damping: 0.5,
+            restitution: 0.8,
+            ccd_threshold: 0.1,
+            ccd_radius: 0.1
+        });
+        knife.send(new C.SetMeshByPath("assets/tool/knife/knife.glb", {scale: 0.005}));
+        knife.receive(new C.SetPhysicsTransform(new C.Vector3(0,0,0)));
+        knife.set(new C.knifeInfo(new C.Vector3(0,0,0)));
+        return knife;
+    } else if(itemType == INGREDIENT.gun) {
+        const gun = new Entity(room);
+        const path = 'public/assets/tool/gun/gun.glb';
+        const bodyinfo = U.getRigidBodyConstructionInfo(1, new Ammo.btSphereShape(0.4));
+        bodyinfo.set_m_linearDamping(0.5);
+        const body = new Ammo.btRigidBody(bodyinfo);
+        const state = SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE;
+        body.setCcdMotionThreshold(0.001);
+        body.setCcdSweptSphereRadius(0.01);
+        gun.set(new C.Sprite(`gun`, body, state));
+        gun.send(new C.SpriteInfo(`gun`, state));
+        gun.send(new C.SetMeshByPath(path));
+        gun.receive(new C.SetPhysicsTransform(new C.Vector3(0, 0, 0), undefined, undefined));
+        gun.set(new C.Gun());
+        return gun;
+    } else {
+        const item = new Entity(room);
+        item.send(new C.FoodInfo([itemType]));
+        const body = getFoodBody(item);
+        //body.setActivationState(4); // DISABLE_ACTIVATION
+        const state = SPRITE_STATE.COLLIDE | SPRITE_STATE.UPDATE_PHYSICS | SPRITE_STATE.CATCHABLE;
+        const spriteinfo = INGREDIENT_PROPERTY[itemType].name;
+        item.set(new C.Sprite(spriteinfo, body, state));
+        item.send(new C.SpriteInfo(spriteinfo, state));
+        item.receive(new C.SetPhysicsTransform(new C.Vector3(0,0,0), undefined, undefined));
+        updateFoodInfo(item.getS(C.FoodInfo)!);
+        return item;
+    }
 }
 
 export function getFoodHeight(entity: C.Entity) {
