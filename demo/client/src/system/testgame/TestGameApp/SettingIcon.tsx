@@ -54,7 +54,7 @@ export function SettingIcon() {
         paddingRight: '20px',
         borderRadius: '10px',
         display: showSettings ? 'block' : 'none',
-        zIndex: 1001,
+        zIndex: 1002,
     };
 
     const containerStyle: CSSProperties = {
