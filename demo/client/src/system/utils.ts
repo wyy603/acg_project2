@@ -401,6 +401,8 @@ export function getMinecraftBlock({north, south, east, west, bottom, up}: {
 }
 
 import { HTMLSystem } from '@/system/testgame/HTMLSystem'
+import { OvercraftSystemClient } from './testgame/OvercraftSystem'
+import { Game } from '@/system/GameSystem'
 
 function playerChangeRoom(room: number) {
     const player = EntitySystem.get(WebSocketSystem.uuid)!;
@@ -422,7 +424,10 @@ export function sendPlayerMessage(str: string) {
             if(command == 'cd') {
                 if(args[0] == '0' || args[0] == '1' || args[0] == '2' || args[0] == '3') {
                     const changeRoom = parseInt(args[0]);
-                    if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
+                    const system = Game.gamesystems.get(0) as OvercraftSystemClient;
+                    if(system && system.isRunning()) {
+                        send({type: 'error', str: `Error: Game is running.`});
+                    } else if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
                         send({type: 'error', str: `Error: You are catching an item.`});
                     } else if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
                         send({type: 'error', str: `Error: You are already in room ${args[0]}.`});
