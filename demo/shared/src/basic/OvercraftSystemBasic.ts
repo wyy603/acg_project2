@@ -21,7 +21,7 @@ import { ORDER_PROPERTY } from "@shared/constant";
  */
 
 const level1Config = {
-	duration: 5,
+	duration: 300,
 	minOrders: 2,
 	maxOrders: 6,
 	orderRegisterList: [

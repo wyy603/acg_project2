@@ -270,6 +270,7 @@ function handleClick(entity: Entity, entities: Entity[], physicsWorld: AmmoModul
                     // console.log("hi1");
                     // console.log(spawnedItem);
                     // console.log(playerCatch)
+                    // assert(player.catchType == CATCH_TYPE.NONE)
                     // if(player.catchType == CATCH_TYPE.HAND && playerCatch.catchType === CATCH_TYPE.NONE) {
                     //     console.log("hi2");
                     //     playerCatch.catchType = CATCH_TYPE.HAND;
