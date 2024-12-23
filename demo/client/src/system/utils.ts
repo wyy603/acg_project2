@@ -168,8 +168,9 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
             //console.log("setTexturePlane material water", material);
             sprite.object3d = plane;
         });
-    } else if(name == "cow_icon") {
-        AssetSystem.loadBitmap("assets/minecraft_workspace/textures/cow_icon.png", (bitmap) => {
+    } else {
+        if(name == "cow") name = "assets/minecraft_workspace/textures/cow_icon.png";
+        AssetSystem.loadBitmap(name, (bitmap) => {
             const material = setMaterial(bitmap, {time: 6});
             const geometry = setGeometry();
             const plane = new THREE.Mesh(geometry, material);
