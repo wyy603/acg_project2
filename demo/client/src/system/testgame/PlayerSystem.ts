@@ -163,7 +163,7 @@ export class PlayerSystem {
                         texture.minFilter = THREE.NearestFilter;
                         texture.magFilter = THREE.NearestFilter;
                         texture.colorSpace = "srgb";
-                        U.updateTexture(sprite.object3d, texture);
+                        U.updateTexture(sprite.object3d, texture, sprite.childrens);
                     });
                 });
                 playerSkin.mark(this);
