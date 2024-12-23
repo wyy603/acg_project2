@@ -96,6 +96,12 @@ export enum INGREDIENT {
     cutted_cucumber,
     onion,
     cutted_onion,
+    pizza_dough,
+    pizza1,
+    pizza2,
+    pizza3,
+    pizza4,
+    pizza5,
 };
 
 export interface LEVEL_Config {
@@ -204,8 +210,8 @@ export const LEVEL2_Config: LEVEL_Config = {
         { position: new Vector3(94, 7, 12).dec(new Vector3(100, 2, 11)), item: INGREDIENT.cabbage },
         { position: new Vector3(94, 7, 11).dec(new Vector3(100, 2, 11)), item: INGREDIENT.raw_beef },
         { position: new Vector3(94, 7, 10).dec(new Vector3(100, 2, 11)), item: INGREDIENT.sliced_bread },
-        { position: new Vector3(94, 7, 9).dec(new Vector3(100, 2, 11)), item: INGREDIENT.cucumber },
-        { position: new Vector3(94, 7, 8).dec(new Vector3(100, 2, 11)), item: INGREDIENT.onion },
+        { position: new Vector3(94, 7, 9).dec(new Vector3(100, 2, 11)), item: INGREDIENT.pizza_dough },
+        { position: new Vector3(94, 7, 8).dec(new Vector3(100, 2, 11)), item: INGREDIENT.pizza1 },
         { position: new Vector3(101, 7, 5).dec(new Vector3(100, 2, 11)), item: INGREDIENT.plate },
         { position: new Vector3(98, 7, 5).dec(new Vector3(100, 2, 11)), item: INGREDIENT.plate },
     ],
@@ -415,6 +421,66 @@ export const INGREDIENT_PROPERTY: Record<INGREDIENT, INGREDIENT_INFO> = {
         collide: new Ammo.btSphereShape(0.35),
         height: 0.04,
         radius: 0.28,
+        priority: 0
+    },
+    [INGREDIENT.pizza_dough]: {
+        name: "pizza_dough",
+        recipe: [],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/pizzas/pizza_dough.glb", scale: 3.35 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.50,
+        priority: 50
+    },
+    [INGREDIENT.pizza1]: {
+        name: "pizza1",
+        recipe: [INGREDIENT.pizza_dough, INGREDIENT.tomato_slice, INGREDIENT.fried],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/pizzas/pizza1.glb", scale: 0.05 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.50,
+        priority: 0
+    },
+    [INGREDIENT.pizza2]: {
+        name: "pizza2",
+        recipe: [INGREDIENT.pizza_dough, INGREDIENT.tomato_slice, INGREDIENT.cutted_cucumber, INGREDIENT.fried],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/pizzas/pizza2.glb", scale: 0.05 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.50,
+        priority: 0
+    },
+    [INGREDIENT.pizza3]: {
+        name: "pizza3",
+        recipe: [INGREDIENT.pizza_dough, INGREDIENT.cutted_cucumber, INGREDIENT.fried],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/pizzas/pizza3.glb", scale: 0.05 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.50,
+        priority: 0
+    },
+    [INGREDIENT.pizza4]: {
+        name: "pizza4",
+        recipe: [],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/pizzas/pizza4.glb", scale: 0.05 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.50,
+        priority: 0
+    },
+    [INGREDIENT.pizza5]: {
+        name: "pizza5",
+        recipe: [INGREDIENT.pizza_dough, INGREDIENT.cooked_beef, INGREDIENT.fried],
+        type: "cylinder",
+        mesh: { path: "public/assets/food/pizzas/pizza5.glb", scale: 0.05 },
+        collide: new Ammo.btSphereShape(0.35),
+        height: 0.04,
+        radius: 0.50,
         priority: 0
     },
 };
