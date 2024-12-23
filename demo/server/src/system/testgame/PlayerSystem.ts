@@ -402,11 +402,11 @@ export class PlayerSystem {
                         const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
                         if(system && !system.isRunning()) system.run();
                     }
-                    if(keyDown.includes('o')) {
-                        const roomID = entity.room;
-                        const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
-                        if(system && system.isRunning()) system.close();
-                    }
+                    // if(keyDown.includes('o')) {
+                    //     const roomID = entity.room;
+                    //     const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
+                    //     if(system && system.isRunning()) system.close();
+                    // }
                 }
                 /*if(playerAnimation.name != "still_test") {
                     U.printV(velocity);

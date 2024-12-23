@@ -558,7 +558,7 @@ export const ORDER_PROPERTY: Record<ORDER_TYPE, ORDER_INFO> = {
     [ORDER_TYPE.Salad]: {
         ingredients: [INGREDIENT.salad, INGREDIENT.plate],
         complexity: 3,
-        tutorial: [INGREDIENT.tomato_slice, INGREDIENT.cutted_cabbage, INGREDIENT.cutted_cabbage],
+        tutorial: [INGREDIENT.tomato_slice, INGREDIENT.cutted_cabbage, INGREDIENT.cutted_cabbage, INGREDIENT.cutted_onion],
         scoreFunction: (x) => (x >= 0 ? [2 * 20, x] : [-30, 0]),
     },
     [ORDER_TYPE.Tomato_Pizza]: {
