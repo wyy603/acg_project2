@@ -21,14 +21,18 @@ import { ORDER_PROPERTY } from "@shared/constant";
  */
 
 const level1Config = {
-	duration: 120,
-	minOrders: 1,
-	maxOrders: 4,
+	duration: 300,
+	minOrders: 2,
+	maxOrders: 6,
 	orderRegisterList: [
-		{ type: ORDER_TYPE.Chopped_Potato, availableTime: [-1, 120] },
-		{ type: ORDER_TYPE.Chopped_Tomato, availableTime: [-1, 120] },
+		// { type: ORDER_TYPE.Chopped_Potato, availableTime: [-1, 90] },
+		// { type: ORDER_TYPE.Chopped_Tomato, availableTime: [-1, 90] },
+		// { type: ORDER_TYPE.Salad, availableTime: [60, 150]},
+		// { type: ORDER_TYPE.Tomato_Pizza, availableTime: [90, 240]},
+		// { type: ORDER_TYPE.Pepperoni_Pizza, availableTime: [120, 270]},
+		{ type: ORDER_TYPE.Hamburger, availableTime: [-1, 300]},
 	], 
-	spawnCheckpoints: [1, 60, 60], 
+	spawnCheckpoints: [20, 40, 40, 80, 80, 110, 140, 170, 200, 230, 250, 275], 
 };
 
 export class OvercraftSystemBasic {

@@ -1,10 +1,8 @@
 import { OvercraftSystemBasic } from '@shared/basic/OvercraftSystemBasic'
-import { FoodInfo, OrderInfo } from '@shared/component';
+import { OrderInfo } from '@shared/component';
 import { OvercraftUpdateEvent } from '@shared/component/event';
-import { WebSocketSystem } from '../WebSocketSystem';
 import { HTMLSystem } from './HTMLSystem'
 import { ORDER_PROPERTY } from '@shared/constant';
-import { INGREDIENT_PROPERTY } from '@shared/constant';
 
 export class OvercraftSystemClient extends OvercraftSystemBasic {
 	protected weak_subtick: number;
@@ -60,7 +58,7 @@ export class OvercraftSystemClient extends OvercraftSystemBasic {
 			HTMLSystem.set2("OvercraftInfo", "time", Math.floor(this.weak_subtick / OvercraftSystemClient.TIME_PER_SEC));
 			HTMLSystem.set2("OvercraftInfo", "orderList", this.currentOrders.map(x => {
 				const info = ORDER_PROPERTY[x.type];
-				return {ingredients: info.ingredients, percentage: Math.floor(x.getPercentage(this.weak_subtick) * 100)};
+				return {ingredients: info.ingredients, percentage: Math.floor(x.getPercentage(this.weak_subtick) * 100), tutorial: info.tutorial};
 			}));
 
 			//order create, once per second. 

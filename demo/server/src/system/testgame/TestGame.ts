@@ -489,7 +489,7 @@ export class TestGame {
         const entity = new Entity(this.room);
         const path = 'public/assets/main_character/minecraft_idle_and_walking_animation.glb';
         const scale = 1;
-        const capsuleShape = new Ammo.btCapsuleShape(0.3 * scale, 1.3 * scale);
+        const capsuleShape = new Ammo.btCapsuleShape(0.4 * scale, 1.3 * scale);
         const collide = new Ammo.btCompoundShape();
         const transform = new Ammo.btTransform();
         transform.setIdentity();
