@@ -226,8 +226,8 @@ export const LEVEL2_Config: LEVEL_Config = {
     water: [],
     tools: [
         {position: new Vector3(105-0.6, 10, 14-0.6), type: "lantern"},
-        {position: new Vector3(105-1,13,15), type: "lantern"},
-        {position: new Vector3(94,13,14-1), type: "lantern"},
+        //{position: new Vector3(105-1,13,15), type: "lantern"},
+        //{position: new Vector3(94,13,14-1), type: "lantern"},
     ]
 };
 /*for(let x = 98; x <= 101; ++x) {
