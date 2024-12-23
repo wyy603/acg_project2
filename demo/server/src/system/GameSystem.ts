@@ -37,7 +37,6 @@ export class GameSystem {
             this.games.set(0, game0);
             const sys0 = new OvercraftSystemServer(0, true); // NOTE: actually still in room id 0, too lazy to change. 
             sys0.setConfig();
-            // game1.run();
             this.gamesystems.set(0, sys0);
         }
 
@@ -47,7 +46,6 @@ export class GameSystem {
             this.games.set(1, game1);
             const sys1 = new OvercraftSystemServer(1, true);
             sys1.setConfig();
-            // game1.run();
             this.gamesystems.set(1, sys1);
         }
 
@@ -57,7 +55,6 @@ export class GameSystem {
             this.games.set(2, game1);
             const sys1 = new OvercraftSystemServer(2, true);
             sys1.setConfig();
-            // game1.run();
             this.gamesystems.set(2, sys1);
         }
 
@@ -67,7 +64,6 @@ export class GameSystem {
             this.games.set(3, game1);
             const sys1 = new OvercraftSystemServer(3, true);
             sys1.setConfig();
-            // game1.run();
             this.gamesystems.set(3, sys1);
         }
     }

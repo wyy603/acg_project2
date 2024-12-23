@@ -1,6 +1,6 @@
 import { Entity } from '@shared/basic'
 import { EntitySystem } from '@shared/system'
-import { WebSocketSystem, AssetSystem } from '@/system'
+import { WebSocketSystem, AssetSystem} from '@/system'
 import { INGREDIENT, INGREDIENT_PROPERTY } from '@shared/constant'
 import * as C from '@/component'
 import * as THREE from 'three'

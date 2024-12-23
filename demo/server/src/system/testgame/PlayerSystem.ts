@@ -400,7 +400,9 @@ export class PlayerSystem {
                     if(keyDown.includes('q')) {
                         const roomID = entity.room;
                         const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
-                        if(system && !system.isRunning()) system.run();
+                        if(roomID !=0) {
+                            if(system && !system.isRunning()) system.run();
+                        }
                     }
                     // if(keyDown.includes('o')) {
                     //     const roomID = entity.room;
