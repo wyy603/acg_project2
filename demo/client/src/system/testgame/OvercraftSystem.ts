@@ -30,23 +30,26 @@ export class OvercraftSystemClient extends OvercraftSystemBasic {
 			throw new Error("[OvercraftSystem] Client not synced!");
 		}
 	}
-	run(): void {
-		if(!this.config) {
-			throw new Error("No config detected");
-		}
-
-		this.isEnded = false;
+	clearStatus() {
 		this.spawnTimestamps = this.config.spawnCheckpoints.slice();
 		this.spawnTimestamps!.sort((a, b) => a - b);
 		this.score = [0,0];
-		this.currentOrders.length = 0;
-		this.onServingList.length = 0;
+		this.currentOrders = []
+		this.onServingList = []
 		this.subtick = 0;
 		this.checkAll = false;
 		this.completeList = [];
 		this.createList = [];
 		this.timeBais = -Date.now();
-
+	}
+	run(): void {
+		if(!this.config) {
+			throw new Error("No config detected");
+		}
+		
+		this.clearStatus();
+		this.isEnded = false;
+		
 		this.checkers = setInterval(() => {
 			if(!this.isRunning()) {
 				clearInterval(this.checkers!);
@@ -110,12 +113,28 @@ export class OvercraftSystemClient extends OvercraftSystemBasic {
 	onMessage(event: OvercraftUpdateEvent) {
 		console.log("[OvercraftSystem]: recevied messages", event);
 		if(event.reset) {
+			console.log("Yes, i am reseting overcraft system.")
+			if (this.checkers) { // Clear the interval if it exists
+                if(this.checkers) clearInterval(this.checkers);
+                this.checkers = null;
+				return;
+            }
+			this.run();
+		}
+		if(event.stop) {
+			console.log("Yes, i am stopping overcraft system.")
 			if (this.checkers) { // Clear the interval if it exists
                 clearInterval(this.checkers);
                 this.checkers = null;
-				this.run();
-				return;
             }
+			this.clearStatus();
+			HTMLSystem.set2("OvercraftInfo", "score", Math.round(this.score[0]+this.score[1]));
+			HTMLSystem.set2("OvercraftInfo", "time", "Game is not running.");
+			console.log(this.currentOrders);
+			HTMLSystem.set2("OvercraftInfo", "orderList", this.currentOrders.map(x => {
+				const info = ORDER_PROPERTY[x.type];
+				return {ingredients: info.ingredients, percentage: Math.floor(x.getPercentage(this.weak_subtick) * 100)};
+			}));
 		}
 		this.subtick = event.subtick;
 		const now = Date.now();

@@ -42,7 +42,7 @@ export class OvercraftSystemServer extends OvercraftSystemBasic {
 		this.currentOrders = [];
 		this.onServingList = [];
 		this.subtick = 0;
-		this.messenger = new OvercraftUpdateEvent(-1,false,false,[],[]);
+		this.messenger = new OvercraftUpdateEvent(-1,false,false,false,[],[]);
 		this.startTime = Date.now();
 		this.lastCreate = -10000;
 		this.messenger.reset = true;
@@ -50,7 +50,7 @@ export class OvercraftSystemServer extends OvercraftSystemBasic {
 		// console.log("I think this is only runned once.");
 
 		const runChecker = () => {
-			if(!this.isRunning) return;
+			if(!this.isRunning()) return;
 
 			this.subtick = (Date.now()-this.startTime);
 
@@ -101,27 +101,34 @@ export class OvercraftSystemServer extends OvercraftSystemBasic {
 				this.currentOrders!.splice(0,1);
 				this.messenger.checkAll = true;
 			}
-
-			//send updates to clients
-			if(this.messenger.completeList.length || this.messenger.checkAll || this.messenger.spawnList.length || this.messenger.reset) {
-				this.messenger.subtick = this.subtick;
-				WebSocketSystem.broadcast(this.roomID, [this.messenger]);
-				this.messenger = new OvercraftUpdateEvent(-1,false,false,[],[]);
-			}
-
+			
 			this.subtick += 1;
 			//Game ending check
 			if(this.subtick >= this.config.duration * OvercraftSystemBasic.TIME_PER_SEC) {
-				this.isEnded = true;
-				console.log('Duration reached');
-				return;
+				this.close();
 			}
+
+			//send updates to clients
+			if(this.messenger.completeList.length || this.messenger.checkAll || this.messenger.spawnList.length || this.messenger.reset || this.messenger.stop) {
+				this.messenger.subtick = this.subtick;
+				WebSocketSystem.broadcast(this.roomID, [this.messenger]);
+				this.messenger = new OvercraftUpdateEvent(-1,false,false,false,[],[]);
+			}
+
 
 			setTimeout(runChecker, OvercraftSystemBasic.checkInterval);
 		};
 
 		runChecker();
 		
+	}
+	close() {
+		this.isEnded = true;
+		this.messenger.stop = true;
+		WebSocketSystem.broadcast(this.roomID, [this.messenger]);
+		this.messenger = new OvercraftUpdateEvent(-1,false,false,false,[],[]);
+		console.log('Game is stopped');
+		return;
 	}
 	onServing(food: FoodInfo) {
 		console.log("Serving food!: ", food);
