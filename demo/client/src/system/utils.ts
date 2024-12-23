@@ -422,7 +422,9 @@ export function sendPlayerMessage(str: string) {
             if(command == 'cd') {
                 if(args[0] == '0' || args[0] == '1') {
                     const changeRoom = parseInt(args[0]);
-                    if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
+                    if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntity) {
+                        send({type: 'error', str: `Error: You are catching an item.`});
+                    } else if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
                         send({type: 'error', str: `Error: You are already in room ${args[0]}.`});
                     } else {
                         playerChangeRoom(parseInt(args[0]));
