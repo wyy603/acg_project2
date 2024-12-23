@@ -51,25 +51,25 @@ export class GameSystem {
             this.gamesystems.set(1, sys1);
         }
 
-        // {
-        //     const game1 = new TestGame(2, 3);
-        //     await game1.init();
-        //     this.games.set(1, game1);
-        //     const sys1 = new OvercraftSystemServer(2, true);
-        //     sys1.setConfig();
-        //     // game1.run();
-        //     this.gamesystems.set(1, sys1);
-        // }
+        {
+            const game1 = new TestGame(2, 2);
+            await game1.init();
+            this.games.set(2, game1);
+            const sys1 = new OvercraftSystemServer(2, true);
+            sys1.setConfig();
+            // game1.run();
+            this.gamesystems.set(2, sys1);
+        }
 
-        // {
-        //     const game1 = new TestGame(3, 4);
-        //     await game1.init();
-        //     this.games.set(1, game1);
-        //     const sys1 = new OvercraftSystemServer(3, true);
-        //     sys1.setConfig();
-        //     // game1.run();
-        //     this.gamesystems.set(1, sys1);
-        // }
+        {
+            const game1 = new TestGame(3, 2);
+            await game1.init();
+            this.games.set(3, game1);
+            const sys1 = new OvercraftSystemServer(3, true);
+            sys1.setConfig();
+            // game1.run();
+            this.gamesystems.set(3, sys1);
+        }
     }
     static getRoomType(id: number) {
         if(this.games.get(id) instanceof TestGame) return ROOM_TYPE.testGame;

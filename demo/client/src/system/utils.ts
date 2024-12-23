@@ -420,7 +420,7 @@ export function sendPlayerMessage(str: string) {
             const command = parts[0];
             const args = parts.slice(1);
             if(command == 'cd') {
-                if(args[0] == '0' || args[0] == '1') {
+                if(args[0] == '0' || args[0] == '1' || args[0] == '2' || args[0] == '3') {
                     const changeRoom = parseInt(args[0]);
                     if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
                         send({type: 'error', str: `Error: You are catching an item.`});
