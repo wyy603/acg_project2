@@ -274,7 +274,7 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // ç¬
                 RenderSystem.fakeCamera.add(catchObject3D);
                 catchObject3D.position.set(2, -0.5, -2);
                 catchObject3D.rotation.set(0, -Math.PI / 2, 0);
-                const position = getEntityByName("cube")[0].get(C.Sprite)!.object3d.position;
+                //const position = getEntityByName("cube")[0].get(C.Sprite)!.object3d.position;
                 // Logger.set("cube_post", `{'x':${Math.round(position.x)}, 'y':${Math.round(position.y)}, 'z':${Math.round(position.z)}}`)
             } else {
                 sprite.addChildren(catchObject3D);

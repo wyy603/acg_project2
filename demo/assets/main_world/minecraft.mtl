@@ -1,0 +1,135 @@
+
+newmtl farmersdelight_block-skillet_bottom
+Kd 0.1622 0.1622 0.1622
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/skillet_bottom.png
+map_d tex/farmersdelight/block/skillet_bottom.png
+
+newmtl minecraft_block-iron_block
+Kd 0.8632 0.8628 0.8628
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/iron_block.png
+
+newmtl farmersdelight_block-crate_bottom
+Kd 0.2985 0.2024 0.1160
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/crate_bottom.png
+
+newmtl pizzacraft_block-stripped_olive_log
+Kd 0.5938 0.4759 0.2943
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/pizzacraft/block/stripped_olive_log.png
+
+newmtl farmersdelight_block-tomato_crate_side
+Kd 0.4225 0.2501 0.1577
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/tomato_crate_side.png
+
+newmtl minecraft_block-quartz_pillar_top
+Kd 0.9220 0.9012 0.8743
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/quartz_pillar_top.png
+
+newmtl farmersdelight_block-stove_front_on
+Kd 0.4746 0.3156 0.2408
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/stove_front_on.png
+
+newmtl farmersdelight_block-potato_crate_side
+Kd 0.4813 0.3418 0.1636
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/potato_crate_side.png
+
+newmtl minecraft_block-bone_block_top
+Kd 0.8228 0.8087 0.7035
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/bone_block_top.png
+
+newmtl minecraft_block-grass_block_side
+Kd 0.4972 0.4201 0.2572
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/grass_block_side.png
+
+newmtl farmersdelight_block-skillet_top
+Kd 0.2186 0.2186 0.2186
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/skillet_top.png
+map_d tex/farmersdelight/block/skillet_top.png
+
+newmtl farmersdelight_block-skillet_side
+Kd 0.3385 0.2406 0.2143
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/skillet_side.png
+map_d tex/farmersdelight/block/skillet_side.png
+
+newmtl minecraft_entity-signs-oak
+Kd 0.6046 0.4878 0.2916
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/entity/signs/oak.png
+map_d tex/minecraft/entity/signs/oak.png
+
+newmtl minecraft_block-bone_block_side
+Kd 0.8998 0.8859 0.8149
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/bone_block_side.png
+
+newmtl farmersdelight_block-cutting_board
+Kd 0.5029 0.3719 0.2138
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/cutting_board.png
+map_d tex/farmersdelight/block/cutting_board.png
+
+newmtl farmersdelight_block-tomato_crate_top
+Kd 0.4416 0.2153 0.1543
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/tomato_crate_top.png
+
+newmtl minecraft_block-bedrock
+Kd 0.5972 0.5972 0.5972
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/bedrock.png
+
+newmtl minecraft_block-grass_block_top
+Kd 0.4936 0.7793 0.3069
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/grass_block_top.png
+
+newmtl minecraft_block-quartz_block_side
+Kd 0.9246 0.9016 0.8743
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/quartz_block_side.png
+
+newmtl minecraft_block-dirt
+Kd 0.5265 0.3776 0.2627
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/dirt.png
+
+newmtl farmersdelight_block-potato_crate_top
+Kd 0.5594 0.4034 0.1797
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/potato_crate_top.png
+
+newmtl farmersdelight_block-stove_bottom
+Kd 0.4001 0.3106 0.3000
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/stove_bottom.png
+
+newmtl minecraft_block-quartz_pillar
+Kd 0.9235 0.9047 0.8784
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/quartz_pillar.png
+
+newmtl farmersdelight_block-stove_top_on
+Kd 0.3091 0.2548 0.2210
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/stove_top_on.png
+
+newmtl minecraft_block-quartz_block_top
+Kd 0.9246 0.9016 0.8743
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/minecraft/block/quartz_block_top.png
+
+newmtl farmersdelight_block-stove_side
+Kd 0.4887 0.3373 0.2992
+Ks 0.0000 0.0000 0.0000
+map_Kd tex/farmersdelight/block/stove_side.png

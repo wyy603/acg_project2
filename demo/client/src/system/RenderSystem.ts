@@ -31,6 +31,7 @@ export class RenderSystem {
 
 	static sceneMax = new THREE.Scene();
 	static maxObjects = new Set<THREE.Object3D>();
+    static hemiLight: THREE.HemisphereLight;
 	static addMaxdepth(obj: THREE.Object3D) {
 		this.maxObjects.add(obj);
 	}
@@ -61,7 +62,8 @@ export class RenderSystem {
 			console.log("high performance");
 			ClientConfig.noShadow = false;
 			this.renderer = new THREE.WebGLRenderer({ antialias: true });
-		} else {
+		} else
+        {
 			console.log("low performance");
 			ClientConfig.noShadow = true;
 			this.renderer = new THREE.WebGLRenderer({antialias: false,alpha: true, precision: "lowp", powerPreference: "low-power" });
@@ -72,30 +74,10 @@ export class RenderSystem {
 		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 		this.scene = new THREE.Scene();
-		//this.scene.background = new THREE.Color( 0xbfd1e5 );
-        this.scene.background = new THREE.Color(0x000011);
-
-        
-        {
-            //const hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
-            const hemiLight = new THREE.HemisphereLight(0x000033, 0x000000, 1);
-            this.scene.add( hemiLight );
-            this.lights.add( hemiLight );
-        }
-        {
-            const pointLight = new THREE.PointLight(0xffff99, 35, 200);
-            pointLight.position.copy(new THREE.Vector3(99,13+5,5+2));
-            pointLight.castShadow = true;
-            pointLight.shadow.camera.far = 400;
-            const d = 150;
-            pointLight.shadow.mapSize.width = 4096;
-            pointLight.shadow.mapSize.height = 4096;
-            pointLight.shadow.radius = 10;
-            pointLight.shadow.blurSamples = 25;
-            pointLight.shadow.bias = -0.001;
-            this.scene.add( pointLight );
-            this.lights.add( pointLight );
-        }
+		this.scene.background = new THREE.Color( 0xbfd1e5 );
+        this.hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
+        this.scene.add( this.hemiLight );
+        this.lights.add( this.hemiLight );
     }
 
 	static setAnimationLoop(callback: XRFrameRequestCallback | null) { this.renderer.setAnimationLoop(callback); }
@@ -109,6 +91,23 @@ export class RenderSystem {
 	}
 
     static update(entities: Entity[]) {
+        for(const entity of EntitySystem.getAllR(C.SetTime)) {
+            const setTime = entity.getR(C.SetTime)!;
+            if(!setTime.updated(this)) {
+                if(setTime.str == "day") {
+                    this.scene.remove(this.hemiLight), this.lights.delete(this.hemiLight);
+                    this.hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1 );
+                    this.scene.add( this.hemiLight ), this.lights.add( this.hemiLight );
+                    this.scene.background = new THREE.Color(0xbfd1e5);
+                } else if(setTime.str == "night") {
+                    this.scene.remove(this.hemiLight), this.lights.delete(this.hemiLight);
+                    this.hemiLight = new THREE.HemisphereLight(0x000033, 0x000000, 1);
+                    this.scene.add( this.hemiLight ), this.lights.add( this.hemiLight );
+                    this.scene.background = new THREE.Color(0x000011);
+                }
+                setTime.mark(this);
+            }
+        }
         if(this.renderer.shadowMap.enabled !== (!ClientConfig.noShadow)) {
             this.renderer.shadowMap.enabled = !ClientConfig.noShadow;
             const updateShadowProperties = (object: THREE.Object3D) => {

@@ -165,3 +165,7 @@ export class PlayAnimation extends UComponent {
 export class PlayerChat extends UComponent {
     constructor(public name: string, public str: string) { super(); }
 };
+@register()
+export class SetTime extends UComponent {
+    constructor(public str: "day" | "night") { super(); }
+};

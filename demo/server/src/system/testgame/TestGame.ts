@@ -12,7 +12,7 @@ import { GridSystem } from '../GridSystem'
 import { Ammo, AmmoModule } from '@shared/utils/ammo'
 import * as U from './utils'
 import { diff } from '@shared/utils/basic'
-import { SPRITE_STATE, LEVEL1_ROOM_POSITION, LEVEL1_Config, 
+import { SPRITE_STATE, LEVEL0_ROOM_POSITION, LEVEL0_Config, LEVEL1_ROOM_POSITION, LEVEL1_Config, 
     LEVEL2_ROOM_POSITION, LEVEL2_Config, LEVEL_Config,
     Config, GRID_TYPE, CollisionFlags, INGREDIENT_PROPERTY } from '@shared/constant'
 
@@ -44,7 +44,7 @@ async function generateLevel(
         light.send(new C.SpriteInfo("light", state));
         light.send(new C.Lantern(new C.Vector3(94,13,14-1)));
     }
-    {
+    /*{
         const tree=new Entity(room);
         const state=SPRITE_STATE.NONE;
         tree.set(new C.Sprite("tree", undefined, state));
@@ -52,8 +52,8 @@ async function generateLevel(
         tree.send(new C.SetMeshByPath("assets/christmas_tree/christmas_tree_polycraft.glb",{scale:0.01}));
         tree.send(new C.MeshPhongMaterial(new C.Color(0,0,0)));
         tree.send(new C.SetMeshTransform(new C.Vector3(100,12.5,6)));
-    }
-    {
+    }*/
+    if(Config.level_path) {
         const world = new Entity(room);
         const path = Config.level_path;
         const bodyinfo = U.getRigidBodyConstructionInfo(0, U.TriangleShapeByMesh(await AssetSystem.get(path)));
@@ -257,7 +257,7 @@ export class TestGame {
         this.players = [];
     }
     async init() {
-        for(let j=1;j<=5;++j)
+        /*for(let j=1;j<=5;++j)
         {
             const ball = U.createSprite({
                 room: this.room,
@@ -272,7 +272,7 @@ export class TestGame {
             });
             ball.send(new C.SetMesh(new C.SphereGeometry(j/5), new C.MeshPhongMaterial(new C.Color(1, 0, 0))));
             ball.receive(new C.SetPhysicsTransform(new C.Vector3(0, 40, -40), undefined, undefined));
-        }
+        }*/
         // Add a tool cube
         {
             const halfExtents = new Ammo.btVector3(0.5, 0.5, 0.5); // Half extents for a unit cube
@@ -293,14 +293,14 @@ export class TestGame {
         }
         {
             const world = new Entity(this.room);
-            const path = 'public/assets/world/world.glb';
+            const path = 'public/assets/main_world/main_world.glb';
             const bodyinfo = U.getRigidBodyConstructionInfo(0, U.TriangleShapeByMesh(await AssetSystem.get(path)));
             const body = new Ammo.btRigidBody(bodyinfo);
             body.setRestitution(0.8);
             const state = SPRITE_STATE.COLLIDE;
             world.set(new C.Sprite(`world`, body, state));
             world.send(new C.SpriteInfo("world", state));
-            world.send(new C.SetMeshByPath(path)); world.send(new C.MeshPhongMaterial(new C.Color(0,0,0)));
+            world.send(new C.SetMeshByPath(path, {minecraft:true})); //world.send(new C.MeshPhongMaterial(new C.Color(0,0,0)));
             world.receive(new C.SetPhysicsTransform(new C.Vector3(0, 0, 0), undefined, undefined));
 
             /*const world = new Entity(this.room);
@@ -313,10 +313,11 @@ export class TestGame {
             world.send(new C.SetMeshTransform(new C.Vector3(0, -200, 0), undefined, undefined));*/
         }
         {
+            generateLevel(LEVEL0_ROOM_POSITION, LEVEL0_Config, this.room, this.gridSystem, this.physicsSystem);
             //generateLevel(LEVEL1_ROOM_POSITION, LEVEL1_Config, this.room);
-            generateLevel(LEVEL2_ROOM_POSITION, LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
+            //generateLevel(LEVEL2_ROOM_POSITION, LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
             
-            {
+            /*{
                 console.log("[TestGame] Adding a car!");
                 const entity = new Entity(this.room);
                 const collide = new Ammo.btCompoundShape();
@@ -364,9 +365,9 @@ export class TestGame {
                 entity.send(new C.SpriteInfo(`car!`, state));
                 entity.send(new C.SetMesh(new C.BoxGeometry(len*2,0.4,len*2), new C.MeshPhongMaterial(new C.Color(0, 0, 1))));
                 entity.receive(new C.SetPhysicsTransform(new C.Vector3(-40, 40, 10), undefined, undefined));
-            }
+            }*/
         }
-        for(let j=0;j<=1;++j)
+        /*for(let j=0;j<=1;++j)
         {
             const ball = new Entity(this.room);
             const path = 'public/assets/food/tomato/tomato.glb';
@@ -413,7 +414,7 @@ export class TestGame {
             entity.send(new C.SpriteInfo(`plate${j}`, state));
             entity.send(new C.SetMeshByPath(path));
             entity.receive(new C.SetPhysicsTransform(new C.Vector3(0, 40, -40), undefined, undefined));
-        }
+        }*/
         for(let j=0;j<=5;++j){
             const gun = new Entity(this.room);
             const path = 'public/assets/tool/gun/gun.glb';

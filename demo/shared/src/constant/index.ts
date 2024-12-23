@@ -94,7 +94,7 @@ export enum INGREDIENT {
 };
 
 export interface LEVEL_Config {
-    level_path: string,
+    level_path: string | undefined,
     level_name: string,
     knive_detectors: Vector3[],
     skillets: Vector3[],
@@ -104,6 +104,39 @@ export interface LEVEL_Config {
     flatPositions: Vector3[],
     faces: {position: Vector3, name: string}[]
     water: {p1: Vector3, p2: Vector3}[]
+};
+
+
+export const LEVEL0_ROOM_POSITION = new Vector3(0, 0, 0);
+export const LEVEL0_Config: LEVEL_Config = {
+    level_path: undefined,
+    level_name: "main_world",
+    knive_detectors: [
+        new Vector3(-2, 5, 2).dec(new Vector3(0, 0, 0)),
+    ],
+    skillets: [
+        new Vector3(-2, 5, -1).dec(new Vector3(0, 0, 0)),
+    ],
+    knives: [
+        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
+        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
+        new Vector3(0, 10, 0).dec(new Vector3(0, 0, 0)),
+    ],
+    servingArea: [
+        new Vector3(-2, 5, -7).dec(new Vector3(0, 0, 0)),
+        new Vector3(-2, 5, -8).dec(new Vector3(0, 0, 0)),
+    ],
+    storage: [
+        { position: new Vector3(-2, 5, 6).dec(new Vector3(0, 0, 0)), item: INGREDIENT.tomato },
+        { position: new Vector3(-2, 5, 5).dec(new Vector3(0, 0, 0)), item: INGREDIENT.potato },
+        { position: new Vector3(-2, 5, 7).dec(new Vector3(0, 0, 0)), item: INGREDIENT.raw_beef },
+        { position: new Vector3(-2, 5, -4).dec(new Vector3(0, 0, 0)), item: INGREDIENT.plate },
+    ],
+    flatPositions: [] as Vector3[],
+    faces: [
+        { position: new Vector3(-1.499, 5, -1).dec(new Vector3(0, 0, 0)), name: "stove_front_on" },
+    ],
+    water: []
 };
 
 export const LEVEL1_ROOM_POSITION = new Vector3(100, 2, 10);
@@ -167,9 +200,9 @@ export const LEVEL2_Config: LEVEL_Config = {
     ],
     water: []
 };
-for(let x = 98; x <= 101; ++x) {
+/*for(let x = 98; x <= 101; ++x) {
     for(let y = 10; y <= 15; ++y) LEVEL2_Config.faces.push({ position: new Vector3(x, 6.4, y).dec(new Vector3(100, 2, 11)), name: "water_still" })
-}
+}*/
 for (let x = 94; x <= 97; x++) {
     LEVEL2_Config.servingArea.push(new Vector3(x, 6.7, 4).dec(new Vector3(100, 2, 11)));
 }

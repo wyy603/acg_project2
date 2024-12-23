@@ -43,7 +43,7 @@ export class PlayerSystem {
     name?: THREE.Mesh
     constructor() {
         console.log("new playersystem!");
-        const dirLight = new THREE.DirectionalLight( 0xffffff, 0.2 );
+        const dirLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
         this.dirLight = dirLight;
         RenderSystem.scene.add(dirLight);
         RenderSystem.lights.add(dirLight);
@@ -273,12 +273,12 @@ export class PlayerSystem {
         if(playerCatchType && !playerCatchType.updated(this)) {
             HTMLSystem.set2("OvercraftInfo", "playerCatchType", CATCH_TYPE_NAME[playerCatchType.catchType]);
         }
-        const position = U.getEntityByName("cube")[0].get(C.Sprite)!.object3d.position;
+        /*const position = U.getEntityByName("cube")[0].get(C.Sprite)!.object3d.position;
         HTMLSystem.set2("Logger", "cube_pos", `{'x':${Math.round(position.x)}, 'y':${Math.round(position.y)}, 'z':${Math.round(position.z)}}`)
         const parent = U.getEntityByName("cube")[0].get(C.Sprite)!.object3d.parent;
         if(parent) {
             HTMLSystem.set2("Logger", "cube_pos_parent", parent.name);
-        }
+        }*/
 
         {
             function round(vec: THREE.Vector3) {
