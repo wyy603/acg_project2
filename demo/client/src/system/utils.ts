@@ -180,14 +180,16 @@ export function setTexturePlane(sprite: C.Sprite, name: string, position: C.Vect
     }
 }
 
-export function updateTexture(obj: THREE.Object3D, texture: THREE.Texture) {
+export function updateTexture(obj: THREE.Object3D, texture: THREE.Texture, exclude: THREE.Object3D[]) {
     if(obj instanceof THREE.Mesh) {
         if(obj.material instanceof THREE.Material) {
             obj.material = obj.material.clone();
             if(obj.material.map) obj.material.map = texture;
         }
     } else {
-        for(const child of obj.children) updateTexture(child, texture);
+        for(const child of obj.children) {
+            if(!exclude.includes(child)) updateTexture(child, texture, exclude);
+        }
     }
 }
 
@@ -249,10 +251,10 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // �
     const object3d = sprite.object3d;
     const u_playerCatch = connectEntity.getR(C.U_PlayerCatch);
     let playerCatch = connectEntity.get(C.PlayerCatch);
-    if(connectEntity.get(C.PlayerCatch)?.catchType == CATCH_TYPE.HAND && 
+    /*if(connectEntity.get(C.PlayerCatch)?.catchType == CATCH_TYPE.HAND && 
     u_playerCatch?.catchType == CATCH_TYPE.HAND) {
         u_playerCatch.catchType = CATCH_TYPE.NONE;
-    } //强行修复换房间时拿着东西会留下mesh的bug
+    }*/ //强行修复换房间时拿着东西会留下mesh的bug
     if(u_playerCatch) {
         console.log("hihihi!!");
         if(playerCatch) {
@@ -264,18 +266,15 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // �
                 catchObject3D.removeFromParent();
             }
         }
-        connectEntity.set(new C.PlayerCatch(u_playerCatch.catchType, u_playerCatch.catchEntity));
+        connectEntity.set(new C.PlayerCatch(u_playerCatch.catchType, u_playerCatch.catchEntityId ? EntitySystem.get(u_playerCatch.catchEntityId) : undefined));
         playerCatch = connectEntity.get(C.PlayerCatch)!;
         console.log("updatePlayerCatch2", entity.id, connectEntity.id, connectEntity.get(C.PlayerCatch)?.catchType, u_playerCatch.catchType);
         if(playerCatch.catchType == CATCH_TYPE.HAND) {
-            const catchEntity = playerCatch.catchEntity!;
-            const catchObject3D = catchEntity.get(C.Sprite)!.object3d;
+            let catchObject3D = playerCatch.catchEntity!.get(C.Sprite)!.object3d;
             if(entity.id == WebSocketSystem.uuid) {
                 RenderSystem.fakeCamera.add(catchObject3D);
                 catchObject3D.position.set(2, -0.5, -2);
                 catchObject3D.rotation.set(0, -Math.PI / 2, 0);
-                //const position = getEntityByName("cube")[0].get(C.Sprite)!.object3d.position;
-                // Logger.set("cube_post", `{'x':${Math.round(position.x)}, 'y':${Math.round(position.y)}, 'z':${Math.round(position.z)}}`)
             } else {
                 sprite.addChildren(catchObject3D);
                 console.log("object3d.children", object3d.children, "catch.parent.name", catchObject3D.parent!.name, "catch.parent", catchObject3D.parent);
@@ -422,7 +421,9 @@ export function sendPlayerMessage(str: string) {
             if(command == 'cd') {
                 if(args[0] == '0' || args[0] == '1') {
                     const changeRoom = parseInt(args[0]);
-                    if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
+                    if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
+                        send({type: 'error', str: `Error: You are catching an item.`});
+                    } else if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
                         send({type: 'error', str: `Error: You are already in room ${args[0]}.`});
                     } else {
                         playerChangeRoom(parseInt(args[0]));

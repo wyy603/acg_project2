@@ -142,10 +142,10 @@ export class U_PlayerCatch extends UComponent {
     constructor(
         public catchType = CATCH_TYPE.NONE,
         public catchLen = 0,
-        public catchEntity?: Entity
+        public catchEntityId?: number
     ) { super(); }
     clone() {
-        return new U_PlayerCatch(this.catchType, this.catchLen, this.catchEntity);
+        return new U_PlayerCatch(this.catchType, this.catchLen, this.catchEntityId);
     }
 };
 @register()

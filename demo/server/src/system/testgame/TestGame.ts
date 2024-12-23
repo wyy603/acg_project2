@@ -324,14 +324,14 @@ export class TestGame {
             } else if(this.level == 2) {
                 generateLevel(LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
                 this.generatePosition = LEVEL2_Config.generatePosition;
-                const world = new Entity(this.room);
+                /*const world = new Entity(this.room);
                 const path = 'public/assets/test_building/test_building.glb';
                 const state = SPRITE_STATE.COLLIDE;
                 //world.set(new C.MinecraftWorld(await AssetSystem.get(path), new Ammo.btVector3(0, -200, 0), this.physicsSystem.world));
                 world.set(new C.Sprite(`world`, undefined, state));
                 world.send(new C.SpriteInfo("world", state));
                 world.send(new C.SetMeshByPath(path, {minecraft: true}));
-                world.send(new C.SetMeshTransform(new C.Vector3(0, -200, 0), undefined, undefined));
+                world.send(new C.SetMeshTransform(new C.Vector3(0, -200, 0), undefined, undefined));*/
             }
             //generateLevel(LEVEL1_Config.roomPosition, LEVEL1_Config, this.room);
             //generateLevel(LEVEL2_Config.roomPosition, LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
