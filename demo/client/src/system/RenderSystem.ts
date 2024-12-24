@@ -57,6 +57,26 @@ export class RenderSystem {
 		this.fakeCamera.name = "test"
 		this.camera = new THREE.PerspectiveCamera( CAMERA_PROP.fov, w / h, CAMERA_PROP.near, CAMERA_PROP.far );
 
+        setTimeout(() => {
+            const listener = new THREE.AudioListener();
+            this.camera.add( listener );
+
+            // 创建一个全局 audio 源
+            const sound = new THREE.Audio( listener );
+
+            console.log("music1");
+
+            // 加载一个 sound 并将其设置为 Audio 对象的缓冲区
+            const audioLoader = new THREE.AudioLoader();
+            audioLoader.load( 'assets/audio/Chrismas-Tune.ogg', function( buffer ) {
+                console.log("music");
+                sound.setBuffer( buffer );
+                sound.setLoop( true );
+                sound.setVolume( 0.5 );
+                sound.play();
+            });
+        }, 1000);
+
 		const isHighPerformance = this.checkHighPerformance();
 		if (isHighPerformance) {
 			console.log("high performance");

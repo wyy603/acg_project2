@@ -25,6 +25,13 @@ export function Message({ playerChat }: { playerChat: any }) {
         );
     } else if (playerChat.type === 'systemmessage') {
         playerChat.setIsFocused(true);
+        // console.log("Set is focused for message", playerChat);
+        // playerChat.setIsFocused(false);
+        // playerChaat
+        // setTimeout(() => {
+        //     console.log
+        //     playerChat.setIsFocused(false);
+        // }, 3000); // 例如，3秒后取消聚焦
         return (
             <div style={{ ...baseStyle, color: "green" }}>
                 <span>{playerChat.str}</span>
