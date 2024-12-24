@@ -75,7 +75,7 @@ export class Entity implements IEntity {
     public sends = new Map<Constructor, UComponent>();
     public _roomUpdated = false;
     constructor(public room: number, public id: number = getNextEntityId(), message = true) {
-        console.log("(i am) entity constructor");
+        //console.log("(i am) entity constructor");
         //console.log(`addEntity entityId = ${id}, room = ${room}`);
         EntitySystem.add(this);
         if(message) EventSystem.addEvent(new EntityAddedEvent(room, this.id));
@@ -212,7 +212,7 @@ export class EntitySystem {
         (window as any).EntitySystem = this;
     }
     static onEntityAdded(room: number, entityId: number) {
-        console.log("(i am) add entity", entityId);
+        //console.log("(i am) add entity", entityId);
         if(!this.entities.has(entityId)) {
             const entity = new Entity(room, entityId, false);
             

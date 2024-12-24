@@ -257,9 +257,9 @@ export function updatePlayerCatch(entity: Entity, connectEntity: Entity) { // �
         u_playerCatch.catchType = CATCH_TYPE.NONE;
     }*/ //强行修复换房间时拿着东西会留下mesh的bug
     if(u_playerCatch) {
-        console.log("hihihi!!");
+        //console.log("hihihi!!");
         if(playerCatch) {
-            console.log("hohoho!!");
+            //console.log("hohoho!!");
             if(playerCatch.catchType == CATCH_TYPE.HAND) {
                 const catchEntity = playerCatch.catchEntity!;
                 const catchObject3D = catchEntity.get(C.Sprite)!.object3d;
