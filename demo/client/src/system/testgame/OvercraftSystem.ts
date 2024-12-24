@@ -125,6 +125,7 @@ export class OvercraftSystemClient extends OvercraftSystemBasic {
                 clearInterval(this.checkers);
                 this.checkers = null;
             }
+			this.isEnded = true;
 			this.clearStatus();
 			HTMLSystem.set2("OvercraftInfo", "score", Math.round(this.score[0]+this.score[1]));
 			HTMLSystem.set2("OvercraftInfo", "time", "Game is not running.");
