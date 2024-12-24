@@ -43,7 +43,7 @@ export class PlayerSystem {
     name?: THREE.Mesh
     constructor() {
         console.log("new playersystem!");
-        const dirLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
+        const dirLight = new THREE.DirectionalLight( 0xffffff, 2 );
         this.dirLight = dirLight;
         RenderSystem.scene.add(dirLight);
         RenderSystem.lights.add(dirLight);

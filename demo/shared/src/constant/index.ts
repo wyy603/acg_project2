@@ -469,10 +469,13 @@ export const LEVEL2_Config: LEVEL_Config = {
         new Vector3(105, 7, 14).dec(new Vector3(100, 2, 11)),
         new Vector3(104, 7, 14).dec(new Vector3(100, 2, 11)),
         new Vector3(103, 7, 14).dec(new Vector3(100, 2, 11)),
+        new Vector3(99, 7, 15).dec(new Vector3(100, 2, 11)),
+        new Vector3(98, 7, 15).dec(new Vector3(100, 2, 11)),
     ],
     skillets: [
         new Vector3(105, 7, 6).dec(new Vector3(100, 2, 10)),
         new Vector3(105, 7, 7).dec(new Vector3(100, 2, 10)),
+        new Vector3(100, 7, 14).dec(new Vector3(100, 2, 10)),
     ],
     knives: [
         new Vector3(105, 7, 15).dec(new Vector3(100, 2, 11)),
@@ -517,10 +520,8 @@ export const LEVEL2_Config: LEVEL_Config = {
 for (let x = 94; x <= 97; x++) {
     LEVEL2_Config.servingArea.push(new Vector3(x, 6.7, 4).dec(new Vector3(100, 2, 11)));
 }
-for(let z = 5; z <= 10; ++z) {
+for(let z = 5; z <= 9; ++z) {
     LEVEL2_Config.flatPositions.push(new Vector3(99, 6.7, z).dec(new Vector3(100, 2, 11)));
-}
-for(let z = 11; z <= 15; ++z) {
     LEVEL2_Config.flatPositions.push(new Vector3(100, 6.7, z).dec(new Vector3(100, 2, 11)));
 }
 
