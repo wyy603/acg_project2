@@ -12,7 +12,12 @@ import { GridSystem } from '../GridSystem'
 import { Ammo, AmmoModule } from '@shared/utils/ammo'
 import * as U from './utils'
 import { diff } from '@shared/utils/basic'
-import { SPRITE_STATE, LEVEL0_Config, LEVEL1_Config, LEVEL2_Config, LEVEL_Config,
+import { SPRITE_STATE,
+    LEVEL0_Config,
+    LEVEL1_Config,
+    LEVEL2_Config,
+    LEVEL3_Config,
+    LEVEL_Config,
     Config, GRID_TYPE, CollisionFlags, INGREDIENT_PROPERTY } from '@shared/constant'
 
 async function generateLevel(
@@ -276,7 +281,8 @@ export class TestGame {
     generatePosition: C.Vector3
     timeStamp = 0
     constructor(public room: number, public level: number) {
-        this.physicsSystem = new PhysicsSystem();
+        console.log("generate game", room, level);
+        this.physicsSystem = new PhysicsSystem(room);
         this.playerSystem = new PlayerSystem();
         this.gridSystem = new GridSystem();
         this.players = [];
@@ -367,6 +373,9 @@ export class TestGame {
                 world.send(new C.SpriteInfo("world", state));
                 world.send(new C.SetMeshByPath(path, {minecraft: true}));
                 world.send(new C.SetMeshTransform(new C.Vector3(0, -200, 0), undefined, undefined));*/
+            } else if(this.level == 3) {
+                generateLevel(LEVEL3_Config, this.room, this.gridSystem, this.physicsSystem);
+                this.generatePosition = LEVEL3_Config.generatePosition;
             }
             //generateLevel(LEVEL1_Config.roomPosition, LEVEL1_Config, this.room);
             //generateLevel(LEVEL2_Config.roomPosition, LEVEL2_Config, this.room, this.gridSystem, this.physicsSystem);
@@ -544,7 +553,7 @@ export class TestGame {
         entity.send(new C.PlayAnimation("still_test"));
         entity.set(new C.PlayerCatch(undefined, undefined));
         entity.send(new C.SetMeshByPath(path, {scale: scale}));
-        console.log("send", this.room, this.generatePosition);
+        console.log("testgamegenerateposition", this.room, this.generatePosition);
         entity.receive(new C.SetPhysicsTransform(this.generatePosition, undefined));
         //entity.set(new C.SetPhysicsTransform(new C.Vector3(0, 50, 0)));
 

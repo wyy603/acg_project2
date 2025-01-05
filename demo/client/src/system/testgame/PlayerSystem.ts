@@ -193,7 +193,6 @@ export class PlayerSystem {
             }
         }
 
-
         for(const entity of entities) {
             const playerName = entity.getR(C.PlayerName), playerChat = entity.getR(C.PlayerChat);
             if(!playerName || !playerChat || playerChat.updated(this)) continue;
@@ -302,6 +301,16 @@ export class PlayerSystem {
         if(parent) {
             HTMLSystem.set2("Logger", "cube_pos_parent", parent.name);
         }*/
+        function send(msg: any) {
+            let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
+            list.push(msg);
+            HTMLSystem.set("ChatBox", list);
+        }
+        const systemMessage = player.getR(C.SystemMessage);
+        if(systemMessage && !systemMessage.updated(this)) {
+            for(const a of systemMessage.str) send({type: systemMessage.type, str: a});
+            systemMessage.mark(this);
+        }
 
         {
             function round(vec: THREE.Vector3) {

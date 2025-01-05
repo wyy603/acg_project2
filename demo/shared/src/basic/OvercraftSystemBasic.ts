@@ -64,9 +64,13 @@ export class OvercraftSystemBasic {
 		console.log(`Room ID: ${this.roomID}, Is Server: ${this.isServer}`);
 	}
 
-	setConfig(config:any = level1Config): void {
+	setConfig(config: any = level1Config): void {
 		this.config = config;
 	}
+    setLevel(level: number) {
+        if(level == 1) this.config = level1Config;
+        else this.config = level1Config;
+    }
 
 	isRunning(): boolean {
 		return this.isEnded !== true;

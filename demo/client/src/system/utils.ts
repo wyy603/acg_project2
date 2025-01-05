@@ -18,7 +18,6 @@ const getOrder = (() => {
     };
 })();
 
-let MMM: any;
 export function changeMinecraft(obj: THREE.Object3D) {
     if(obj instanceof THREE.Mesh) {
         const material = obj.material;
@@ -51,7 +50,6 @@ export function changeMinecraft(obj: THREE.Object3D) {
 
                 if(material.name.includes("stove_front")) {
                     console.log("other material:", material);
-                    MMM = material;
                 }
             }
         }
@@ -401,13 +399,7 @@ export function getMinecraftBlock({north, south, east, west, bottom, up}: {
 }
 
 import { HTMLSystem } from '@/system/testgame/HTMLSystem'
-import { OvercraftSystemClient } from './testgame/OvercraftSystem'
-import { Game } from '@/system/GameSystem'
 
-function playerChangeRoom(room: number) {
-    const player = EntitySystem.get(WebSocketSystem.uuid)!;
-    player.send(new C.PlayerChangeRoom(room));
-}
 export function sendPlayerMessage(str: string) {
     function send(msg: any) {
         let list: any[] = HTMLSystem.get("ChatBox"); if(!list) list = [];
@@ -416,38 +408,10 @@ export function sendPlayerMessage(str: string) {
     }
     const player = EntitySystem.get(WebSocketSystem.uuid);
     if(!player) return;
+    console.log("sendplayermessage");
     if(str != "") {
         if (str[0] === '/') {
-            const parts = str.slice(1).split(' ');
-            const command = parts[0];
-            const args = parts.slice(1);
-            if(command == 'cd') {
-                if(args[0] == '0' || args[0] == '1' || args[0] == '2' || args[0] == '3') {
-                    const changeRoom = parseInt(args[0]);
-                    const system = Game.gamesystems.get(0) as OvercraftSystemClient;
-                    if(system && system.isRunning()) {
-                        send({type: 'error', str: `Error: Game is running.`});
-                    } else if(EntitySystem.get(player.getR(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
-                        send({type: 'error', str: `Error: You are catching an item.`});
-                    } else if(changeRoom == player.getR(C.PlayerRoom)!.roomId) {
-                        send({type: 'error', str: `Error: You are already in room ${args[0]}.`});
-                    } else {
-                        playerChangeRoom(parseInt(args[0]));
-                        send({type: 'systemmessage', str: `Sending you to room ${args[0]}...`})
-                    }
-                } else {
-                    send({type: 'error', str: `Error: room ${args[0]} not found.`});
-                }
-            } else if(command == 'help') {
-                send({type: 'systemmessage', str: `欢迎来到 OverCraft! `});
-                send({type: 'systemmessage', str: `1. 鼠标左键：拿起物品或与生成器、菜板、放置区等交互；鼠标右键：放下物品。`});
-                send({type: 'systemmessage', str: `2. 鼠标滚轮可以切换抓取方式。在拿枪时，按 z,x 发射子弹。`});
-                send({type: 'systemmessage', str: `3. 在主世界 (room_id = 0) 可以获得与 OverCraft 做菜相关的帮助。在房间中按 q 开始一局游戏。`});
-                send({type: 'systemmessage', str: `4. /cd [room_id = 0,1,2,3] 可以切换房间。当前在房间 ${player.getR(C.PlayerRoom)!.roomId}。`});
-                send({type: 'systemmessage', str: `5. /help 可以获取帮助。`});
-            } else {
-                send({type: 'error', str: `Error: invalid command [${str}].`});
-            }
+            player.send(new C.PlayerCommand(str));
         } else {
             player.send(new C.PlayerChat(getPlayerName(), str));
         }

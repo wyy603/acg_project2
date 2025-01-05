@@ -39,7 +39,7 @@ export class Sprite extends C.Component {
     }
     activate(physicsWorld: AmmoModule.btDiscreteDynamicsWorld) {
         this.activated = true;
-        if(this.body) physicsWorld.addRigidBody(this.body);
+        if(this.body) physicsWorld.addRigidBody(this.body, 1 << this.entity()!.room, 1 << this.entity()!.room);
     }
 };
 
@@ -315,7 +315,7 @@ export class MinecraftWorld extends C.Component {
         this.blocks.set(playerId, body);
         
         body.setUserIndex(this.entity()!.id);
-        this.physicsWorld.addRigidBody(body);
+        this.physicsWorld.addRigidBody(body, 1 << this.entity()!.room, 1 << this.entity()!.room);
         //Ammo.destroy(triangleMeshShape);
         Ammo.destroy(bodyinfo);
         console.log("end");

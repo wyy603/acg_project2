@@ -17,21 +17,33 @@ import { WebSocketSystem } from '@/system/WebSocketSystem'
 import { initHandler } from '@/component/handler'
 import { GridSystem } from './GridSystem';
 import { OvercraftSystemServer } from './OvercraftSystem';
+import { globalWorld } from './testgame/PhysicsSystem'
 
 export class GameSystem {
-    static games: Map<number, TestGame>
-    static gamesystems: Map<number, any>;
+    static games: Map<number, TestGame> = new Map();
+    static gamesystems: Map<number, any> = new Map();
+    static roomName: Map<number, string> = new Map();
     static activate = false
+    static timeStamp = 0;
+    static async addRoom(room: number, level: number, name: string) {
+        const game = new TestGame(room, level);
+        await game.init();
+        this.games.set(room, game);
+        const sys0 = new OvercraftSystemServer(room, true); // NOTE: actually still in room id 0, too lazy to change. 
+        sys0.setLevel(level);
+        this.gamesystems.set(room, sys0);
+        this.roomName.set(room, name);
+    }
     static async init() {
         SerializeSystem.init();
         EntitySystem.init();
         await WebSocketSystem.init();
         initHandler();
 
-        this.games = new Map();
-        this.gamesystems = new Map();
-
-        {
+        await this.addRoom(0, 0, "main");
+        await this.addRoom(1, 3, "qwq2");
+        
+        /*{
             const game0 = new TestGame(0, 0);
             await game0.init();
             this.games.set(0, game0);
@@ -65,7 +77,7 @@ export class GameSystem {
             const sys1 = new OvercraftSystemServer(3, true);
             sys1.setConfig();
             this.gamesystems.set(3, sys1);
-        }
+        }*/
     }
     static getRoomType(id: number) {
         if(this.games.get(id) instanceof TestGame) return ROOM_TYPE.testGame;
@@ -99,6 +111,12 @@ export class GameSystem {
             }
             for(const game of this.games.values()) {
                 game.addPlayers();
+            }
+            if(globalWorld) {
+                const now = Date.now();
+                const dt = (now - this.timeStamp) / 1000;
+                if(this.timeStamp != 0) globalWorld.stepSimulation( dt, 13, 1/90);
+                this.timeStamp = now;
             }
             for(const game of this.games.values()) {
                 if(!this.activate) game.timeStamp = Date.now();

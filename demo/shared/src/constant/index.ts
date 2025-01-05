@@ -525,6 +525,64 @@ for(let z = 5; z <= 9; ++z) {
     LEVEL2_Config.flatPositions.push(new Vector3(100, 6.7, z).dec(new Vector3(100, 2, 11)));
 }
 
+export const LEVEL3_Config: LEVEL_Config = {
+    level_path: "public/assets/level3/level3.glb",
+    level_name: "level3",
+    roomPosition: new Vector3(0, 0, 0),
+    generatePosition: new Vector3(6, 28.6, -5.6),
+    knive_detectors: [
+        new Vector3(12, 29, -11),
+        new Vector3(14, 29, -16),
+        new Vector3(15, 29, -16),
+        new Vector3(16, 29, -16),
+    ],
+    skillets: [
+        new Vector3(17, 29, -15),
+        new Vector3(17, 29, -14),
+    ],
+    knives: [
+        new Vector3(12, 31, -16),
+        new Vector3(12, 31.5, -16),
+        new Vector3(12, 32, -16),
+    ],
+    servingArea: [
+        new Vector3(11, 28.7, -11),
+        new Vector3(11, 28.7, -12),
+        new Vector3(11, 28.7, -13),
+        new Vector3(11, 28.7, -14),
+        new Vector3(11, 28.7, -15),
+    ],
+    storage: [
+        { position: new Vector3(17, 29, -7), item: INGREDIENT.tomato },
+        { position: new Vector3(17, 31, -7), item: INGREDIENT.potato },
+        { position: new Vector3(17, 29, -5), item: INGREDIENT.cabbage },
+        { position: new Vector3(17, 31, -5), item: INGREDIENT.cucumber },
+        { position: new Vector3(15, 29, -5), item: INGREDIENT.pizza_dough },
+        { position: new Vector3(14, 29, -5), item: INGREDIENT.cutted_onion },
+        { position: new Vector3(17, 30, -9), item: INGREDIENT.raw_beef },
+        { position: new Vector3(11, 29, -9), item: INGREDIENT.plate },
+    ],
+    flatPositions: [
+        new Vector3(12, 28.7, -13),
+        new Vector3(12, 28.7, -14),
+        new Vector3(12, 28.7, -15),
+        new Vector3(17, 28.7, -13),
+        new Vector3(17, 28.7, -11),
+    ],
+    faces: [
+        { position: new Vector3(16.499, 29, -15), name: "stove_front_on" },
+        { position: new Vector3(16.499, 29, -14), name: "stove_front_on" },
+        { position: new Vector3(17.499, 32, -5), name: INGREDIENT_PROPERTY[INGREDIENT.cutted_cucumber].icon! },
+        { position: new Vector3(15, 29, -5.501), name: INGREDIENT_PROPERTY[INGREDIENT.pizza_dough].icon! },
+        { position: new Vector3(14, 29, -5.501), name: INGREDIENT_PROPERTY[INGREDIENT.cutted_onion].icon! },
+        { position: new Vector3(17.499, 31, -9), name: "cow" },
+    ],
+    water: [],
+    tools: [
+        { position: new Vector3(14,32,-11), type: "lantern" },
+    ]
+};
+
 export enum ORDER_TYPE {
     Chopped_Potato,
     Chopped_Tomato,

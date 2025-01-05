@@ -11,26 +11,30 @@ import { Entity } from '@shared/basic'
 import { EntitySystem } from '@shared/system'
 import { Config } from '@shared/constant'
 import { diff } from '@shared/utils/basic'
-import * as U from '@shared/utils'
+import * as U from '@/system/testgame/utils'
+
+export let globalWorld: AmmoModule.btDiscreteDynamicsWorld | undefined = undefined;
 
 export class PhysicsSystem {
     world: AmmoModule.btDiscreteDynamicsWorld
     entities: Entity[]
     c1 = 0
     c2 = 0
-    constructor() {
-        const collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(),
-            dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration),
-            overlappingPairCache = new Ammo.btDbvtBroadphase(),
-            solver = new Ammo.btSequentialImpulseConstraintSolver();
+    constructor(public room: number) {
+        if(!globalWorld) {
+            const collisionConfiguration = new Ammo.btDefaultCollisionConfiguration(),
+                dispatcher = new Ammo.btCollisionDispatcher(collisionConfiguration),
+                overlappingPairCache = new Ammo.btDbvtBroadphase(),
+                solver = new Ammo.btSequentialImpulseConstraintSolver();
 
-        this.world = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
-        const vec = new Ammo.btVector3(0, -30, 0); this.world.setGravity(vec), Ammo.destroy(vec);
+            globalWorld = new Ammo.btDiscreteDynamicsWorld(dispatcher, overlappingPairCache, solver, collisionConfiguration);
+            const vec = new Ammo.btVector3(0, -30, 0); globalWorld.setGravity(vec), Ammo.destroy(vec);
+        }
+        this.world = globalWorld;
         this.entities = [];
         console.log("PhysicsSystem Loaded.");
     }
     update(entities: Entity[], dt: number, timeStamp: number) {
-        //console.log("PhysicsSystem update");
         const newentities: Entity[] = [];
         for(const entity of entities) {
             const sprite = entity.get(C.Sprite);
@@ -41,7 +45,7 @@ export class PhysicsSystem {
         for(const entity of adds) {
             const sprite = entity.get(C.Sprite)!;
             //console.log("add rigid body");
-            this.world.addRigidBody(sprite.body!);
+            this.world.addRigidBody(sprite.body!, 1 << this.room, 1 << this.room);
         }
         for(const entity of dels) {
             //console.log("remove rigid body!");
@@ -90,13 +94,14 @@ export class PhysicsSystem {
             }
         }
 
-        this.world.stepSimulation( dt, 13, 1/90);
-
         for(const entity of this.entities) {
             const sprite = entity.get(C.Sprite);
             if(!sprite) continue;
             if(!sprite.activated) continue;
             if(!sprite.body) continue;
+            /*if(sprite.name=='playerEntity') {
+                console.log("isactive", sprite.name, sprite.body.isActive(), sprite.body.isStaticObject(), C.Vector3.byAmmo(U.getPos(sprite.body)));
+            }*/
             
             const motionState = sprite.body!.getMotionState();
             const transform = new Ammo.btTransform();

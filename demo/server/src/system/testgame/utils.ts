@@ -267,7 +267,7 @@ export function updateFoodBody(entity: C.Entity, physicsWorld: AmmoModule.btDisc
     } else {
         sprite.type |= SPRITE_STATE.CATCHABLE;
     }
-    physicsWorld.addRigidBody(sprite.body!);
+    physicsWorld.addRigidBody(sprite.body!, 1 << entity.room, 1 << entity.room);
     motionState = sprite.body!.getMotionState();
     motionState.setWorldTransform(transform);
     sprite.body!.setMotionState(motionState);
@@ -341,6 +341,10 @@ export function getEntityByName(name: string) {
         }
     }
     return realList;
+}
+export function isInt(str: string) {
+    const num = parseInt(str);
+    return num.toString() == str && !Number.isNaN(num);
 }
 
 export * from '@shared/utils'

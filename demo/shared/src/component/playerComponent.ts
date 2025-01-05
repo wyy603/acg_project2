@@ -169,3 +169,11 @@ export class SetTime extends UComponent {
 export class Tips extends UComponent {
     constructor(public str: string) { super(); }
 };
+@register()
+export class PlayerCommand extends UComponent {
+    constructor(public command: string) { super(); }
+};
+@register()
+export class SystemMessage extends UComponent {
+    constructor(public type: string, public str: string[]) { super(); }
+};

@@ -338,7 +338,7 @@ export class PlayerSystem {
             const playerChangeSkin = entity.getR(C.PlayerSkin);
             const playerCatchType = entity.getR(C.PlayerCatchType);
             const playerChat = entity.getR(C.PlayerChat);
-            const playerChangeRoom = entity.getR(C.PlayerChangeRoom);
+            const playerCommand = entity.getR(C.PlayerCommand);
             if(!sprite || !playerCatch) continue;
 
             if(playerChangeName && !playerChangeName.updated(this)) {
@@ -358,10 +358,71 @@ export class PlayerSystem {
                 entity.send(playerChat);
                 playerChat.mark(this);
             }
-            if(playerChangeRoom && !playerChangeRoom.updated(this)) {
-                player.setRoom(playerChangeRoom.id);
-                console.log("set entity.room=", entity.room, entity.id);
-                playerChangeRoom.mark(this);
+            if(playerCommand && !playerCommand.updated(this)) {
+                const parts = playerCommand.command.slice(1).split(' ');
+                const command = parts[0];
+                const args = parts.slice(1);
+                const systemMessage = new C.SystemMessage('', []);
+                console.log("playercommand", playerCommand.command);
+                if(command == 'cd') {
+                    if(U.isInt(args[0]) && GameSystem.games.get(parseInt(args[0]))) {
+                        const changeRoom = parseInt(args[0]);
+                        const system = GameSystem.gamesystems.get(entity.room) as OvercraftSystemServer;
+                        if(system && system.isRunning()) {
+                            systemMessage.type = 'error', systemMessage.str = [`Error: Game is running.`];
+                        } else if(EntitySystem.get(entity.getS(C.PlayerConnectId)!.id)!.getR(C.U_PlayerCatch)?.catchEntityId) {
+                            systemMessage.type = 'error', systemMessage.str = [`Error: You are catching an item.`];
+                        } else if(changeRoom == entity.room) {
+                        } else {
+                            player.setRoom(parseInt(args[0]));
+                            systemMessage.type = 'systemmessage', systemMessage.str = [`Sending you to room ${args[0]}...`];
+                        }
+                    } else {
+                        systemMessage.type = 'error', systemMessage.str = [`Error: room ${args[0]} not found.`];
+                    }
+                } else if(command == 'help') {
+                    systemMessage.type = 'systemmessage', systemMessage.str = [
+                        `欢迎来到 OverCraft! `,
+                        `1. 鼠标左键：拿起物品或与生成器、菜板、放置区等交互；鼠标右键：放下物品。`,
+                        `2. 鼠标滚轮可以切换抓取方式。在拿枪时，按 z,x 发射子弹。`,
+                        `3. 在主世界 (room_id = 0) 可以获得与 OverCraft 做菜相关的帮助。在房间中按 q 开始一局游戏。`,
+                        `4. /cd [room_id = 0,1,2,3] 可以切换房间。当前在房间 ${entity.room}。`,
+                        `5. /help 可以获取帮助。`,
+                        `6. /ls 可以查看所有存在的房间。`,
+                        `7. /mkdir [room_id: number] [level_id: number] [name: string] 可以创建房间。`,
+                    ];
+                } else if(command == 'mkdir') {
+                    const room = parseInt(args[0]);
+                    const level = parseInt(args[1]);
+                    const name = args[2];
+                    if(!U.isInt(args[0]) || GameSystem.games.get(room)) systemMessage.type = 'error', systemMessage.str = [`Error: 房间号不是整数或房间已存在。`];
+                    else if(!U.isInt(args[1]) || !(level>=2&&level<=3)) systemMessage.type = 'error', systemMessage.str = [`Error: 关卡等级不是 [2,3] 的整数。`];
+                    else if(!name) systemMessage.type = 'error', systemMessage.str = [`Error: 没有指定房间名字。`];
+                    else {
+                        systemMessage.type = 'systemmessage', systemMessage.str = [`稍后可以通过 "/cd ${room}" 进入。`]
+                        GameSystem.addRoom(room, level, name);
+                    }
+                } else if(command == 'ls') {
+                    systemMessage.type = 'systemmessage', systemMessage.str = [`已经存在的房间如下：`];
+                    for(const id of GameSystem.roomName.keys()) {
+                        systemMessage.str.push(`${id}: ${GameSystem.roomName.get(id)}`);
+                    }
+                } else if(command == 'start') {
+                    const roomID = entity.room;
+                    const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
+                    if(roomID != 0) {
+                        if(system && !system.isRunning()) system.run();
+                        else systemMessage.type = 'error', systemMessage.str = [`游戏已经在运行。`];
+                    } else {
+                        systemMessage.type = 'error', systemMessage.str = [`不能在主世界启动游戏。`];
+                    }
+                } else {
+                    systemMessage.type = 'error', systemMessage.str = [`Error: invalid command [${playerCommand.command}].`];
+                }
+                if(systemMessage.type != '') {
+                    entity.send(systemMessage);
+                }
+                playerCommand.mark(this);
             }
             if(!playerEntity.get(C.GunTime)) playerEntity.set(new C.GunTime(0));
             const gunTime = playerEntity.get(C.GunTime)!;
@@ -372,7 +433,8 @@ export class PlayerSystem {
                 const velocity = sprite.body!.getLinearVelocity();
                 const animationRatio = Math.sqrt(velocity.x() * velocity.x() + velocity.z() * velocity.z()) / 3;
                 const movement = U.posAT(velocity).applyQuaternion(keyboardInput.quaternion.getTHREE().invert());
-                let damping = Math.exp( - 3 * dt );
+                //let damping = Math.exp( - 3 * dt );
+                let damping = 1 - 3 * dt;
                 let speedXZ = PLAYER_MOVEMENT.speedXZ * dt, speedY = PLAYER_MOVEMENT.speedY;
                 {
                     if(this.onGround(sprite, physicsWorld)) {
@@ -385,9 +447,9 @@ export class PlayerSystem {
                     if(keyDown.includes('d')) movement.setX(movement.x + speedXZ), playerAnimation = new C.PlayAnimation("walking_test", animationRatio);
                     if(keyDown.includes('w')) movement.setZ(movement.z - speedXZ), playerAnimation = new C.PlayAnimation("walking_test", animationRatio);
                     if(keyDown.includes('s')) movement.setZ(movement.z + speedXZ), playerAnimation = new C.PlayAnimation("walking_test", animationRatio);
-                    if(keyDown.includes('p')) {
+                    /*if(keyDown.includes('p')) {
                         U.spawnPlate(playerEntity);
-                    }
+                    }*/
                     if(keyDown.includes('x')) {
                         if(playerCatch.catchType == CATCH_TYPE.HAND && playerCatch.catchEntity!.get(C.Gun)) {
                             shoot2(playerEntity,playerEntity.getR(C.PlayerCamera)!.origin!,playerEntity.getR(C.PlayerCamera)!.direction!);
@@ -396,13 +458,6 @@ export class PlayerSystem {
                     if(keyDown.includes('z')) {
                         if(playerCatch.catchType == CATCH_TYPE.HAND && playerCatch.catchEntity!.get(C.Gun)) {
                             shoot1(playerEntity,playerEntity.getR(C.PlayerCamera)!.origin!,playerEntity.getR(C.PlayerCamera)!.direction!);
-                        }
-                    }
-                    if(keyDown.includes('q')) {
-                        const roomID = entity.room;
-                        const system = GameSystem.gamesystems.get(roomID) as OvercraftSystemServer;
-                        if(roomID !=0) {
-                            if(system && !system.isRunning()) system.run();
                         }
                     }
                     // if(keyDown.includes('o')) {
@@ -416,7 +471,9 @@ export class PlayerSystem {
                     // console.log("playerAnimation", playerAnimation);
                 }*/
                 
-                sprite.body!.setDamping(damping, 0);
+                movement.multiplyScalar(Math.pow(1-damping,dt));
+                //sprite.body!.setDamping(0, 0);
+                //sprite.body!.setDamping(damping, 0);
                 const realMovement = U.posTA(movement.applyQuaternion(keyboardInput.quaternion.getTHREE()));
                 sprite.body!.setLinearVelocity(realMovement);
             }

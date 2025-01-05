@@ -61,7 +61,7 @@ export class Game {
         this.gamesystems = new Map();
         const gamesystem = new OvercraftSystemClient(0, false);
         gamesystem.setConfig();
-        this.gamesystems.set(0,gamesystem);
+        this.gamesystems.set(0, gamesystem);
         // gamesystem.run();
         /*WebSocketSystem.send([new PlayerRoomChangeEvent(WebSocketSystem.uuid, 1)]);*/
     }
