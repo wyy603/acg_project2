@@ -2,7 +2,9 @@
 
 This is the final project for the course 'Advanced Computer Graphics' taught by Yi Li.
 
-![](video/video.mp4)
+video demo:
+
+https://raw.githubusercontent.com/wyy603/acg_project2/master/video.mp4
 
 # Framework
 
