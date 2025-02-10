@@ -585,6 +585,7 @@ export class TestGame {
             console.log("removeConstraint");
             playerCatch.removeConstraint(physicsWorld);
         }
+        
         //console.log("remove ", entity.id);
 
         const events: E.MyEvent[] = [];
