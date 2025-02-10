@@ -1,8 +1,8 @@
 # Introduction
 
-This is the final project of the course "Advanced Computer Graphics"  teched by Yi Li. 
+This is the final project for the course 'Advanced Computer Graphics' taught by Yi Li.
 
-
+![](video/video.mp4)
 
 # Framework
 
