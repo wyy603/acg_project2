@@ -2,13 +2,13 @@
 
 This is the final project for the course 'Advanced Computer Graphics' taught by Yi Li.
 
-video demo:
+A video demo of an earlier version (the current one in the repo is an updated version).
 
 https://raw.githubusercontent.com/wyy603/acg_project2/master/video.mp4
 
 # Framework
 
-Client and server are both pure typescript. We use THREE.js for rendering, ammo.js for simulation, and WebSocket for network communications. 
+The client and server are both built using pure TypeScript. The client utilizes Vite, while the server is powered by Node.js. We use THREE.js for rendering, Ammo.js for simulation, and WebSocket for network communications.
 
 # Installation
 
@@ -76,7 +76,7 @@ npm run client-dev
 
 
 
-# Online Access
+# Online Access (当时演示时写的)
 
 我们在清华内网启动了一个服务器，网址为 `http://59.66.132.25:9982`，只要服务器是开启的，你就可以通过点击这个链接进入游戏。
 
