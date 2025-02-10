@@ -4,7 +4,7 @@ This is the final project for the course 'Advanced Computer Graphics' taught by 
 
 A video demo of an earlier version (the current one in the repo is an updated version).
 
-https://raw.githubusercontent.com/wyy603/acg_project2/master/video.mp4
+https://github.com/user-attachments/assets/8068076e-5c34-4c17-a77b-c587a05960fd
 
 # Framework
 
